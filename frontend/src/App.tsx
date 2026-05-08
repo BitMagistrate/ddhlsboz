@@ -113,30 +113,43 @@ function Logo() {
 
 function Header({ tab, setTab }: { tab: Tab; setTab: (t: Tab) => void }) {
   const tabs: { id: Tab; label: string; icon: React.ReactNode }[] = [
-    { id: "curator", label: "Куратор", icon: <Compass size={16} /> },
-    { id: "trainer", label: "Тренажёр ЕГЭ", icon: <GraduationCap size={16} /> },
-    { id: "dashboard", label: "Дашборд региона", icon: <BarChart3 size={16} /> },
-    { id: "about", label: "О проекте", icon: <Sparkles size={16} /> },
+    { id: "curator", label: "Куратор", icon: <Compass size={16} aria-hidden /> },
+    { id: "trainer", label: "Тренажёр ЕГЭ", icon: <GraduationCap size={16} aria-hidden /> },
+    { id: "dashboard", label: "Дашборд региона", icon: <BarChart3 size={16} aria-hidden /> },
+    { id: "about", label: "О проекте", icon: <Sparkles size={16} aria-hidden /> },
   ]
   return (
     <header className="border-b border-zinc-800">
       <div className="mx-auto max-w-6xl px-6 pt-7 pb-1">
         <Logo />
-        <nav className="mt-5 flex flex-wrap gap-1 border-b border-zinc-800">
-          {tabs.map((t) => (
-            <button
-              key={t.id}
-              onClick={() => setTab(t.id)}
-              className={`flex items-center gap-2 px-4 py-3 text-sm border-b-2 -mb-px transition-colors ${
-                tab === t.id
-                  ? "border-amber-300 text-zinc-100"
-                  : "border-transparent text-zinc-400 hover:text-zinc-200"
-              }`}
-            >
-              {t.icon}
-              {t.label}
-            </button>
-          ))}
+        <nav
+          role="tablist"
+          aria-label="Разделы ЧитАИ"
+          className="mt-5 flex flex-wrap gap-1 border-b border-zinc-800"
+        >
+          {tabs.map((t) => {
+            const selected = tab === t.id
+            return (
+              <button
+                key={t.id}
+                role="tab"
+                type="button"
+                id={`tab-${t.id}`}
+                aria-selected={selected}
+                aria-controls={`panel-${t.id}`}
+                tabIndex={selected ? 0 : -1}
+                onClick={() => setTab(t.id)}
+                className={`flex items-center gap-2 px-4 py-3 text-sm border-b-2 -mb-px transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-300 focus-visible:rounded-sm ${
+                  selected
+                    ? "border-amber-300 text-zinc-100"
+                    : "border-transparent text-zinc-400 hover:text-zinc-200"
+                }`}
+              >
+                {t.icon}
+                {t.label}
+              </button>
+            )
+          })}
         </nav>
       </div>
     </header>
@@ -722,12 +735,20 @@ export default function App() {
   const [tab, setTab] = useState<Tab>("curator")
   return (
     <div className="min-h-screen flex flex-col">
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50 focus:rounded-md focus:bg-amber-300 focus:px-3 focus:py-2 focus:text-sm focus:font-semibold focus:text-zinc-900"
+      >
+        Перейти к основному содержимому
+      </a>
       <Header tab={tab} setTab={setTab} />
-      <main className="mx-auto w-full max-w-6xl px-6 flex-1">
-        {tab === "curator" && <CuratorTab />}
-        {tab === "trainer" && <TrainerTab />}
-        {tab === "dashboard" && <DashboardTab />}
-        {tab === "about" && <AboutTab />}
+      <main id="main" tabIndex={-1} className="mx-auto w-full max-w-6xl px-6 flex-1 outline-none">
+        <div role="tabpanel" id={`panel-${tab}`} aria-labelledby={`tab-${tab}`}>
+          {tab === "curator" && <CuratorTab />}
+          {tab === "trainer" && <TrainerTab />}
+          {tab === "dashboard" && <DashboardTab />}
+          {tab === "about" && <AboutTab />}
+        </div>
       </main>
       <footer className="border-t border-zinc-800 py-5 text-xs text-zinc-500">
         <div className="mx-auto max-w-6xl px-6">

@@ -87,11 +87,14 @@ jobs:
       - name: ESLint
         run: npm run lint
 
+      - name: Vitest (unit tests)
+        run: npm test
+
       - name: TypeScript build
         run: npm run build
 
   bot:
-    name: bot (lint)
+    name: bot (lint + tests)
     runs-on: ubuntu-latest
     timeout-minutes: 5
     defaults:
@@ -105,8 +108,12 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install ruff
-        run: pip install ruff==0.7.4
+      - name: Install runtime + dev deps
+        run: |
+          pip install --upgrade pip
+          pip install ruff==0.7.4 \
+            "aiogram>=3.4,<4.0" "httpx>=0.27,<1.0" \
+            pytest==8.3.3 pytest-asyncio==0.24.0 respx==0.21.1
 
       - name: Ruff lint
         run: |
@@ -115,3 +122,6 @@ jobs:
           else
             echo "No bot sources to lint"
           fi
+
+      - name: Pytest
+        run: pytest -q --tb=short
