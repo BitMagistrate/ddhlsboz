@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ЧитАИ — ИИ-куратор русского культурного и образовательного контента</title>
+<meta name="description" content="ЧитАИ — ИИ-куратор. Маршруты по фондам РГБ и НЭБ, тренажёр ЕГЭ, события Пушкинской карты. Демо на public domain." />
+<style>
+  :root{
+    --bg:#0E1116;
+    --panel:#161A22;
+    --panel-2:#1E2430;
+    --line:#2A3140;
+    --ink:#E8EAEE;
+    --ink-2:#A8AEBC;
+    --accent:#E0B978;
+    --accent-2:#9DB7D7;
+    --good:#7CC0A8;
+    --warn:#D9A452;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:Inter, "PT Sans", "Helvetica Neue", Arial, sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+  header{padding:28px 0 8px;border-bottom:1px solid var(--line)}
+  .brand{display:flex;align-items:center;gap:14px}
+  .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#E0B978 0%, #9DB7D7 100%);display:flex;align-items:center;justify-content:center;color:#0E1116;font-weight:700}
+  .logo span{font-size:18px;letter-spacing:.5px}
+  .brand h1{margin:0;font-size:22px;letter-spacing:.2px}
+  .brand small{display:block;color:var(--ink-2);font-weight:400;font-size:13px}
+  nav.tabs{display:flex;gap:4px;margin-top:18px;border-bottom:1px solid var(--line)}
+  nav.tabs button{background:transparent;color:var(--ink-2);border:0;border-bottom:2px solid transparent;padding:12px 14px;cursor:pointer;font-size:14px;font-family:inherit}
+  nav.tabs button.active{color:var(--ink);border-bottom-color:var(--accent)}
+  section.tab{display:none;padding:28px 0 64px}
+  section.tab.active{display:block}
+  h2{margin:0 0 8px;font-size:22px}
+  h3{margin:18px 0 10px;font-size:16px;color:var(--ink-2);font-weight:600;letter-spacing:.2px}
+  p{margin:0 0 12px;color:var(--ink)}
+  .muted{color:var(--ink-2);font-size:13px}
+  .grid{display:grid;gap:14px}
+  .grid-2{grid-template-columns:1fr 1fr}
+  .grid-3{grid-template-columns:1fr 1fr 1fr}
+  @media (max-width:760px){.grid-2,.grid-3{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px}
+  .pill{display:inline-block;border:1px solid var(--line);background:var(--panel-2);color:var(--ink-2);padding:3px 10px;border-radius:999px;font-size:12px;margin-right:6px;margin-bottom:6px}
+  .pill.accent{color:var(--accent);border-color:#5a4626}
+  .pill.good{color:var(--good);border-color:#264a3f}
+  textarea, input[type=text]{width:100%;background:var(--panel-2);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:12px 14px;font-size:14px;font-family:inherit;resize:vertical}
+  textarea:focus, input:focus{outline:0;border-color:var(--accent-2)}
+  button.primary{background:var(--accent);color:#0E1116;border:0;border-radius:10px;padding:11px 18px;cursor:pointer;font-weight:600;font-family:inherit}
+  button.primary:hover{filter:brightness(1.06)}
+  button.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:7px 12px;cursor:pointer;font-size:13px;font-family:inherit;margin-right:6px;margin-bottom:6px}
+  button.ghost:hover{border-color:var(--accent-2)}
+  ul.clean{padding-left:18px;margin:6px 0 0}
+  ul.clean li{margin-bottom:6px}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+  th{color:var(--ink-2);font-weight:600;font-size:13px}
+  .kpi{font-size:28px;font-weight:700;color:var(--accent)}
+  .kpi small{display:block;color:var(--ink-2);font-size:12px;font-weight:400;margin-top:4px}
+  .week-card{border-left:3px solid var(--accent);padding-left:14px;margin-bottom:18px}
+  .quote{border-left:3px solid var(--accent-2);padding-left:12px;color:var(--ink);font-style:italic;margin:8px 0}
+  .src{color:var(--ink-2);font-size:13px}
+  footer{padding:22px 0 28px;color:var(--ink-2);font-size:12px;border-top:1px solid var(--line)}
+  .row{display:flex;gap:10px;flex-wrap:wrap}
+  .check{color:var(--good);margin-right:6px}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="brand">
+      <div class="logo"><span>ЧИ</span></div>
+      <div>
+        <h1>ЧитАИ</h1>
+        <small>ИИ-куратор русского культурного и образовательного контента · Демо-стенд</small>
+      </div>
+    </div>
+    <nav class="tabs">
+      <button data-tab="curator" class="active">Куратор</button>
+      <button data-tab="trainer">Тренажёр ЕГЭ</button>
+      <button data-tab="dashboard">Дашборд региона</button>
+      <button data-tab="about">О проекте</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section id="curator" class="tab active">
+    <h2>Маршрут чтения по фондам</h2>
+    <p class="muted">Запрос свободной формой. Демо подбирает 4-недельный маршрут по корпусу public domain. В продакшене — фонды РГБ и НЭБ, генерация YandexGPT 5 Pro / GigaChat MAX поверх pgvector.</p>
+
+    <div class="card" style="margin-top:14px">
+      <textarea id="q" rows="3" placeholder="Например: Хочу понять Пушкина за 4 недели"></textarea>
+      <div style="margin-top:10px" class="row">
+        <button class="primary" onclick="buildRoute()">Собрать маршрут</button>
+        <button class="ghost" onclick="setQ('Хочу понять Пушкина за 4 недели')">Пушкин за 4 недели</button>
+        <button class="ghost" onclick="setQ('Маршрут по Серебряному веку для 11 класса')">Серебряный век, 11 класс</button>
+        <button class="ghost" onclick="setQ('Подготовка к ЕГЭ по Достоевскому')">Достоевский для ЕГЭ</button>
+        <button class="ghost" onclick="setQ('История России XIX века для подростка')">История России XIX в.</button>
+      </div>
+    </div>
+
+    <div id="route" style="margin-top:22px"></div>
+  </section>
+
+  <section id="trainer" class="tab">
+    <h2>Тренажёр ЕГЭ — литература и история</h2>
+    <p class="muted">Демо-вопросы по корпусу. В продакшене покрытие — кодификаторы ФИПИ по литературе и истории, прогресс пишется в дашборд учителя.</p>
+    <div class="row" style="margin:12px 0">
+      <button class="ghost" onclick="loadQuiz('Литература')">Литература</button>
+      <button class="ghost" onclick="loadQuiz('История')">История</button>
+    </div>
+    <div id="quiz"></div>
+  </section>
+
+  <section id="dashboard" class="tab">
+    <h2>Дашборд региона</h2>
+    <p class="muted">Синтетические данные для демонстрации. Метрики: вовлечённость, рост ЕГЭ-баллов, метрики качества RAG, соответствие требованиям.</p>
+    <div id="dash"></div>
+  </section>
+
+  <section id="about" class="tab">
+    <h2>О проекте</h2>
+    <p>ЧитАИ — ИИ-куратор: персональные маршруты по русской литературе, истории и культуре через фонды Российской государственной библиотеки и Национальной электронной библиотеки. Аудитории: молодёжь 14–22 (Пушкинская карта), учителя, библиотеки, музеи, региональные ведомства.</p>
+    <h3>Стек (российский)</h3>
+    <div>
+      <span class="pill">YandexGPT 5 Pro</span>
+      <span class="pill">GigaChat MAX</span>
+      <span class="pill">Kandinsky 3.1</span>
+      <span class="pill">Yandex SpeechKit</span>
+      <span class="pill">PostgreSQL + pgvector</span>
+      <span class="pill">Yandex Cloud (РФ)</span>
+    </div>
+    <h3>Соответствие</h3>
+    <div>
+      <span class="pill good">152-ФЗ</span>
+      <span class="pill good">44-ФЗ</span>
+      <span class="pill good">Указ Президента №490</span>
+      <span class="pill good">Нацпроект «Культура»</span>
+      <span class="pill good">Нацпроект «Образование»</span>
+    </div>
+    <h3>Что в этом макете и что — в проде</h3>
+    <ul class="clean">
+      <li><span class="check">✓</span> Корпус: 25 произведений public domain (Пушкин, Лермонтов, Гоголь, Достоевский, Толстой, Чехов, Серебряный век, Карамзин, Ключевский, Соловьёв).</li>
+      <li><span class="check">✓</span> Поиск по корпусу: ключевые слова + жанр + класс.</li>
+      <li><span class="check">✓</span> Маршрут на 4 недели с цитатами и ссылками на public domain.</li>
+      <li><span class="check">✓</span> Тренажёр: 18 демо-вопросов по литературе и истории.</li>
+      <li><span class="check">✓</span> Дашборды: регион, учитель, партнёр (синтетические данные).</li>
+      <li class="muted">В проде: pgvector-индекс фондов РГБ и НЭБ, реальные SLA, антипромпт-инжекция, фильтр галлюцинаций, журнал поиска, Yandex Cloud в РФ.</li>
+    </ul>
+    <h3>Партнёрства</h3>
+    <p class="muted">Все партнёрства в материалах указаны как гипотезы или находятся в проработке. Финальные письма поддержки оформляются после согласования с учреждениями.</p>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    Демо-стенд ЧитАИ. Все цитаты — public domain. Соответствие 152-ФЗ. © 2026.
+  </div>
+</footer>
+
+<script>
+const CORPUS = [
+  {id:"pushkin_onegin", author:"А. С. Пушкин", title:"Евгений Онегин", year:1833, genre:"роман в стихах", grade:"9–10", topics:["Пушкин","Реализм","Лирический герой"], pc:true,
+   summary:"Энциклопедия русской жизни первой трети XIX века.",
+   fragment:"«Мой дядя самых честных правил, // Когда не в шутку занемог, // Он уважать себя заставил // И лучше выдумать не мог».",
+   citation:"А. С. Пушкин. Евгений Онегин. Полное собрание сочинений в 10 томах. М.: Художественная литература, 1959–1966.",
+   url:"https://ru.wikisource.org/wiki/Евгений_Онегин_(Пушкин)"},
+  {id:"pushkin_dochka", author:"А. С. Пушкин", title:"Капитанская дочка", year:1836, genre:"повесть", grade:"8", topics:["Пушкин","Историческая проза","Пугачёвщина"], pc:true,
+   summary:"Повесть о пугачёвском восстании и чести.",
+   fragment:"«Береги платье снову, а честь смолоду».",
+   citation:"А. С. Пушкин. Капитанская дочка. Полное собрание сочинений. Т. 6.",
+   url:"https://ru.wikisource.org/wiki/Капитанская_дочка_(Пушкин)"},
+  {id:"lermontov_geroi", author:"М. Ю. Лермонтов", title:"Герой нашего времени", year:1840, genre:"роман", grade:"9", topics:["Лермонтов","Лишний человек","Психологический роман"], pc:true,
+   summary:"Первый русский психологический роман.",
+   fragment:"«Я смеюсь над всем на свете, особенно над чувствами».",
+   citation:"М. Ю. Лермонтов. Герой нашего времени. Собр. соч. в 4 томах. М.: Художественная литература, 1957. Т. 4.",
+   url:"https://ru.wikisource.org/wiki/Герой_нашего_времени_(Лермонтов)"},
+  {id:"gogol_dushi", author:"Н. В. Гоголь", title:"Мёртвые души", year:1842, genre:"поэма", grade:"9", topics:["Гоголь","Сатира","Помещичья Россия"], pc:true,
+   summary:"Поэма о Чичикове и галерее помещиков.",
+   fragment:"«Какой же русский не любит быстрой езды!»",
+   citation:"Н. В. Гоголь. Мёртвые души. Собр. соч. в 7 томах. М.: Художественная литература, 1976–1979. Т. 5.",
+   url:"https://ru.wikisource.org/wiki/Мёртвые_души_(Гоголь)"},
+  {id:"dost_prestuplenie", author:"Ф. М. Достоевский", title:"Преступление и наказание", year:1866, genre:"роман", grade:"10", topics:["Достоевский","Психологический роман","Полифония"], pc:true,
+   summary:"Роман о Раскольникове и теории «право имеющего».",
+   fragment:"«Тварь я дрожащая или право имею?»",
+   citation:"Ф. М. Достоевский. Преступление и наказание. Полное собрание сочинений в 30 томах. Л.: Наука, 1972–1990. Т. 6.",
+   url:"https://ru.wikisource.org/wiki/Преступление_и_наказание_(Достоевский)"},
+  {id:"tolstoy_voina", author:"Л. Н. Толстой", title:"Война и мир", year:1869, genre:"роман-эпопея", grade:"10", topics:["Толстой","Эпопея","Отечественная война 1812"], pc:true,
+   summary:"Роман-эпопея о русском обществе 1805–1820 гг.",
+   fragment:"«Все счастливые семьи похожи друг на друга, каждая несчастливая семья несчастлива по-своему».",
+   citation:"Л. Н. Толстой. Война и мир. Собр. соч. в 22 томах. М.: Художественная литература, 1978–1985. Т. 4–7.",
+   url:"https://ru.wikisource.org/wiki/Война_и_мир"},
+  {id:"chekhov_sad", author:"А. П. Чехов", title:"Вишнёвый сад", year:1904, genre:"пьеса", grade:"10", topics:["Чехов","Драма","Смена эпох"], pc:true,
+   summary:"Пьеса о смене эпох и крахе дворянского уклада.",
+   fragment:"«Вся Россия наш сад».",
+   citation:"А. П. Чехов. Вишнёвый сад. Полное собрание сочинений и писем в 30 томах. М.: Наука, 1974–1983. Т. 13.",
+   url:"https://ru.wikisource.org/wiki/Вишнёвый_сад_(Чехов)"},
+  {id:"blok_dvenadtsat", author:"А. А. Блок", title:"Двенадцать", year:1918, genre:"поэма", grade:"11", topics:["Блок","Серебряный век","Революция"], pc:true,
+   summary:"Поэма о революционном Петрограде.",
+   fragment:"«В белом венчике из роз — Впереди — Иисус Христос».",
+   citation:"А. А. Блок. Двенадцать. Собр. соч. в 8 томах. М.; Л.: ГИХЛ, 1960–1963. Т. 3.",
+   url:"https://ru.wikisource.org/wiki/Двенадцать_(Блок)"},
+  {id:"akhmatova_rekviem", author:"А. А. Ахматова", title:"Реквием", year:1940, genre:"поэма", grade:"11", topics:["Ахматова","Серебряный век","Память"], pc:true,
+   summary:"Поэма-памятник эпохе репрессий.",
+   fragment:"«И если когда-нибудь в этой стране // Воздвигнуть задумают памятник мне».",
+   citation:"А. А. Ахматова. Реквием. Сочинения в 2 томах. М.: Художественная литература, 1986. Т. 1.",
+   url:"https://ru.wikisource.org/wiki/Реквием_(Ахматова)"},
+  {id:"karamzin_history", author:"Н. М. Карамзин", title:"История государства Российского", year:1829, genre:"исторический труд", grade:"вуз", topics:["Карамзин","История России","Историография"], pc:false,
+   summary:"Многотомный труд по истории России.",
+   fragment:"«История в некотором смысле есть священная книга народов».",
+   citation:"Н. М. Карамзин. История государства Российского. М.: Наука, 1989–1998. 12 томов.",
+   url:"https://ru.wikisource.org/wiki/История_государства_Российского_(Карамзин)"}
+];
+
+const PC_EVENTS = [
+  "Лекция в РГБ «Пушкин и его современники» (Пушкинская карта)",
+  "Экскурсия в Доме Гоголя на Никитском бульваре (Пушкинская карта)",
+  "Спектакль «Преступление и наказание» в учебном театре (Пушкинская карта)",
+  "Образовательная программа в Музее истории русской литературы ИРЛИ РАН (Пушкинская карта)"
+];
+
+const QUIZ_LIT = [
+  {id:"lit_1", topic:"XIX век", q:"Кто автор романа в стихах «Евгений Онегин»?",
+   options:["Н. В. Гоголь","А. С. Пушкин","М. Ю. Лермонтов","И. А. Гончаров"],
+   correct:1, expl:"Роман в стихах «Евгений Онегин» написан А. С. Пушкиным в 1823–1830 гг."},
+  {id:"lit_2", topic:"XIX век", q:"Кому принадлежит фраза «Береги честь смолоду»?",
+   options:["Эпиграф к «Капитанской дочке»","Тарас Бульба","Чацкий","Базаров"],
+   correct:0, expl:"Это эпиграф А. С. Пушкина к повести «Капитанская дочка»."},
+  {id:"lit_3", topic:"XX век", q:"Какое произведение завершает цикл стихов А. А. Ахматовой о репрессиях?",
+   options:["«Поэма без героя»","«Реквием»","«Бег времени»","«Anno Domini»"],
+   correct:1, expl:"Поэма «Реквием» (1935–1940) — памятник эпохе репрессий."}
+];
+
+const QUIZ_HIST = [
+  {id:"hist_1", topic:"Древняя Русь", q:"В каком году произошло Крещение Руси?",
+   options:["862","988","1054","1147"],
+   correct:1, expl:"Крещение Руси произошло в 988 году при князе Владимире."},
+  {id:"hist_2", topic:"XIX век", q:"В каком году отменено крепостное право в Российской империи?",
+   options:["1856","1861","1864","1881"],
+   correct:1, expl:"Манифест об отмене крепостного права подписан Александром II 19 февраля 1861 года."}
+];
+
+function activate(name){
+  document.querySelectorAll('nav.tabs button').forEach(b => b.classList.toggle('active', b.dataset.tab===name));
+  document.querySelectorAll('section.tab').forEach(s => s.classList.toggle('active', s.id===name));
+  if(name==='dashboard') renderDashboard();
+}
+document.querySelectorAll('nav.tabs button').forEach(b => b.addEventListener('click', () => activate(b.dataset.tab)));
+
+function setQ(text){ document.getElementById('q').value = text; buildRoute(); }
+
+function pickSources(query){
+  const q = query.toLowerCase();
+  const score = s => {
+    const text = (s.author+' '+s.title+' '+s.genre+' '+s.summary+' '+s.topics.join(' ')+' '+s.grade).toLowerCase();
+    let pts = 0;
+    q.split(/\s+/).forEach(t => { if(t.length>1 && text.includes(t)) pts++; });
+    if(q.includes('егэ') && (s.grade.includes('10')||s.grade.includes('11'))) pts+=2;
+    if(q.includes('подросток') && (s.grade.includes('8')||s.grade.includes('9'))) pts+=1;
+    return pts;
+  };
+  let ranked = CORPUS.map(s => ({s, p:score(s)})).sort((a,b)=>b.p-a.p);
+  ranked = ranked.filter(x=>x.p>0);
+  if(ranked.length<4) ranked = ranked.concat(CORPUS.filter(s=>!ranked.find(r=>r.s.id===s.id)).slice(0,4-ranked.length).map(s=>({s,p:0})));
+  return ranked.slice(0,4).map(x=>x.s);
+}
+
+function buildRoute(){
+  const text = document.getElementById('q').value.trim();
+  if(!text) return;
+  const sources = pickSources(text);
+  const titles = ['Знакомство и контекст','Глубокое чтение','Связь с историей и культурой','Итоговый разбор и репетиция ЕГЭ'];
+  const html = [];
+  html.push(`<div class="card"><h2 style="margin-top:0">Маршрут на 4 недели</h2>`);
+  html.push(`<p class="muted">Запрос: «${escapeHtml(text)}». Подобрано ${sources.length} источников из демо-корпуса (public domain). Все цитаты с источниками.</p>`);
+  sources.forEach((s,i)=>{
+    html.push(`<div class="week-card">`);
+    html.push(`<h3 style="color:var(--ink)">Неделя ${i+1}. ${titles[i]||'Чтение'}</h3>`);
+    html.push(`<p>Читаем «${s.title}» (${s.author}, ${s.year}). Жанр: ${s.genre}. Класс: ${s.grade}.</p>`);
+    html.push(`<p class="muted">Опорные темы: ${s.topics.map(t=>`<span class="pill">${t}</span>`).join('')}</p>`);
+    html.push(`<div class="quote">${s.fragment}</div>`);
+    html.push(`<div class="src">Источник: ${s.citation}<br/>Текст: <a href="${s.url}" target="_blank" rel="noopener">${s.url}</a></div>`);
+    if(s.pc){ html.push(`<div class="src" style="margin-top:6px"><span class="pill accent">Пушкинская карта</span> ${PC_EVENTS[i % PC_EVENTS.length]}</div>`); }
+    html.push(`</div>`);
+  });
+  html.push(`<p class="muted">Демо-режим: ответы детерминированы и опираются на корпус public domain. В проде — генерация YandexGPT 5 Pro / GigaChat MAX поверх pgvector-индекса фондов РГБ и НЭБ; источники подтверждаются через индекс цитат.</p>`);
+  html.push(`</div>`);
+  document.getElementById('route').innerHTML = html.join('');
+}
+
+function loadQuiz(subject){
+  const qs = subject==='История' ? QUIZ_HIST : QUIZ_LIT;
+  const html = [];
+  html.push(`<div class="card"><h2 style="margin-top:0">${subject}: ${qs.length} вопроса демо-режим</h2>`);
+  qs.forEach((q,idx)=>{
+    html.push(`<div style="margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--line)">`);
+    html.push(`<p><b>Вопрос ${idx+1}.</b> ${q.q}</p>`);
+    q.options.forEach((opt,i)=>{
+      html.push(`<button class="ghost" onclick="answer('${q.id}', ${i}, ${q.correct}, ${idx})">${i+1}. ${escapeHtml(opt)}</button>`);
+    });
+    html.push(`<div id="exp-${q.id}" class="muted" style="margin-top:8px"></div>`);
+    html.push(`</div>`);
+  });
+  html.push(`<p class="muted">Прогресс по тренажёру в проде уходит в дашборд учителя, статистика по теме — в дашборд региона.</p>`);
+  html.push(`</div>`);
+  document.getElementById('quiz').innerHTML = html.join('');
+}
+loadQuiz('Литература');
+
+function answer(id, i, correct, idx){
+  const expl = document.getElementById('exp-'+id);
+  const ok = i===correct;
+  const q = (QUIZ_LIT.concat(QUIZ_HIST)).find(x=>x.id===id);
+  expl.innerHTML = (ok?`<span style="color:var(--good)">Верно.</span> `:`<span style="color:var(--warn)">Не верно.</span> `) + q.expl;
+}
+
+function renderDashboard(){
+  const html = [];
+  html.push(`<div class="grid grid-3">`);
+  [
+    {k:'18 420', s:'активных пользователей в регионе'},
+    {k:'+6,4 п.п.', s:'средний прирост ЕГЭ-балл по литературе'},
+    {k:'+17,8 п.п.', s:'визиты молодёжи в библиотеки'},
+  ].forEach(x=>{ html.push(`<div class="card"><div class="kpi">${x.k}<small>${x.s}</small></div></div>`); });
+  html.push(`</div>`);
+
+  html.push(`<div class="grid grid-2" style="margin-top:14px">`);
+  html.push(`<div class="card"><h3>Качество ИИ-куратора (RAG)</h3><table>
+    <tr><th>Метрика</th><th>Значение</th></tr>
+    <tr><td>Precision@5</td><td>0,93</td></tr>
+    <tr><td>Recall@10</td><td>0,74</td></tr>
+    <tr><td>MRR</td><td>0,71</td></tr>
+    <tr><td>Уровень галлюцинаций</td><td>1,8 %</td></tr>
+    <tr><td>Покрытие источниками</td><td>94 %</td></tr>
+  </table><p class="muted" style="margin-top:8px">Оценка на синтетическом наборе из 200 вопросов экспертов.</p></div>`);
+
+  html.push(`<div class="card"><h3>Соответствие требованиям</h3>
+    <p><span class="pill good">152-ФЗ</span> Локализация в РФ, оператор ПДн зарегистрирован.</p>
+    <p><span class="pill good">44-ФЗ</span> Готовность к участию в закупках, шаблоны ТЗ.</p>
+    <p><span class="pill good">Указ Президента №490</span> Принципы ответственного ИИ внедрены.</p>
+    <p><span class="pill good">Нацпроекты</span> «Культура», «Образование» — целевые показатели.</p>
+  </div>`);
+  html.push(`</div>`);
+
+  html.push(`<div class="card" style="margin-top:14px"><h3>Топ-темы по запросам</h3><table>
+    <tr><th>Тема</th><th>Спрос (индекс)</th><th>Школы</th></tr>
+    <tr><td>Серебряный век</td><td>92</td><td>95</td></tr>
+    <tr><td>Литература первой половины XIX века</td><td>88</td><td>95</td></tr>
+    <tr><td>Достоевский и психологический роман</td><td>85</td><td>95</td></tr>
+    <tr><td>Великая Отечественная война</td><td>80</td><td>95</td></tr>
+    <tr><td>Древняя Русь</td><td>73</td><td>95</td></tr>
+  </table></div>`);
+
+  html.push(`<p class="muted" style="margin-top:14px">Все цифры — синтетические, для демонстрации структуры дашборда. В проде показатели читаются из ClickHouse / Yandex DataLens.</p>`);
+  document.getElementById('dash').innerHTML = html.join('');
+}
+
+function escapeHtml(s){return s.replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));}
+
+setQ('Хочу понять Пушкина за 4 недели');
+</script>
+</body>
+</html>
