@@ -11,6 +11,11 @@ import {
   ExternalLink,
   Compass,
   ShieldCheck,
+  Search,
+  Network,
+  Ticket,
+  Download,
+  Calendar,
 } from "lucide-react"
 import {
   Bar,
@@ -27,7 +32,79 @@ import {
 
 const API_BASE = (import.meta.env.VITE_API_BASE as string) || "http://localhost:8000"
 
-type Tab = "curator" | "trainer" | "dashboard" | "about"
+type Tab = "curator" | "search" | "mindmap" | "trainer" | "pushkin" | "dashboard" | "about"
+
+type SearchSource = {
+  id: string
+  author: string
+  title: string
+  year: number
+  genre: string
+  school_grade: number | null
+  ege_topics: string[]
+  pushkin_card: boolean
+  summary: string
+  fragment: string
+  citation: string
+  public_domain_url: string
+}
+
+type SearchResponse = {
+  query: string
+  engine: "hybrid" | "keyword"
+  count: number
+  items: SearchSource[]
+}
+
+type MindmapNode = {
+  id: string
+  label: string
+  kind: "query" | "author" | "book" | "theme"
+  weight: number
+  metadata?: Record<string, unknown>
+}
+
+type MindmapEdge = {
+  source: string
+  target: string
+  label: string
+  weight: number
+}
+
+type MindmapCitation = {
+  source_id: string
+  author: string
+  title: string
+  fragment: string
+  citation: string
+  url: string
+}
+
+type MindmapResponse = {
+  query: string
+  nodes: MindmapNode[]
+  edges: MindmapEdge[]
+  citations: MindmapCitation[]
+}
+
+type PushkinEvent = {
+  id: string
+  title: string
+  venue: string
+  city: string
+  region: string
+  date: string
+  price_rub: number
+  age_range: string
+  themes: string[]
+  book_ids: string[]
+  booking_url: string
+}
+
+type PushkinResponse = {
+  count: number
+  items: PushkinEvent[]
+}
 
 type RouteWeek = {
   week: number
@@ -114,7 +191,10 @@ function Logo() {
 function Header({ tab, setTab }: { tab: Tab; setTab: (t: Tab) => void }) {
   const tabs: { id: Tab; label: string; icon: React.ReactNode }[] = [
     { id: "curator", label: "Куратор", icon: <Compass size={16} aria-hidden /> },
+    { id: "search", label: "Поиск по фондам", icon: <Search size={16} aria-hidden /> },
+    { id: "mindmap", label: "Ментальная карта", icon: <Network size={16} aria-hidden /> },
     { id: "trainer", label: "Тренажёр ЕГЭ", icon: <GraduationCap size={16} aria-hidden /> },
+    { id: "pushkin", label: "Пушкинская карта", icon: <Ticket size={16} aria-hidden /> },
     { id: "dashboard", label: "Дашборд региона", icon: <BarChart3 size={16} aria-hidden /> },
     { id: "about", label: "О проекте", icon: <Sparkles size={16} aria-hidden /> },
   ]
@@ -191,6 +271,10 @@ function CuratorTab() {
   const [route, setRoute] = useState<RouteResponse | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [exporting, setExporting] = useState<"markdown" | "ics" | null>(null)
+  const [ttsLoading, setTtsLoading] = useState<number | null>(null)
+  const [audioUrl, setAudioUrl] = useState<string | null>(null)
+  const [exportError, setExportError] = useState<string | null>(null)
 
   async function buildRoute(q: string = query) {
     if (!q || q.trim().length < 2) return
@@ -209,6 +293,57 @@ function CuratorTab() {
       setError(err instanceof Error ? err.message : "Сервис недоступен")
     } finally {
       setLoading(false)
+    }
+  }
+
+  async function exportRoute(kind: "markdown" | "ics") {
+    if (!query || query.trim().length < 2) return
+    setExporting(kind)
+    setExportError(null)
+    try {
+      const res = await fetch(`${API_BASE}/api/curator/export/${kind}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query, weeks: 4 }),
+      })
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      const blob = await res.blob()
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement("a")
+      a.href = url
+      a.download = kind === "markdown" ? "chitai-route.md" : "chitai-route.ics"
+      document.body.appendChild(a)
+      a.click()
+      a.remove()
+      URL.revokeObjectURL(url)
+    } catch (err) {
+      setExportError(err instanceof Error ? err.message : "Сервис недоступен")
+    } finally {
+      setExporting(null)
+    }
+  }
+
+  async function speak(text: string, weekIdx: number) {
+    setTtsLoading(weekIdx)
+    setAudioUrl(null)
+    try {
+      const res = await fetch(`${API_BASE}/api/tts/synth`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text, voice: "ermil", emotion: "neutral" }),
+      })
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      const blob = await res.blob()
+      const url = URL.createObjectURL(blob)
+      setAudioUrl(url)
+      const audio = new Audio(url)
+      void audio.play()
+    } catch (err) {
+      setExportError(
+        err instanceof Error ? `TTS: ${err.message}` : "TTS: сервис недоступен"
+      )
+    } finally {
+      setTtsLoading(null)
     }
   }
 
@@ -265,15 +400,62 @@ function CuratorTab() {
 
       {route && (
         <Card className="mt-6">
-          <h3 className="text-lg font-semibold">Маршрут на 4 недели</h3>
-          <p className="mt-1 text-sm text-zinc-400">{route.summary}</p>
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <h3 className="text-lg font-semibold">Маршрут на 4 недели</h3>
+              <p className="mt-1 text-sm text-zinc-400">{route.summary}</p>
+            </div>
+            <div className="flex flex-wrap gap-2" aria-label="Экспорт маршрута">
+              <button
+                onClick={() => exportRoute("markdown")}
+                disabled={exporting !== null}
+                className="inline-flex items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-xs text-zinc-200 hover:border-amber-300 disabled:opacity-60 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-300"
+                aria-label="Скачать маршрут в формате Markdown"
+              >
+                <Download size={14} aria-hidden />
+                {exporting === "markdown" ? "Готовлю…" : "Скачать .md"}
+              </button>
+              <button
+                onClick={() => exportRoute("ics")}
+                disabled={exporting !== null}
+                className="inline-flex items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-xs text-zinc-200 hover:border-amber-300 disabled:opacity-60 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-300"
+                aria-label="Скачать маршрут как календарь .ics"
+              >
+                <Calendar size={14} aria-hidden />
+                {exporting === "ics" ? "Готовлю…" : "Календарь .ics"}
+              </button>
+            </div>
+          </div>
+          {exportError && (
+            <p className="mt-2 text-xs text-red-400" role="alert">
+              {exportError}
+            </p>
+          )}
+          {audioUrl && (
+            <audio
+              src={audioUrl}
+              controls
+              aria-label="Аудио-озвучка фрагмента"
+              className="mt-3 w-full"
+            />
+          )}
           <div className="mt-5 space-y-5">
-            {route.weeks.map((w) => (
+            {route.weeks.map((w, idx) => (
               <div key={w.week} className="border-l-2 border-amber-300 pl-4">
                 <div className="text-base font-semibold">{w.title}</div>
                 <div className="mt-1 text-sm">{w.description}</div>
-                <div className="mt-2 border-l-2 border-sky-300 pl-3 text-sm italic text-zinc-200">
-                  {w.fragment}
+                <div className="mt-2 flex items-start gap-2">
+                  <div className="border-l-2 border-sky-300 pl-3 text-sm italic text-zinc-200 flex-1">
+                    {w.fragment}
+                  </div>
+                  <button
+                    onClick={() => speak(w.fragment, idx)}
+                    disabled={ttsLoading !== null}
+                    className="shrink-0 inline-flex items-center gap-1 rounded-lg border border-zinc-800 bg-zinc-950 px-2 py-1 text-xs text-zinc-300 hover:border-amber-300 disabled:opacity-60 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-300"
+                    aria-label="Озвучить фрагмент"
+                  >
+                    {ttsLoading === idx ? "…" : "🔊 Озвучить"}
+                  </button>
                 </div>
                 <div className="mt-2 text-xs text-zinc-400">
                   Источник: {w.citation}
@@ -310,11 +492,441 @@ function CuratorTab() {
   )
 }
 
+function SearchTab() {
+  const [query, setQuery] = useState("Пушкин и тема чести")
+  const [hybrid, setHybrid] = useState(true)
+  const [data, setData] = useState<SearchResponse | null>(null)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  async function runSearch(q: string = query, useHybrid: boolean = hybrid) {
+    if (!q || q.trim().length < 2) return
+    setLoading(true)
+    setError(null)
+    try {
+      const url = `${API_BASE}/api/corpus/search?q=${encodeURIComponent(q)}&limit=8&hybrid=${useHybrid}`
+      const res = await fetch(url)
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      const body: SearchResponse = await res.json()
+      setData(body)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Сервис недоступен")
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    runSearch("Пушкин и тема чести", true)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  return (
+    <section className="py-7">
+      <h2 className="text-2xl font-semibold mb-2">Поиск по фондам (гибридный)</h2>
+      <p className="text-sm text-zinc-400 max-w-3xl">
+        Гибридный поиск: BM25 (морфология русского языка) + плотные эмбеддинги поверх корпуса
+        public domain. В проде — pgvector с фондами РГБ и НЭБ. Переключатель ниже сравнивает
+        гибридный поиск с чистым keyword-режимом.
+      </p>
+
+      <Card className="mt-5">
+        <div className="flex flex-col gap-3 md:flex-row md:items-center">
+          <input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && runSearch()}
+            placeholder="Что ищем?"
+            aria-label="Поисковый запрос"
+            className="flex-1 rounded-lg border border-zinc-800 bg-zinc-950 px-4 py-3 text-sm outline-none focus:border-sky-300"
+          />
+          <label className="flex items-center gap-2 text-xs text-zinc-300">
+            <input
+              type="checkbox"
+              checked={hybrid}
+              onChange={(e) => setHybrid(e.target.checked)}
+              className="h-4 w-4"
+            />
+            Гибридный режим (BM25 + dense)
+          </label>
+          <button
+            onClick={() => runSearch()}
+            disabled={loading}
+            className="inline-flex items-center justify-center gap-2 rounded-lg bg-amber-300 px-5 py-2 text-sm font-semibold text-zinc-900 hover:brightness-110 disabled:opacity-60 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-300"
+          >
+            <Search size={16} aria-hidden />
+            {loading ? "Ищу…" : "Искать"}
+          </button>
+        </div>
+        {error && (
+          <p className="mt-3 text-sm text-red-400" role="alert">
+            Не удалось обратиться к API ({error}). Backend: {API_BASE}
+          </p>
+        )}
+      </Card>
+
+      {data && (
+        <Card className="mt-6">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <h3 className="text-lg font-semibold">
+              Найдено: {data.count}{" "}
+              <span className="text-xs font-normal text-zinc-400">
+                режим: {data.engine === "hybrid" ? "гибридный" : "ключевые слова"}
+              </span>
+            </h3>
+            <Pill tone={data.engine === "hybrid" ? "accent" : "default"}>{data.engine}</Pill>
+          </div>
+          <ol className="mt-4 space-y-4">
+            {data.items.map((item, i) => (
+              <li
+                key={item.id}
+                className="rounded-lg border border-zinc-800 bg-zinc-950/60 p-4"
+              >
+                <div className="flex flex-wrap items-baseline gap-2">
+                  <span className="text-xs text-zinc-500">#{i + 1}</span>
+                  <span className="text-base font-semibold">{item.title}</span>
+                  <span className="text-xs text-zinc-400">— {item.author}, {item.year}</span>
+                  {item.pushkin_card && <Pill tone="accent">Пушкинская карта</Pill>}
+                </div>
+                <p className="mt-2 text-sm text-zinc-300">{item.summary}</p>
+                <p className="mt-2 border-l-2 border-sky-300 pl-3 text-sm italic text-zinc-200">
+                  {item.fragment}
+                </p>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {item.ege_topics.map((t) => (
+                    <Pill key={t}>{t}</Pill>
+                  ))}
+                </div>
+                <div className="mt-2 text-xs text-zinc-400">
+                  <a
+                    href={item.public_domain_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-amber-300 hover:underline inline-flex items-center gap-1"
+                  >
+                    {item.public_domain_url}
+                    <ExternalLink size={12} aria-hidden />
+                  </a>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </Card>
+      )}
+    </section>
+  )
+}
+
+function MindmapTab() {
+  const [query, setQuery] = useState("Пушкин")
+  const [data, setData] = useState<MindmapResponse | null>(null)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  async function buildMap(q: string = query) {
+    if (!q || q.trim().length < 2) return
+    setLoading(true)
+    setError(null)
+    try {
+      const res = await fetch(`${API_BASE}/api/curator/mindmap`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query: q, limit: 6 }),
+      })
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      const body: MindmapResponse = await res.json()
+      setData(body)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Сервис недоступен")
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    buildMap("Пушкин")
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const grouped = useMemo(() => {
+    const out: Record<MindmapNode["kind"], MindmapNode[]> = {
+      query: [],
+      author: [],
+      book: [],
+      theme: [],
+    }
+    if (!data) return out
+    for (const n of data.nodes) {
+      if (out[n.kind]) out[n.kind].push(n)
+    }
+    return out
+  }, [data])
+
+  return (
+    <section className="py-7">
+      <h2 className="text-2xl font-semibold mb-2">Ментальная карта корпуса</h2>
+      <p className="text-sm text-zinc-400 max-w-3xl">
+        Семантический граф: автор → книги → темы ЕГЭ. Узлы и связи строятся на основе
+        public-domain корпуса; цитаты приводятся внизу. В проде — связи через pgvector + KG.
+      </p>
+
+      <Card className="mt-5">
+        <div className="flex flex-col gap-3 md:flex-row">
+          <input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && buildMap()}
+            placeholder="Автор, книга или тема"
+            aria-label="Запрос для ментальной карты"
+            className="flex-1 rounded-lg border border-zinc-800 bg-zinc-950 px-4 py-3 text-sm outline-none focus:border-sky-300"
+          />
+          <button
+            onClick={() => buildMap()}
+            disabled={loading}
+            className="inline-flex items-center justify-center gap-2 rounded-lg bg-amber-300 px-5 py-2 text-sm font-semibold text-zinc-900 hover:brightness-110 disabled:opacity-60 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-300"
+          >
+            <Network size={16} aria-hidden />
+            {loading ? "Строю…" : "Построить карту"}
+          </button>
+        </div>
+        {error && (
+          <p className="mt-3 text-sm text-red-400" role="alert">
+            Не удалось обратиться к API ({error}). Backend: {API_BASE}
+          </p>
+        )}
+      </Card>
+
+      {data && (
+        <>
+          <Card className="mt-6">
+            <h3 className="text-lg font-semibold">Узлы карты ({data.nodes.length})</h3>
+            <div className="mt-4 grid gap-4 md:grid-cols-3">
+              {(["author", "book", "theme"] as const).map((kind) => (
+                <div key={kind} aria-label={`категория ${kind}`}>
+                  <div className="mb-2 text-xs font-semibold uppercase text-zinc-400">
+                    {kind === "author"
+                      ? "Авторы"
+                      : kind === "book"
+                        ? "Книги"
+                        : "Темы ЕГЭ"}
+                  </div>
+                  <ul className="space-y-2">
+                    {grouped[kind].map((n) => (
+                      <li
+                        key={n.id}
+                        className="rounded-lg border border-zinc-800 bg-zinc-950/60 px-3 py-2 text-sm"
+                      >
+                        {n.label}
+                      </li>
+                    ))}
+                    {grouped[kind].length === 0 && (
+                      <li className="text-xs text-zinc-500">— пусто —</li>
+                    )}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </Card>
+
+          <Card className="mt-4">
+            <h3 className="text-lg font-semibold">Связи ({data.edges.length})</h3>
+            <ul className="mt-3 space-y-1 text-sm text-zinc-300">
+              {data.edges.slice(0, 12).map((e, i) => (
+                <li key={i} className="font-mono text-xs">
+                  {e.source.split("::").pop()}
+                  <span className="mx-2 text-zinc-500">→[{e.label}]→</span>
+                  {e.target.split("::").pop()}
+                </li>
+              ))}
+            </ul>
+          </Card>
+
+          <Card className="mt-4">
+            <h3 className="text-lg font-semibold">
+              Цитаты public domain ({data.citations.length})
+            </h3>
+            <ul className="mt-3 space-y-3">
+              {data.citations.map((c) => (
+                <li key={c.source_id} className="border-l-2 border-amber-300 pl-3 text-sm">
+                  <div className="font-semibold">
+                    {c.author} — {c.title}
+                  </div>
+                  <div className="mt-1 italic text-zinc-200">{c.fragment}</div>
+                  <div className="mt-1 text-xs text-zinc-400">{c.citation}</div>
+                  <a
+                    href={c.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs text-amber-300 hover:underline inline-flex items-center gap-1"
+                  >
+                    {c.url}
+                    <ExternalLink size={12} aria-hidden />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </Card>
+        </>
+      )}
+    </section>
+  )
+}
+
+function PushkinTab() {
+  const [region, setRegion] = useState<string>("")
+  const [data, setData] = useState<PushkinResponse | null>(null)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  async function loadEvents(reg: string = region) {
+    setLoading(true)
+    setError(null)
+    try {
+      const url = reg
+        ? `${API_BASE}/api/pushkin/events?region=${encodeURIComponent(reg)}`
+        : `${API_BASE}/api/pushkin/events`
+      const res = await fetch(url)
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      const body: PushkinResponse = await res.json()
+      setData(body)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Сервис недоступен")
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    loadEvents("")
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const regions = useMemo(() => {
+    if (!data) return []
+    const set = new Set<string>()
+    for (const e of data.items) set.add(e.region)
+    return Array.from(set).sort()
+  }, [data])
+
+  return (
+    <section className="py-7">
+      <h2 className="text-2xl font-semibold mb-2">Пушкинская карта — события</h2>
+      <p className="text-sm text-zinc-400 max-w-3xl">
+        Демо-каталог культурных событий 14–22 лет, совместимых с программой «Пушкинская карта».
+        В проде — синхронизация с реестром «Культура.РФ» и API Минкульта.
+      </p>
+
+      <Card className="mt-5">
+        <div className="flex flex-col gap-3 md:flex-row md:items-center">
+          <label className="text-xs text-zinc-300">
+            Регион:
+            <select
+              value={region}
+              onChange={(e) => {
+                setRegion(e.target.value)
+                loadEvents(e.target.value)
+              }}
+              aria-label="Фильтр по региону"
+              className="ml-2 rounded-md border border-zinc-800 bg-zinc-950 px-3 py-2 text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-300"
+            >
+              <option value="">Все регионы</option>
+              {regions.map((r) => (
+                <option key={r} value={r}>
+                  {r}
+                </option>
+              ))}
+            </select>
+          </label>
+          <button
+            onClick={() => loadEvents()}
+            disabled={loading}
+            className="inline-flex items-center gap-2 rounded-lg border border-zinc-800 px-3 py-2 text-xs text-zinc-300 hover:border-sky-300 disabled:opacity-60 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-300"
+          >
+            {loading ? "Обновляю…" : "Обновить"}
+          </button>
+        </div>
+        {error && (
+          <p className="mt-3 text-sm text-red-400" role="alert">
+            Не удалось обратиться к API ({error}). Backend: {API_BASE}
+          </p>
+        )}
+      </Card>
+
+      {data && (
+        <Card className="mt-6">
+          <h3 className="text-lg font-semibold">События ({data.count})</h3>
+          <ul className="mt-4 space-y-3">
+            {data.items.map((e) => (
+              <li
+                key={e.id}
+                className="rounded-lg border border-zinc-800 bg-zinc-950/60 p-4"
+              >
+                <div className="flex flex-wrap items-baseline gap-2">
+                  <span className="text-base font-semibold">{e.title}</span>
+                  <Pill tone="accent">Пушкинская карта</Pill>
+                  <span className="text-xs text-zinc-400">{e.age_range}</span>
+                </div>
+                <div className="mt-1 text-sm text-zinc-300">
+                  {e.venue} · {e.city} · {e.region}
+                </div>
+                <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-zinc-400">
+                  <span>📅 {e.date}</span>
+                  <span>💳 {e.price_rub} ₽</span>
+                  {e.themes.map((t) => (
+                    <Pill key={t}>{t}</Pill>
+                  ))}
+                </div>
+                <a
+                  href={e.booking_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-2 inline-flex items-center gap-1 text-xs text-amber-300 hover:underline"
+                >
+                  Забронировать <ExternalLink size={12} aria-hidden />
+                </a>
+              </li>
+            ))}
+            {data.items.length === 0 && (
+              <li className="text-sm text-zinc-400">События не найдены.</li>
+            )}
+          </ul>
+        </Card>
+      )}
+    </section>
+  )
+}
+
+type SrsCard = {
+  card_id: string
+  user_id: string
+  front: string
+  back: string
+  tags: string[]
+  ease: number
+  interval_days: number
+  reps: number
+  lapses: number
+  due_at: string
+}
+
+type SrsDueResponse = {
+  user_id: string
+  count: number
+  items: SrsCard[]
+}
+
+const SRS_USER = "demo-user"
+
 function TrainerTab() {
   const [subject, setSubject] = useState<"Литература" | "История">("Литература")
   const [questions, setQuestions] = useState<QuizItem[]>([])
   const [results, setResults] = useState<Record<string, AnswerResult>>({})
   const [loading, setLoading] = useState(false)
+  const [srsCards, setSrsCards] = useState<SrsCard[]>([])
+  const [srsRevealed, setSrsRevealed] = useState<Record<string, boolean>>({})
+  const [srsLoading, setSrsLoading] = useState(false)
+  const [srsBuilding, setSrsBuilding] = useState(false)
+  const [srsError, setSrsError] = useState<string | null>(null)
 
   async function loadQuiz(s: "Литература" | "История") {
     setSubject(s)
@@ -341,8 +953,63 @@ function TrainerTab() {
     setResults((prev) => ({ ...prev, [q.id]: data }))
   }
 
+  async function loadSrsDue() {
+    setSrsLoading(true)
+    setSrsError(null)
+    try {
+      const res = await fetch(
+        `${API_BASE}/api/srs/due?user_id=${encodeURIComponent(SRS_USER)}&limit=10`
+      )
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      const data: SrsDueResponse = await res.json()
+      setSrsCards(data.items || [])
+      setSrsRevealed({})
+    } catch (err) {
+      setSrsError(err instanceof Error ? err.message : "Сервис недоступен")
+    } finally {
+      setSrsLoading(false)
+    }
+  }
+
+  async function buildSrsFromRoute() {
+    setSrsBuilding(true)
+    setSrsError(null)
+    try {
+      const res = await fetch(`${API_BASE}/api/srs/from-route`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user_id: SRS_USER,
+          query: "Хочу понять Пушкина за 4 недели",
+          weeks: 4,
+        }),
+      })
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      await loadSrsDue()
+    } catch (err) {
+      setSrsError(err instanceof Error ? err.message : "Сервис недоступен")
+    } finally {
+      setSrsBuilding(false)
+    }
+  }
+
+  async function reviewCard(card: SrsCard, quality: number) {
+    try {
+      const res = await fetch(`${API_BASE}/api/srs/review`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ card_id: card.card_id, quality }),
+      })
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      setSrsCards((prev) => prev.filter((c) => c.card_id !== card.card_id))
+    } catch (err) {
+      setSrsError(err instanceof Error ? err.message : "Сервис недоступен")
+    }
+  }
+
   useEffect(() => {
     loadQuiz("Литература")
+    loadSrsDue()
   }, [])
 
   return (
@@ -422,6 +1089,91 @@ function TrainerTab() {
               </Card>
             )
           })}
+      </div>
+
+      <div className="mt-10 border-t border-zinc-800 pt-7">
+        <h3 className="text-xl font-semibold">Интервальные повторения (SRS)</h3>
+        <p className="mt-1 text-sm text-zinc-400 max-w-3xl">
+          Алгоритм SM-2: карточки с фрагментами и цитатами появляются в нужный момент. Демо
+          использует учётную запись <code className="text-zinc-300">{SRS_USER}</code>; в проде —
+          привязка к ученику и дашборду учителя.
+        </p>
+
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          <button
+            onClick={loadSrsDue}
+            disabled={srsLoading}
+            className="inline-flex items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-xs text-zinc-200 hover:border-sky-300 disabled:opacity-60 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-300"
+          >
+            {srsLoading ? "Загрузка…" : "Обновить очередь"}
+          </button>
+          <button
+            onClick={buildSrsFromRoute}
+            disabled={srsBuilding}
+            className="inline-flex items-center gap-2 rounded-lg border border-amber-300 bg-amber-300 px-3 py-2 text-xs font-semibold text-zinc-900 hover:brightness-110 disabled:opacity-60 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-300"
+          >
+            {srsBuilding ? "Создаю…" : "Создать карточки из маршрута"}
+          </button>
+          <span className="text-xs text-zinc-500">К повторению: {srsCards.length}</span>
+        </div>
+
+        {srsError && (
+          <p className="mt-3 text-xs text-red-400" role="alert">
+            {srsError}
+          </p>
+        )}
+
+        <div className="mt-5 space-y-3">
+          {srsCards.length === 0 && !srsLoading && (
+            <p className="text-sm text-zinc-400">
+              На сегодня карточек нет. Постройте маршрут и нажмите «Создать карточки из маршрута».
+            </p>
+          )}
+          {srsCards.map((c) => {
+            const revealed = !!srsRevealed[c.card_id]
+            return (
+              <Card key={c.card_id}>
+                <div className="text-xs uppercase tracking-wide text-zinc-500">
+                  Карточка · повторение #{c.reps + 1}{c.tags.length > 0 && ` · ${c.tags.join(", ")}`}
+                </div>
+                <div className="mt-2 text-base font-semibold">{c.front}</div>
+                {revealed ? (
+                  <div className="mt-3 rounded-lg border border-zinc-800 bg-zinc-950/60 p-3 text-sm text-zinc-200 whitespace-pre-line">
+                    {c.back}
+                  </div>
+                ) : (
+                  <button
+                    onClick={() =>
+                      setSrsRevealed((prev) => ({ ...prev, [c.card_id]: true }))
+                    }
+                    className="mt-3 inline-flex items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-xs text-zinc-200 hover:border-sky-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-300"
+                  >
+                    Показать ответ
+                  </button>
+                )}
+                {revealed && (
+                  <div className="mt-3 flex flex-wrap items-center gap-2">
+                    <span className="text-xs text-zinc-400 mr-2">Оценка:</span>
+                    {[
+                      { q: 0, label: "Не помню", tone: "border-red-700 text-red-200" },
+                      { q: 2, label: "Сложно", tone: "border-amber-700 text-amber-200" },
+                      { q: 4, label: "Хорошо", tone: "border-sky-700 text-sky-200" },
+                      { q: 5, label: "Отлично", tone: "border-emerald-700 text-emerald-200" },
+                    ].map((b) => (
+                      <button
+                        key={b.q}
+                        onClick={() => reviewCard(c, b.q)}
+                        className={`rounded-lg border bg-zinc-950 px-3 py-1 text-xs hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-300 ${b.tone}`}
+                      >
+                        {b.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </Card>
+            )
+          })}
+        </div>
       </div>
     </section>
   )
@@ -745,7 +1497,10 @@ export default function App() {
       <main id="main" tabIndex={-1} className="mx-auto w-full max-w-6xl px-6 flex-1 outline-none">
         <div role="tabpanel" id={`panel-${tab}`} aria-labelledby={`tab-${tab}`}>
           {tab === "curator" && <CuratorTab />}
+          {tab === "search" && <SearchTab />}
+          {tab === "mindmap" && <MindmapTab />}
           {tab === "trainer" && <TrainerTab />}
+          {tab === "pushkin" && <PushkinTab />}
           {tab === "dashboard" && <DashboardTab />}
           {tab === "about" && <AboutTab />}
         </div>
