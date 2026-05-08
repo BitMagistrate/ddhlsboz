@@ -89,7 +89,15 @@ async def test_build_route_with_mock_router_does_not_break() -> None:
 @pytest.mark.asyncio
 async def test_build_route_returns_empty_for_unknown_query() -> None:
     router = LLMRouter(primary=MockProvider(), secondary=None, fallback=MockProvider())
-    route = await build_route_async("xyzqwerty_не_литература", weeks=2, router=router)
+    # use_hybrid=False — проверяем именно ветку «keyword без матчей».
+    # У гибридного поиска по корпусу всегда найдётся хоть слабый
+    # семантический матч, и это покрывается отдельным тестом.
+    route = await build_route_async(
+        "qwertyqq xyzqwerty zzzzz",
+        weeks=2,
+        router=router,
+        use_hybrid=False,
+    )
     assert route.weeks == []
     assert route.sources == []
     assert "нет источников" in route.summary

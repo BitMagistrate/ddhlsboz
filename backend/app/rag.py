@@ -20,6 +20,7 @@ from dataclasses import dataclass, field
 
 from .corpus import Source, search
 from .llm import LLMError, LLMMessage, LLMResponse, LLMRouter, get_router
+from .retrieval import hybrid_search_sources
 
 logger = logging.getLogger(__name__)
 
@@ -196,8 +197,17 @@ async def build_route_async(
     query: str,
     weeks: int = 4,
     router: LLMRouter | None = None,
+    *,
+    use_hybrid: bool = True,
 ) -> Route:
-    sources = search(query, limit=max(weeks, 5))
+    if use_hybrid:
+        try:
+            sources = await hybrid_search_sources(query, limit=max(weeks, 5))
+        except Exception as exc:  # pragma: no cover - defensive
+            logger.warning("hybrid search failed, falling back to keyword: %s", exc)
+            sources = search(query, limit=max(weeks, 5))
+    else:
+        sources = search(query, limit=max(weeks, 5))
     if not sources:
         return Route(
             query=query,
