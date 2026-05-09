@@ -140,7 +140,7 @@ def _disclaimer(provider: str) -> str:
 
 
 async def _llm_week_description(
-    router: LLMRouter, source: Source, week: int, total: int
+    router: LLMRouter, source: Source, week: int, total: int, *, timeout: float = 8.0
 ) -> tuple[str, str | None]:
     user_prompt = (
         f"Подготовь короткое описание недели #{week} из {total} читательского "
@@ -158,7 +158,9 @@ async def _llm_week_description(
         LLMMessage(role="user", content=user_prompt),
     ]
     try:
-        resp: LLMResponse = await router.complete(messages, temperature=0.3, max_tokens=220)
+        resp: LLMResponse = await router.complete(
+            messages, temperature=0.3, max_tokens=220, timeout=timeout
+        )
         text = resp.text.strip()
         if not text:
             return _template_week_description(source), None
@@ -169,7 +171,7 @@ async def _llm_week_description(
 
 
 async def _llm_summary(
-    router: LLMRouter, query: str, sources: list[Source]
+    router: LLMRouter, query: str, sources: list[Source], *, timeout: float = 8.0
 ) -> tuple[str, LLMResponse | None]:
     titles = "; ".join(f"«{s.title}» ({s.author})" for s in sources[:6])
     user_prompt = (
@@ -183,7 +185,7 @@ async def _llm_summary(
         LLMMessage(role="user", content=user_prompt),
     ]
     try:
-        resp = await router.complete(messages, temperature=0.3, max_tokens=180)
+        resp = await router.complete(messages, temperature=0.3, max_tokens=180, timeout=timeout)
         text = resp.text.strip()
         if not text:
             return _template_summary(query, len(sources)), resp
@@ -199,6 +201,7 @@ async def build_route_async(
     router: LLMRouter | None = None,
     *,
     use_hybrid: bool = True,
+    llm_timeout: float = 8.0,
 ) -> Route:
     if use_hybrid:
         try:
@@ -226,8 +229,11 @@ async def build_route_async(
     n_weeks = min(weeks, len(sources))
     selected = sources[:n_weeks]
 
-    week_tasks = [_llm_week_description(router, s, i + 1, n_weeks) for i, s in enumerate(selected)]
-    summary_task = _llm_summary(router, query, selected)
+    week_tasks = [
+        _llm_week_description(router, s, i + 1, n_weeks, timeout=llm_timeout)
+        for i, s in enumerate(selected)
+    ]
+    summary_task = _llm_summary(router, query, selected, timeout=llm_timeout)
     week_results, (summary_text, summary_resp) = await asyncio.gather(
         asyncio.gather(*week_tasks), summary_task
     )

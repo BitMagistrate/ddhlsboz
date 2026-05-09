@@ -51,6 +51,7 @@ from . import srs as srs_mod  # noqa: E402
 from . import trainer as trainer_mod  # noqa: E402
 from . import tts as tts_mod  # noqa: E402
 from .llm import get_router  # noqa: E402
+from .schemas import validate_curator_route  # noqa: E402
 
 # Логи и метрики настраиваются один раз при импорте модуля.
 obs.configure_logging(level=logging.INFO, json=True)
@@ -232,7 +233,7 @@ async def curator_route(req: CuratorRequest) -> dict:
         obs.get_metrics().counter(
             "chitai_safety_refusals_total", 1.0, {"category": verdict.category}
         )
-        return {
+        payload = {
             "query": req.query,
             "summary": verdict.reason,
             "weeks": [],
@@ -245,8 +246,9 @@ async def curator_route(req: CuratorRequest) -> dict:
             "llm_model": "rule-based-v1",
             "safety": verdict.to_dict(),
         }
+        return validate_curator_route(payload)
     if verdict.verdict == safety_mod.SafetyVerdict.CLARIFY:
-        return {
+        payload = {
             "query": req.query,
             "summary": verdict.reason,
             "weeks": [],
@@ -256,6 +258,7 @@ async def curator_route(req: CuratorRequest) -> dict:
             "llm_model": "rule-based-v1",
             "safety": verdict.to_dict(),
         }
+        return validate_curator_route(payload)
 
     route = await rag_mod.build_route_async(req.query, weeks=req.weeks)
     obs.get_metrics().counter(
@@ -263,7 +266,7 @@ async def curator_route(req: CuratorRequest) -> dict:
         1.0,
         {"provider": route.llm_provider, "weeks": str(len(route.weeks))},
     )
-    return {**route.to_dict(), "safety": verdict.to_dict()}
+    return validate_curator_route({**route.to_dict(), "safety": verdict.to_dict()})
 
 
 @app.get("/api/llm/status")
