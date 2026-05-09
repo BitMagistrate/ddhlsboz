@@ -15,6 +15,8 @@ import time
 from dataclasses import dataclass, field
 from threading import Lock
 
+from .state import StateBackend, get_state_backend
+
 
 def _sm2_next(*, ease: float, repetitions: int, interval: int, quality: int) -> tuple[float, int, int]:
     """SM-2: возвращает (new_ease, new_repetitions, new_interval_days).
@@ -62,13 +64,49 @@ class FlashCard:
 
 
 class SrsStore:
-    def __init__(self) -> None:
+    def __init__(self, backend: StateBackend | None = None) -> None:
         self._lock = Lock()
         self._cards: dict[str, FlashCard] = {}
+        self._backend = backend or get_state_backend("srs")
+        self._load_unlocked()
 
+    # ── persistence ─────────────────────────────────────────────────────
+    def _serialize_unlocked(self) -> dict:
+        return {"version": 1, "cards": [c.to_dict() for c in self._cards.values()]}
+
+    def _load_unlocked(self) -> None:
+        if not self._backend.enabled:
+            return
+        payload = self._backend.load()
+        if not isinstance(payload, dict):
+            return
+        for raw in payload.get("cards") or []:
+            try:
+                card = FlashCard(
+                    card_id=str(raw["card_id"]),
+                    user_id=str(raw["user_id"]),
+                    front=str(raw["front"]),
+                    back=str(raw["back"]),
+                    tags=list(raw.get("tags") or []),
+                    ease=float(raw.get("ease", 2.5)),
+                    repetitions=int(raw.get("repetitions", 0)),
+                    interval_days=int(raw.get("interval_days", 0)),
+                    last_reviewed_ts=float(raw.get("last_reviewed_ts", 0.0)),
+                    next_due_ts=float(raw.get("next_due_ts", time.time())),
+                )
+                self._cards[card.card_id] = card
+            except (KeyError, ValueError, TypeError):
+                continue
+
+    def _flush_unlocked(self) -> None:
+        if self._backend.enabled:
+            self._backend.save(self._serialize_unlocked())
+
+    # ── public API ──────────────────────────────────────────────────────
     def upsert(self, card: FlashCard) -> FlashCard:
         with self._lock:
             self._cards[card.card_id] = card
+            self._flush_unlocked()
             return card
 
     def get(self, card_id: str) -> FlashCard | None:
@@ -105,11 +143,13 @@ class SrsStore:
             card.interval_days = interval
             card.last_reviewed_ts = now
             card.next_due_ts = now + interval * 86400
+            self._flush_unlocked()
             return card
 
     def reset(self) -> None:
         with self._lock:
             self._cards.clear()
+            self._flush_unlocked()
 
 
 _STORE = SrsStore()
@@ -117,6 +157,11 @@ _STORE = SrsStore()
 
 def get_store() -> SrsStore:
     return _STORE
+
+
+def reset_store_for_testing() -> None:
+    global _STORE
+    _STORE = SrsStore()
 
 
 def make_card_from_route_week(user_id: str, week: dict) -> FlashCard:

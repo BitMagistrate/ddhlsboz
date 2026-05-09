@@ -19,6 +19,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from threading import Lock
 
+from .state import StateBackend, get_state_backend
+
 
 @dataclass
 class PromptCard:
@@ -185,11 +187,58 @@ class BenchmarkRecord:
 
 
 class _BenchStore:
-    def __init__(self) -> None:
+    """Хранение результатов бенчмарка.
+
+    Имеет два независимых пути сохранения:
+    * `CHITAI_BENCHMARK_PATH` — старый совместимый канал, прямой JSON-дамп
+      всех записей в один файл (использовался CI для аудита).
+    * `CHITAI_STATE_DIR` — новый общий механизм state-бэкендов, который
+      применим ко всем сторам (privacy/srs/refusals/benchmark).
+
+    Оба канала независимы и могут работать одновременно: внешний — для CI и
+    отчётов, общий — для restart-resilient демо.
+    """
+
+    def __init__(self, backend: StateBackend | None = None) -> None:
         self._lock = Lock()
         self._records: list[BenchmarkRecord] = []
-        self._path = Path(os.environ.get("CHITAI_BENCHMARK_PATH", "")).expanduser() if os.environ.get("CHITAI_BENCHMARK_PATH") else None
+        self._path = (
+            Path(os.environ.get("CHITAI_BENCHMARK_PATH", "")).expanduser()
+            if os.environ.get("CHITAI_BENCHMARK_PATH")
+            else None
+        )
+        self._backend = backend or get_state_backend("benchmark")
+        self._load_unlocked()
 
+    # ── persistence ─────────────────────────────────────────────────────
+    def _serialize_unlocked(self) -> dict:
+        return {"version": 1, "records": [r.to_dict() for r in self._records]}
+
+    def _load_unlocked(self) -> None:
+        if not self._backend.enabled:
+            return
+        payload = self._backend.load()
+        if not isinstance(payload, dict):
+            return
+        for raw in payload.get("records") or []:
+            try:
+                self._records.append(
+                    BenchmarkRecord(
+                        ts=str(raw["ts"]),
+                        metrics=dict(raw.get("metrics") or {}),
+                        notes=str(raw.get("notes", "")),
+                    )
+                )
+            except (KeyError, ValueError, TypeError):
+                continue
+        if len(self._records) > 50:
+            self._records = self._records[-50:]
+
+    def _flush_unlocked(self) -> None:
+        if self._backend.enabled:
+            self._backend.save(self._serialize_unlocked())
+
+    # ── public API ──────────────────────────────────────────────────────
     def add(self, rec: BenchmarkRecord) -> None:
         with self._lock:
             self._records.append(rec)
@@ -204,6 +253,7 @@ class _BenchStore:
                     )
                 except OSError:
                     pass
+            self._flush_unlocked()
 
     def latest(self) -> BenchmarkRecord | None:
         with self._lock:
@@ -216,6 +266,7 @@ class _BenchStore:
     def reset(self) -> None:
         with self._lock:
             self._records.clear()
+            self._flush_unlocked()
 
 
 _BENCH = _BenchStore()
@@ -223,3 +274,8 @@ _BENCH = _BenchStore()
 
 def get_benchmark_store() -> _BenchStore:
     return _BENCH
+
+
+def reset_benchmark_store_for_testing() -> None:
+    global _BENCH
+    _BENCH = _BenchStore()

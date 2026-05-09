@@ -44,16 +44,66 @@ jobs:
       - name: Ruff lint
         run: poetry run ruff check app/ tests/
 
-      - name: Pytest
-        run: poetry run pytest -q --tb=short
+      - name: mypy (best-effort, non-blocking)
+        # Не блокируем CI: типы пока неполные, но регресс хочется видеть.
+        continue-on-error: true
+        run: |
+          poetry run pip install "mypy==1.13.0"
+          poetry run mypy app/ --ignore-missing-imports --no-strict-optional --pretty || true
 
-      - name: Bandit (security scan)
+      - name: Pytest with coverage
+        run: |
+          poetry run pip install "coverage[toml]==7.6.4"
+          poetry run coverage run -m pytest -q --tb=short
+          poetry run coverage report --skip-covered --fail-under=70
+          poetry run coverage xml -o coverage.xml
+
+      - name: Upload backend coverage
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: backend-coverage
+          path: backend/coverage.xml
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Bandit (security scan, hard fail on HIGH)
+        # Раньше глушили `|| echo`. Это отбирало смысл у скана. Теперь HIGH
+        # уровень = красный CI; LOW/MEDIUM по-прежнему допустимы (-ll отсекает).
         run: |
           poetry run pip install bandit==1.8.0
-          poetry run bandit -q -r app/ -ll -ii || echo "Bandit warnings present"
+          poetry run bandit -q -r app/ -ll -ii
 
-      - name: Honest retrieval benchmark
-        run: poetry run python -m app.benchmark | tee benchmark.json
+      - name: Honest retrieval benchmark (regression gate)
+        # Раньше benchmark.json только аплоадили — никакого gate.
+        # Теперь блокируем CI на регрессах. Гейт смотрит на MRR (когда у
+        # каждого запроса один эталонный документ — это и есть честная
+        # метрика «нашли ли первым правильное произведение»). P@5 пишем
+        # в лог как приборную панель, но не блокируем по нему: при росте
+        # корпуса P@5 механически падает (у эталона часто 1 релевантный док
+        # из 5+), и блокировать по нему = ложноположительные срабатывания.
+        run: |
+          poetry run python -m app.benchmark | tee benchmark.json
+          poetry run python - <<'PY'
+          import json, sys
+          data = json.loads(open("benchmark.json", encoding="utf-8").read())
+          metrics = data.get("metrics") if isinstance(data, dict) else None
+          if not metrics:
+              print("benchmark.json: missing 'metrics' block", file=sys.stderr)
+              sys.exit(1)
+          mrr = float(metrics.get("mrr", 0.0))
+          recall5 = float(metrics.get("recall_at_5", 0.0))
+          p5 = float(metrics.get("p_at_5", 0.0))
+          print(f"mrr={mrr:.3f} recall@5={recall5:.3f} p@5={p5:.3f}")
+          fails = []
+          if mrr < 0.85:
+              fails.append(f"MRR {mrr:.3f} < 0.85")
+          if recall5 < 0.90:
+              fails.append(f"Recall@5 {recall5:.3f} < 0.90")
+          if fails:
+              print("Retrieval regression: " + "; ".join(fails), file=sys.stderr)
+              sys.exit(1)
+          PY
 
       - name: Upload benchmark artefact
         uses: actions/upload-artifact@v4
@@ -87,8 +137,21 @@ jobs:
       - name: ESLint
         run: npm run lint
 
-      - name: Vitest (unit tests)
-        run: npm test
+      - name: npm audit (high+)
+        # Не блокируем на любых уязвимостях, но HIGH/CRITICAL красят CI.
+        run: npm audit --audit-level=high --omit=dev
+
+      - name: Vitest (unit tests + coverage)
+        run: npm run test:coverage
+
+      - name: Upload frontend coverage
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: frontend-coverage
+          path: frontend/coverage
+          if-no-files-found: ignore
+          retention-days: 14
 
       - name: TypeScript build
         run: npm run build
@@ -115,13 +178,10 @@ jobs:
             "aiogram>=3.4,<4.0" "httpx>=0.27,<1.0" \
             pytest==8.3.3 pytest-asyncio==0.24.0 "respx>=0.22.0,<1.0"
 
-      - name: Ruff lint
-        run: |
-          if [ -f pyproject.toml ] || ls *.py 2>/dev/null; then
-            ruff check . || true
-          else
-            echo "No bot sources to lint"
-          fi
+      - name: Ruff lint (hard fail)
+        # Раньше глушили `|| true`. Это превращало lint-job в ритуал. Теперь
+        # любой ruff-ошибочный код в боте красит CI.
+        run: ruff check .
 
       - name: Pytest
         run: pytest -q --tb=short

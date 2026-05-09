@@ -84,3 +84,42 @@ def test_history_capped_at_500() -> None:
         store.append_history("u1", {"event": str(i)})
     out = store.export("u1")
     assert len(out["data"]["history"]) == 500
+
+
+def test_list_consents_empty_for_unknown_user() -> None:
+    """list_consents должен отдавать пустой список (не 404), чтобы
+    фронт мог рендерить форму со значениями по умолчанию."""
+    assert privacy.get_store().list_consents("nope") == []
+
+
+def test_list_consents_returns_full_history_in_order() -> None:
+    store = privacy.get_store()
+    store.set_consent("u1", "personalization", granted=True)
+    store.set_consent("u1", "personalization", granted=False)  # отзыв
+    store.set_consent("u1", "marketing", granted=True)
+    history = store.list_consents("u1")
+    # 3 записи: первая получила revoked_ts при втором set_consent.
+    assert len(history) == 3
+    purposes = [c.purpose for c in history]
+    assert purposes == ["personalization", "personalization", "marketing"]
+    # Отзыв должен быть зафиксирован на первой записи.
+    assert history[0].revoked_ts is not None
+
+
+def test_forget_stub_survives_after_call() -> None:
+    """Регрессия: stub аудита должен сохраняться, чтобы можно было
+    подтвердить исполнение запроса на забвение."""
+    store = privacy.get_store()
+    store.append_history("u1", {"event": "x"})
+    res = store.forget("u1")
+    stub_id = res["audit_stub"]
+    # Старый user_id больше не существует.
+    assert store.export("u1")["found"] is False
+    # А stub — существует и помечен deleted=True.
+    stub_export = store.export(stub_id)
+    assert stub_export["found"] is True
+    assert stub_export["data"]["deleted"] is True
+    assert stub_export["data"]["role"] == "deleted"
+    # У стаба нет ни истории, ни согласий.
+    assert stub_export["data"]["history"] == []
+    assert stub_export["data"]["consents"] == []

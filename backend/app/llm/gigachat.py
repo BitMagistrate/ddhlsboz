@@ -38,7 +38,7 @@ class GigaChatProvider(LLMProvider):
         model: str | None = None,
         oauth_url: str = DEFAULT_OAUTH_URL,
         chat_url: str = DEFAULT_CHAT_URL,
-        verify_ssl: bool = False,  # сертификат Минцифры по умолчанию не в системе
+        verify_ssl: bool | str | None = None,
         default_timeout: float = 20.0,
         max_retries: int = 2,
     ) -> None:
@@ -47,11 +47,31 @@ class GigaChatProvider(LLMProvider):
         self.model = model or os.getenv("GIGACHAT_MODEL", "GigaChat-Max")
         self.oauth_url = oauth_url
         self.chat_url = chat_url
-        self.verify_ssl = verify_ssl
+        # SSL-настройки:
+        # 1) Если конструктору передали verify_ssl=... — используем как есть
+        #    (bool или путь к bundle).
+        # 2) Иначе берём GIGACHAT_CA_BUNDLE — путь до сертификата Минцифры.
+        # 3) Иначе GIGACHAT_VERIFY_SSL=true|false (по умолчанию false для
+        #    обратной совместимости с прежним поведением).
+        # Использование `verify=False` вне production должно сопровождаться
+        # явным выбором — это контролируется через ENV.
+        self.verify_ssl: bool | str = self._resolve_verify_ssl(verify_ssl)
         self.default_timeout = default_timeout
         self.max_retries = max_retries
         self._access_token: str | None = None
         self._token_expires_at: float = 0.0
+
+    @staticmethod
+    def _resolve_verify_ssl(explicit: bool | str | None) -> bool | str:
+        if explicit is not None:
+            return explicit
+        bundle = os.getenv("GIGACHAT_CA_BUNDLE", "").strip()
+        if bundle:
+            return bundle
+        env_flag = os.getenv("GIGACHAT_VERIFY_SSL", "").strip().lower()
+        if env_flag in ("1", "true", "yes", "on"):
+            return True
+        return False
 
     async def is_configured(self) -> bool:
         return bool(self.authorization_key) and bool(self.scope)

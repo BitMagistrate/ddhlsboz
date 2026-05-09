@@ -22,6 +22,8 @@ import time
 from dataclasses import dataclass
 from enum import StrEnum
 
+from .state import StateBackend, get_state_backend
+
 logger = logging.getLogger(__name__)
 
 
@@ -126,21 +128,57 @@ class RefusalRecord:
 
 
 class RefusalLog:
-    """Аудиторский журнал отказов (in-memory, top-N).
+    """Аудиторский журнал отказов (in-memory кольцевой буфер + опциональный JSON).
 
-    В production пишется в Postgres / S3 / SIEM. В демо — кольцевой буфер.
+    В production пишется в Postgres / S3 / SIEM. В demo / Yandex Cloud
+    single-node — на диск через `state` бэкенд (env CHITAI_STATE_DIR), чтобы
+    рестарт инстанса не стирал журнал отказов: для аудита и Trust & Safety
+    это важнее, чем сам факт что лог short-lived.
     """
 
-    def __init__(self, capacity: int = 200) -> None:
+    def __init__(self, capacity: int = 200, backend: StateBackend | None = None) -> None:
         self.capacity = capacity
         self._lock = threading.Lock()
         self._items: list[RefusalRecord] = []
+        self._backend = backend or get_state_backend("refusals")
+        self._load_unlocked()
 
+    # ── persistence ─────────────────────────────────────────────────────
+    def _serialize_unlocked(self) -> dict:
+        return {"version": 1, "items": [r.to_dict() for r in self._items]}
+
+    def _load_unlocked(self) -> None:
+        if not self._backend.enabled:
+            return
+        payload = self._backend.load()
+        if not isinstance(payload, dict):
+            return
+        for raw in payload.get("items") or []:
+            try:
+                self._items.append(
+                    RefusalRecord(
+                        ts=float(raw["ts"]),
+                        query=str(raw["query"]),
+                        category=str(raw["category"]),
+                        reason=str(raw.get("reason", "")),
+                    )
+                )
+            except (KeyError, ValueError, TypeError):
+                continue
+        if len(self._items) > self.capacity:
+            self._items = self._items[-self.capacity :]
+
+    def _flush_unlocked(self) -> None:
+        if self._backend.enabled:
+            self._backend.save(self._serialize_unlocked())
+
+    # ── public API ──────────────────────────────────────────────────────
     def add(self, query: str, category: str, reason: str) -> None:
         with self._lock:
             self._items.append(RefusalRecord(time.time(), query[:300], category, reason))
             if len(self._items) > self.capacity:
                 self._items = self._items[-self.capacity :]
+            self._flush_unlocked()
 
     def all(self) -> list[RefusalRecord]:
         with self._lock:
@@ -149,6 +187,7 @@ class RefusalLog:
     def reset(self) -> None:
         with self._lock:
             self._items.clear()
+            self._flush_unlocked()
 
 
 _LOG = RefusalLog()
@@ -156,6 +195,11 @@ _LOG = RefusalLog()
 
 def get_refusal_log() -> RefusalLog:
     return _LOG
+
+
+def reset_refusal_log_for_testing() -> None:
+    global _LOG
+    _LOG = RefusalLog()
 
 
 def screen(query: str) -> SafetyResult:
