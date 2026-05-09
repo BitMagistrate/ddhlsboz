@@ -3,8 +3,9 @@ name: CI
 on:
   push:
     branches: [main]
+  # Триггерим CI на любые PR — у нас стек stacked PR (pr4 → pr5 → main),
+  # и CI должен работать на каждой ступени, а не только при мерже в main.
   pull_request:
-    branches: [main]
 
 # Каждый PR откатывает старые билды той же ветки.
 concurrency:
