@@ -1,0 +1,30 @@
+[project]
+name = "chitai-bots-core"
+version = "0.1.0"
+description = "ЧитАИ — мульти-канальное ядро (Telegram / MAX / VK / Web / Alice)"
+requires-python = ">=3.12"
+dependencies = [
+  "httpx>=0.27,<1.0",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+exclude = [".venv", "build", "dist"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["bots*"]
+exclude = ["tests*"]

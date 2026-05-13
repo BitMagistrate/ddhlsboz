@@ -1,0 +1,28 @@
+{
+  "name": "ЧитАИ — ИИ-куратор",
+  "short_name": "ЧитАИ",
+  "description": "ИИ-куратор русского культурного и образовательного контента: маршруты по фондам РГБ и НЭБ, тренажёр ЕГЭ, события Пушкинской карты.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0e1116",
+  "theme_color": "#0e1116",
+  "lang": "ru-RU",
+  "dir": "ltr",
+  "categories": ["education", "books", "culture"],
+  "icons": [
+    {
+      "src": "/icons/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
