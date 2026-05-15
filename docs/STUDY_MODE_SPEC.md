@@ -2,6 +2,13 @@
 
 > **⚠️ DRAFT / нужна локализация.** Документ исходно написан под западный стек (OpenAI, Anthropic, Whisper, Mistral OCR, Pinecone и т.п.). Для production в ЧитАИ нужно заменить все эти провайдеры на российский стек: **GigaChat MAX / YandexGPT 5 Pro** (LLM), **Yandex SpeechKit** (TTS/ASR), **Yandex Vision** (OCR), **локальные эмбеддинги / Yandex Foundation Models** (vector search), **Postgres + pgvector** (хранение). См. `docs/ROADMAP.md` §EX1–EX5 для текущего плана upload pipeline в Mode «Учёба».
 
+> **🚀 Реализация Stage 2 — готова.** Универсальный ingest pipeline доступен:
+> `POST /api/study/ingest` (text / url / audio / video) + `POST /api/study/ingest/pdf`.
+> Полный набор endpoints для конспекта, Q&A, флэшкарт, Smart-Quiz, FIB, эссе,
+> экспорта, sharing, mastery и тарифов — см. `backend/app/study.py` и
+> `backend/app/main.py` (раздел «Учёба»). Прототип лендинга:
+> <https://chitai.bolt.host/#>. Тариф-матрица: Free / Неделя / Месяц / Год.
+
 > Документ объединяет функционал **Mindgrasp.ai**, **Zachet.app** и **StudyFetch.com (Spark.E + Arcade)**, описывает, **как именно** каждую такую функцию строить в коде (архитектура, данные, API/SDK, готовые библиотеки), и предлагает **2–3 мини-игры**, которые приживаются у студентов и работают как маркетинговый виральный канал — без клонирования Subway Surfers.
 >
 > Стек по умолчанию (от которого можно отступать): **Next.js 14 (App Router) + TypeScript + Tailwind + shadcn/ui** на фронте, **NestJS** или **FastAPI** на бэке, **PostgreSQL + pgvector**, **Redis + BullMQ**, **S3-совместимое хранилище** (AWS S3 / Yandex Object Storage / Cloudflare R2). Мобилка — **React Native (Expo)** или нативная iOS на SwiftUI.

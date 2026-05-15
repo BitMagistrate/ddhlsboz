@@ -87,10 +87,12 @@ describe('fetchQuestions', () => {
     });
 
     // sanitizeText удаляет ASCII-управляющие, BOM/RLO/zero-width.
+    // eslint-disable-next-line no-control-regex
     expect(out[0]!.text).not.toMatch(/[\u0000-\u0008]/);
     expect(out[0]!.text).not.toMatch(/[\u200B-\u200F\u202A-\u202E\uFEFF]/);
     expect(out[0]!.options[0]!.text).not.toContain('\uFEFF');
     expect(out[0]!.options[1]!.text).not.toContain('\u202E');
+    // eslint-disable-next-line no-control-regex
     expect(out[0]!.explanation).not.toMatch(/[\u0000-\u0008]/);
   });
 
