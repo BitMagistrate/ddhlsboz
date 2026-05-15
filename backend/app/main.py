@@ -31,7 +31,15 @@ from dotenv import load_dotenv
 # Загружаем .env максимально рано, до создания FastAPI и инициализации роутера.
 load_dotenv(os.path.join(os.path.dirname(os.path.dirname(__file__)), ".env"))
 
-from fastapi import FastAPI, HTTPException, Request, Response  # noqa: E402
+from fastapi import (  # noqa: E402
+    FastAPI,
+    File,
+    Form,
+    HTTPException,
+    Request,
+    Response,
+    UploadFile,
+)
 from fastapi.middleware.cors import CORSMiddleware  # noqa: E402
 from pydantic import BaseModel, Field  # noqa: E402
 
@@ -57,6 +65,7 @@ from . import retrieval as retrieval_mod  # noqa: E402
 from . import roi as roi_mod  # noqa: E402
 from . import safety as safety_mod  # noqa: E402
 from . import srs as srs_mod  # noqa: E402
+from . import study as study_mod  # noqa: E402
 from . import trainer as trainer_mod  # noqa: E402
 from . import tts as tts_mod  # noqa: E402
 from .llm import get_router  # noqa: E402
@@ -456,6 +465,17 @@ async def study_quiz(
     questions: list[dict] = []
     for i, q in enumerate(pool[:safe_count]):
         question_id = f"q-{i}-{q.id}"
+        # PR#G1/PR#G2: expose per-option explanations so the UI can show
+        # Smart-Quiz feedback after each answer.
+        wrong = q.explanation_wrong or [q.explanation] * max(0, len(q.options) - 1)
+        per_option: list[str] = []
+        wi = 0
+        for j, _opt in enumerate(q.options):
+            if j == q.correct_index:
+                per_option.append(q.explanation)
+            else:
+                per_option.append(wrong[wi] if wi < len(wrong) else q.explanation)
+                wi += 1
         questions.append(
             {
                 "id": question_id,
@@ -466,6 +486,16 @@ async def study_quiz(
                 ],
                 "correctOptionId": f"{question_id}-opt-{q.correct_index}",
                 "explanation": q.explanation,
+                "explanation_correct": q.explanation,
+                "explanation_wrong": wrong,
+                "option_explanations": [
+                    {
+                        "id": f"{question_id}-opt-{j}",
+                        "explanation": exp,
+                        "correct": j == q.correct_index,
+                    }
+                    for j, exp in enumerate(per_option)
+                ],
                 "difficulty": 2,
             }
         )
@@ -916,3 +946,454 @@ async def i18n_locales() -> dict:
 async def metrics_endpoint() -> Response:
     text = obs.get_metrics().render_prometheus()
     return Response(content=text, media_type="text/plain; version=0.0.4; charset=utf-8")
+
+
+# ── Учёба (PR#9/PDF/URL/TEXT/24/25/G2/FIB/WT/MASTERY/PODCAST/SHARE/27a) ─────
+
+
+def _study_user(request: Request) -> str:
+    """Идентификатор пользователя для приватных store'ов.
+
+    В демо берём из заголовка `X-User-Id` (front пишет туда session id);
+    fallback — IP. В production это будет JWT/cookie session.
+    """
+    return (
+        request.headers.get("x-user-id")
+        or (request.client.host if request.client else None)
+        or "anon"
+    )
+
+
+class StudyIngestText(BaseModel):
+    title: str = Field(default="Учебный материал", max_length=240)
+    text: str = Field(min_length=1, max_length=200_000)
+    tariff: str = "free"
+    language: str = "ru"
+
+
+class StudyIngestUrl(BaseModel):
+    url: str = Field(min_length=8, max_length=2000)
+    tariff: str = "free"
+
+
+class StudyIngestAudio(BaseModel):
+    title: str = Field(default="Аудиозапись", max_length=240)
+    biometry_consent: bool = False
+    age_ok: bool = False
+    tariff: str = "free"
+    duration_seconds: float | None = None
+
+
+class StudyIngestVideo(BaseModel):
+    url: str = Field(min_length=8, max_length=2000)
+    tariff: str = "free"
+    duration_seconds: float | None = None
+
+
+class StudyQARequest(BaseModel):
+    question: str = Field(min_length=1, max_length=2000)
+
+
+class StudyGenerateRequest(BaseModel):
+    count: int = Field(default=8, ge=1, le=30)
+
+
+class StudyEssayRequest(BaseModel):
+    prompt: str = Field(min_length=1, max_length=600)
+    essay: str = Field(min_length=20, max_length=20_000)
+
+
+class StudyInviteRequest(BaseModel):
+    role: str = Field(default="viewer")
+
+
+class StudyCommentRequest(BaseModel):
+    body: str = Field(min_length=1, max_length=4000)
+    chunk_id: str | None = None
+
+
+class StudyWaitlistRequest(BaseModel):
+    email: str = Field(min_length=5, max_length=320)
+    source: str = "pricing"
+
+
+class StudySubscriptionRequest(BaseModel):
+    tariff: str = Field(default="free")
+
+
+def _material_or_404(material_id: str) -> study_mod.Material:
+    m = study_mod.get_material(material_id)
+    if m is None:
+        raise HTTPException(status_code=404, detail="material_not_found")
+    return m
+
+
+def _serialize_material(m: study_mod.Material) -> dict:
+    payload = dataclass_to_dict(m)
+    payload["chunks_count"] = len(study_mod.material_chunks(m.id))
+    return payload
+
+
+def dataclass_to_dict(obj) -> dict:  # noqa: ANN001
+    """asdict() для @dataclass + защита от не-dataclass."""
+
+    from dataclasses import asdict, is_dataclass
+
+    if is_dataclass(obj):
+        return asdict(obj)
+    return dict(obj)
+
+
+@app.post("/api/study/ingest/text")
+async def study_ingest_text(payload: StudyIngestText, request: Request) -> dict:
+    """PR#TEXT: ингест произвольного текста."""
+    try:
+        material = study_mod.ingest_text(
+            _study_user(request),
+            payload.title,
+            payload.text,
+            tariff=payload.tariff,
+            language=payload.language,
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    return _serialize_material(material)
+
+
+@app.post("/api/study/ingest/url")
+async def study_ingest_url(payload: StudyIngestUrl, request: Request) -> dict:
+    """PR#URL: ингест веб-статьи."""
+    try:
+        material = await study_mod.ingest_url(
+            _study_user(request), payload.url, tariff=payload.tariff
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except Exception as exc:  # сетевые ошибки httpx и т.д.
+        raise HTTPException(status_code=502, detail=f"fetch_failed: {exc}") from exc
+    return _serialize_material(material)
+
+
+@app.post("/api/study/ingest/pdf")
+async def study_ingest_pdf(
+    request: Request,
+    file: UploadFile = File(...),  # noqa: B008
+    title: str = Form(default="PDF документ"),  # noqa: B008
+    tariff: str = Form(default="free"),  # noqa: B008
+) -> dict:
+    """PR#PDF: ингест PDF-файла."""
+    data = await file.read()
+    if not data:
+        raise HTTPException(status_code=400, detail="empty_file")
+    if len(data) > 20 * 1024 * 1024:  # 20 MB cap
+        raise HTTPException(status_code=413, detail="file_too_large")
+    try:
+        material = study_mod.ingest_pdf(
+            _study_user(request),
+            title or (file.filename or "PDF"),
+            data,
+            tariff=tariff,
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except Exception as exc:  # битый pdf
+        raise HTTPException(status_code=400, detail=f"pdf_parse_failed: {exc}") from exc
+    return _serialize_material(material)
+
+
+@app.post("/api/study/ingest/audio")
+async def study_ingest_audio(payload: StudyIngestAudio, request: Request) -> dict:
+    """PR#23: ингест аудио. 152-ФЗ: требуется biometry_consent + age_ok.
+
+    Сейчас сохраняем материал в статусе processing; реальный SpeechKit
+    разворачивается через `YANDEX_API_KEY`.
+    """
+    try:
+        material = await study_mod.ingest_audio_stub(
+            _study_user(request),
+            payload.title,
+            biometry_consent=payload.biometry_consent,
+            age_ok=payload.age_ok,
+            tariff=payload.tariff,
+            duration_seconds=payload.duration_seconds,
+        )
+    except PermissionError as exc:
+        raise HTTPException(status_code=403, detail=str(exc)) from exc
+    return _serialize_material(material)
+
+
+@app.post("/api/study/ingest/video")
+async def study_ingest_video(payload: StudyIngestVideo, request: Request) -> dict:
+    """PR#23: ингест YouTube/VK ссылки → расшифровка через SpeechKit (stub)."""
+    try:
+        material = await study_mod.ingest_video_stub(
+            _study_user(request),
+            payload.url,
+            tariff=payload.tariff,
+            duration_seconds=payload.duration_seconds,
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    return _serialize_material(material)
+
+
+# Универсальный endpoint, который маршрутизирует по kind. UI вызывает только его.
+@app.post("/api/study/ingest")
+async def study_ingest(request: Request) -> dict:
+    """PR#9: универсальный ингест. Принимает JSON `{kind, ...}` (text/url/audio/video).
+
+    Файлы (PDF) ходят через `/api/study/ingest/pdf` (multipart). Это сделано
+    специально: `multipart` в OpenAPI/Pydantic-сценариях сложнее тестировать,
+    а текст/URL/audio метаданные удобнее в JSON.
+    """
+    body = await request.json()
+    kind = (body.get("kind") or "").strip().lower()
+    if kind == "text":
+        return await study_ingest_text(StudyIngestText(**body), request)
+    if kind == "url":
+        return await study_ingest_url(StudyIngestUrl(**body), request)
+    if kind == "audio":
+        return await study_ingest_audio(StudyIngestAudio(**body), request)
+    if kind in {"video", "youtube", "vk"}:
+        return await study_ingest_video(StudyIngestVideo(**body), request)
+    raise HTTPException(
+        status_code=400,
+        detail=f"unsupported_kind:{kind}; use text|url|audio|video or POST /api/study/ingest/pdf",
+    )
+
+
+@app.get("/api/study/materials")
+async def study_materials(request: Request) -> dict:
+    """Список материалов пользователя."""
+    items = study_mod.list_materials(_study_user(request))
+    return {"count": len(items), "items": items}
+
+
+@app.get("/api/study/material/{material_id}")
+async def study_material_get(material_id: str) -> dict:
+    return _serialize_material(_material_or_404(material_id))
+
+
+@app.delete("/api/study/material/{material_id}")
+async def study_material_delete(material_id: str, request: Request) -> dict:
+    """152-ФЗ: право на удаление — каскадно стираем чанки/комменты/инвайты."""
+    actor = _study_user(request)
+    ok = study_mod.delete_material(material_id, actor=actor)
+    if not ok:
+        raise HTTPException(status_code=404, detail="material_not_found")
+    return {"deleted": True, "material_id": material_id}
+
+
+@app.get("/api/study/material/{material_id}/chunks")
+async def study_material_chunks(material_id: str) -> dict:
+    _material_or_404(material_id)
+    chunks = study_mod.material_chunks(material_id)
+    return {
+        "count": len(chunks),
+        "items": [
+            {
+                "id": c.id,
+                "position": c.position,
+                "text": c.text,
+                "ts_start": c.ts_start,
+                "ts_end": c.ts_end,
+            }
+            for c in chunks
+        ],
+    }
+
+
+@app.post("/api/study/material/{material_id}/conspect")
+async def study_conspect(material_id: str) -> dict:
+    """PR#24: AI-конспект (summary + key_moments + tips + glossary)."""
+    _material_or_404(material_id)
+    return await study_mod.make_conspect(material_id)
+
+
+@app.get("/api/study/material/{material_id}/conspect")
+async def study_conspect_get(material_id: str) -> dict:
+    """Получить кэшированный конспект; если ещё не сгенерирован — сгенерируем."""
+    _material_or_404(material_id)
+    return await study_mod.make_conspect(material_id)
+
+
+@app.post("/api/study/material/{material_id}/qa")
+async def study_qa(material_id: str, body: StudyQARequest, request: Request) -> dict:
+    """PR#25: Q&A по материалу (RAG)."""
+    _material_or_404(material_id)
+    try:
+        return await study_mod.answer_question(
+            material_id, _study_user(request), body.question
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@app.post("/api/study/material/{material_id}/flashcards")
+async def study_flashcards(material_id: str, body: StudyGenerateRequest) -> dict:
+    """PR#SRS-AUTO: генерация колоды флэшкарт по материалу."""
+    _material_or_404(material_id)
+    cards = await study_mod.generate_flashcards(material_id, count=body.count)
+    return {"count": len(cards), "items": cards}
+
+
+@app.post("/api/study/material/{material_id}/quiz")
+async def study_quiz_brain_dash(material_id: str, body: StudyGenerateRequest) -> dict:
+    """PR#G2: Smart-Quiz из любого материала."""
+    _material_or_404(material_id)
+    items = await study_mod.generate_quiz(material_id, count=body.count)
+    return {"count": len(items), "items": items}
+
+
+@app.post("/api/study/material/{material_id}/fib")
+async def study_fib(material_id: str, body: StudyGenerateRequest) -> dict:
+    """PR#FIB: fill-in-the-blank упражнения."""
+    _material_or_404(material_id)
+    items = await study_mod.generate_fib(material_id, count=body.count)
+    return {"count": len(items), "items": items}
+
+
+@app.post("/api/study/material/{material_id}/essay/grade")
+async def study_essay_grade(
+    material_id: str, body: StudyEssayRequest, request: Request
+) -> dict:
+    """PR#WT: оценка эссе по рубрике."""
+    _material_or_404(material_id)
+    try:
+        return await study_mod.grade_essay(
+            material_id, _study_user(request), body.prompt, body.essay
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@app.get("/api/study/material/{material_id}/essays")
+async def study_essays_list(material_id: str) -> dict:
+    _material_or_404(material_id)
+    items = study_mod.list_essays(material_id)
+    return {"count": len(items), "items": items}
+
+
+@app.get("/api/study/material/{material_id}/export.html")
+async def study_export_html(material_id: str) -> Response:
+    """PR#16: HTML-экспорт конспекта (открыть → Print → PDF)."""
+    material = _material_or_404(material_id)
+    # Конспект сгенерируется лениво, если ещё нет.
+    if not material.conspect:
+        await study_mod.make_conspect(material_id)
+        material = _material_or_404(material_id)
+    html = study_mod.export_conspect_html(material)
+    return Response(content=html, media_type="text/html; charset=utf-8")
+
+
+@app.post("/api/study/material/{material_id}/podcast")
+async def study_podcast(material_id: str) -> dict:
+    """PR#PODCAST: озвучка summary через Yandex SpeechKit."""
+    _material_or_404(material_id)
+    try:
+        return await study_mod.synth_podcast(material_id)
+    except Exception as exc:  # noqa: BLE001
+        raise HTTPException(status_code=500, detail=f"tts_failed: {exc}") from exc
+
+
+@app.post("/api/study/material/{material_id}/share")
+async def study_share(
+    material_id: str, body: StudyInviteRequest, request: Request
+) -> dict:
+    """PR#26: создать invite-токен (viewer / editor)."""
+    _material_or_404(material_id)
+    try:
+        return study_mod.create_invite(
+            material_id, body.role, _study_user(request)
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@app.get("/api/study/share/{token}")
+async def study_share_resolve(token: str) -> dict:
+    """PR#26: получить материал по invite-токену."""
+    invite = study_mod.resolve_invite(token)
+    if invite is None:
+        raise HTTPException(status_code=404, detail="invite_not_found")
+    material = _material_or_404(invite["material_id"])
+    return {"invite": invite, "material": _serialize_material(material)}
+
+
+@app.post("/api/study/material/{material_id}/comments")
+async def study_comment_add(
+    material_id: str, body: StudyCommentRequest, request: Request
+) -> dict:
+    """PR#26: добавить комментарий к материалу (или конкретному чанку)."""
+    _material_or_404(material_id)
+    try:
+        return study_mod.add_comment(
+            material_id, _study_user(request), body.body, chunk_id=body.chunk_id
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@app.get("/api/study/material/{material_id}/comments")
+async def study_comments_list(material_id: str) -> dict:
+    _material_or_404(material_id)
+    items = study_mod.list_comments(material_id)
+    return {"count": len(items), "items": items}
+
+
+@app.get("/api/study/mastery")
+async def study_mastery(request: Request) -> dict:
+    """PR#MASTERY: распределение карт пользователя по уровням освоения."""
+    return study_mod.mastery_for_user(_study_user(request))
+
+
+@app.get("/api/study/tariffs")
+async def study_tariffs() -> dict:
+    """PR#27a: матрица тарифов и лимитов."""
+    return study_mod.tariffs()
+
+
+@app.post("/api/study/waitlist")
+async def study_waitlist_join(body: StudyWaitlistRequest) -> dict:
+    """PR#27a: записаться в waitlist по платным тарифам."""
+    try:
+        return study_mod.join_waitlist(body.email, source=body.source)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@app.get("/api/study/waitlist")
+async def study_waitlist_list() -> dict:
+    """Демо-эндпоинт для админ-просмотра waitlist (без real-auth: внутри ru-only VPC)."""
+    items = study_mod.list_waitlist()
+    return {"count": len(items), "items": items}
+
+
+@app.post("/api/study/subscription")
+async def study_subscription_set(
+    body: StudySubscriptionRequest, request: Request
+) -> dict:
+    """PR#27a: переключить тариф пользователю (без реальной оплаты)."""
+    try:
+        return study_mod.set_subscription(_study_user(request), body.tariff)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@app.get("/api/study/subscription")
+async def study_subscription_get(request: Request) -> dict:
+    return study_mod.get_subscription(_study_user(request))
+
+
+@app.get("/api/study/search/{material_id}")
+async def study_search(material_id: str, q: str, k: int = 4) -> dict:
+    """Прямой retrieval (для отладки и UI-подсветок)."""
+    _material_or_404(material_id)
+    hits = study_mod.search_chunks(material_id, q, k=k)
+    return {
+        "count": len(hits),
+        "items": [
+            {"id": c.id, "position": c.position, "preview": c.text[:280]}
+            for c in hits
+        ],
+    }

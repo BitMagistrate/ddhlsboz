@@ -1,4 +1,5 @@
 import { lazy, Suspense, useEffect, useMemo, useState } from "react"
+import StudyTab from "./StudyTab"
 import {
   BookOpen,
   GraduationCap,
@@ -37,6 +38,7 @@ const API_BASE = (import.meta.env.VITE_API_BASE as string) || "http://localhost:
 
 type Tab =
   | "curator"
+  | "study"
   | "search"
   | "mindmap"
   | "trainer"
@@ -202,6 +204,7 @@ function Logo() {
 function Header({ tab, setTab }: { tab: Tab; setTab: (t: Tab) => void }) {
   const tabs: { id: Tab; label: string; icon: React.ReactNode }[] = [
     { id: "curator", label: "Куратор", icon: <Compass size={16} aria-hidden /> },
+    { id: "study", label: "Учёба", icon: <BookOpen size={16} aria-hidden /> },
     { id: "search", label: "Поиск по фондам", icon: <Search size={16} aria-hidden /> },
     { id: "mindmap", label: "Ментальная карта", icon: <Network size={16} aria-hidden /> },
     { id: "trainer", label: "Тренажёр ЕГЭ", icon: <GraduationCap size={16} aria-hidden /> },
@@ -1491,6 +1494,22 @@ function AboutTab() {
           public domain без подключения к фондам РГБ и НЭБ.
         </p>
       </Card>
+
+      <Card className="mt-4">
+        <h3 className="text-sm font-semibold mb-2">Прототип лендинга</h3>
+        <p className="text-sm text-zinc-300">
+          Маркетинговый макет лендинга:{" "}
+          <a
+            className="underline text-amber-300 hover:text-amber-200"
+            href={safeHref("https://chitai.bolt.host/#")}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            chitai.bolt.host
+          </a>
+          {". Этот демо-стенд — рабочий бэкенд + интерактив, лендинг — продуктовая обложка."}
+        </p>
+      </Card>
     </section>
   )
 }
@@ -1604,6 +1623,7 @@ export default function App() {
       <main id="main" tabIndex={-1} className="mx-auto w-full max-w-6xl px-6 flex-1 outline-none">
         <div role="tabpanel" id={`panel-${tab}`} aria-labelledby={`tab-${tab}`}>
           {tab === "curator" && <CuratorTab />}
+          {tab === "study" && <StudyTab />}
           {tab === "search" && <SearchTab />}
           {tab === "mindmap" && <MindmapTab />}
           {tab === "trainer" && <TrainerTab />}

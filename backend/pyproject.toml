@@ -10,6 +10,11 @@ python = "^3.12"
 fastapi = {extras = ["standard"], version = "^0.136.1"}
 httpx = "^0.27.0"
 python-dotenv = "^1.0.1"
+# PR#9/PR#PDF/PR#URL: универсальный ingest pipeline (text/url/pdf).
+# Audio (PR#23) и YouTube/VK через httpx + Yandex SpeechKit подключаются
+# рантайм-стабом; библиотеки yt-dlp/whisper не пин-нятся, чтобы не ломать сборку
+# на машинах без ffmpeg.
+pypdf = "^5.0.1"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.0"
