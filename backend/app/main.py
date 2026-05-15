@@ -456,6 +456,17 @@ async def study_quiz(
     questions: list[dict] = []
     for i, q in enumerate(pool[:safe_count]):
         question_id = f"q-{i}-{q.id}"
+        # PR#G1/PR#G2: expose per-option explanations so the UI can show
+        # Smart-Quiz feedback after each answer.
+        wrong = q.explanation_wrong or [q.explanation] * max(0, len(q.options) - 1)
+        per_option: list[str] = []
+        wi = 0
+        for j, _opt in enumerate(q.options):
+            if j == q.correct_index:
+                per_option.append(q.explanation)
+            else:
+                per_option.append(wrong[wi] if wi < len(wrong) else q.explanation)
+                wi += 1
         questions.append(
             {
                 "id": question_id,
@@ -466,6 +477,16 @@ async def study_quiz(
                 ],
                 "correctOptionId": f"{question_id}-opt-{q.correct_index}",
                 "explanation": q.explanation,
+                "explanation_correct": q.explanation,
+                "explanation_wrong": wrong,
+                "option_explanations": [
+                    {
+                        "id": f"{question_id}-opt-{j}",
+                        "explanation": exp,
+                        "correct": j == q.correct_index,
+                    }
+                    for j, exp in enumerate(per_option)
+                ],
                 "difficulty": 2,
             }
         )
