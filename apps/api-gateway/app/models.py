@@ -19,6 +19,16 @@ class HealthResponse(BaseModel):
     build_sha: str | None = None
     uptime_s: float
     services: dict[str, str]
+    data_origin: Literal["synthetic", "real"] = "synthetic"
+    real_feeds: list[str] = Field(default_factory=list)
+    pending_real_feeds: list[str] = Field(
+        default_factory=lambda: [
+            "vetc.hex.5min",
+            "sentinel1.sar.water_mask",
+            "vnms.weather.hourly",
+            "fleet_sdk.probes",
+        ]
+    )
 
 
 class RouteRequest(BaseModel):

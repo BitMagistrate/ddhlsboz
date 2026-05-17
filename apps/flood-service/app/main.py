@@ -61,7 +61,12 @@ _detector: FloodDetector | None = None
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     global _detector
     logger = get_logger("flood-service")
-    logger.info("flood.startup")
+    logger.info(
+        "flood.startup",
+        mode="synthetic-fixtures",
+        data_origin="synthetic",
+        pending_real_feed="sentinel1.sar.water_mask",
+    )
     _detector = _bootstrap_detector()
     yield
     logger.info("flood.shutdown")
@@ -71,8 +76,13 @@ app = FastAPI(title="RoadPulse Flood Service", version="0.1.0", lifespan=lifespa
 
 
 @app.get("/healthz")
-def healthz() -> dict[str, str]:
-    return {"status": "ok"}
+def healthz() -> dict[str, object]:
+    return {
+        "status": "ok",
+        "data_origin": "synthetic",
+        "real_feeds": [],
+        "pending_real_feeds": ["sentinel1.sar.water_mask"],
+    }
 
 
 @app.post("/score", response_model=ScoreOut)

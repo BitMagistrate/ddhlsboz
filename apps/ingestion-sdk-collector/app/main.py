@@ -37,7 +37,12 @@ _guard: KAnonGuard | None = None
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     global _guard
     logger = get_logger("sdk-collector")
-    logger.info("sdk.startup")
+    logger.info(
+        "sdk.startup",
+        mode="synthetic-fixtures",
+        data_origin="synthetic",
+        pending_real_feed="fleet_sdk.probes",
+    )
     _guard = KAnonGuard(min_k=50, source="sdk-collector")
     yield
     logger.info("sdk.shutdown")
@@ -47,8 +52,13 @@ app = FastAPI(title="RoadPulse SDK Collector", version="0.1.0", lifespan=lifespa
 
 
 @app.get("/healthz")
-def healthz() -> dict[str, str]:
-    return {"status": "ok"}
+def healthz() -> dict[str, object]:
+    return {
+        "status": "ok",
+        "data_origin": "synthetic",
+        "real_feeds": [],
+        "pending_real_feeds": ["fleet_sdk.probes"],
+    }
 
 
 @app.post("/probes")

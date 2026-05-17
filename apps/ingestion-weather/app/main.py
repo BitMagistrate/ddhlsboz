@@ -39,6 +39,12 @@ def poll_nmhs() -> list[WeatherRollup]:
 
 def main() -> None:
     log = get_logger("ingestion-weather")
+    log.info(
+        "weather.startup",
+        mode="synthetic-fixtures",
+        data_origin="synthetic",
+        pending_real_feed="vnms.weather.hourly",
+    )
     for row in poll_nmhs():
         log.info("weather.row", district=row.district_code, precip=row.precipitation_mm_h)
 

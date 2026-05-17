@@ -69,7 +69,12 @@ def _load_graph() -> tuple[Graph, dict[str, float]]:
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     global _engine, _graph
     logger = get_logger("routing-engine")
-    logger.info("routing.startup")
+    logger.info(
+        "routing.startup",
+        mode="synthetic-fixtures",
+        data_origin="synthetic",
+        pending_real_feed="osm.vn + vetc.hex.5min",
+    )
     g, flood = _load_graph()
     _graph = g
     _engine = RoutingEngine(g, StaticPenalty(flood_by_hex=flood))
@@ -81,8 +86,13 @@ app = FastAPI(title="RoadPulse Routing Engine", version="0.1.0", lifespan=lifesp
 
 
 @app.get("/healthz")
-def healthz() -> dict[str, str]:
-    return {"status": "ok"}
+def healthz() -> dict[str, object]:
+    return {
+        "status": "ok",
+        "data_origin": "synthetic",
+        "real_feeds": [],
+        "pending_real_feeds": ["vetc.hex.5min"],
+    }
 
 
 @app.post("/route", response_model=list[RouteOut])

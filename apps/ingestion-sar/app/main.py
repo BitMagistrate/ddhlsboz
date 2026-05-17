@@ -35,5 +35,11 @@ def classify_synthetic(hex_ids: list[str]) -> list[SARTileScore]:
 
 if __name__ == "__main__":
     log = get_logger("ingestion-sar")
+    log.info(
+        "sar.startup",
+        mode="synthetic-fixtures",
+        data_origin="synthetic",
+        pending_real_feed="sentinel1.sar.water_mask",
+    )
     for tile in classify_synthetic(["hex_22", "hex_23", "hex_32", "hex_42"]):
         log.info("sar.tile", hex_id=tile.hex_id, water=round(tile.water_fraction, 3))

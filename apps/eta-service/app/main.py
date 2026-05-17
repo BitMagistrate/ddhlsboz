@@ -77,7 +77,12 @@ _model: EtaModel | None = None
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     global _model
     logger = get_logger("eta-service")
-    logger.info("eta.startup")
+    logger.info(
+        "eta.startup",
+        mode="synthetic-fixtures",
+        data_origin="synthetic",
+        pending_real_feed="vetc.hex.5min",
+    )
     _model = _bootstrap_model()
     yield
     logger.info("eta.shutdown")
@@ -87,8 +92,13 @@ app = FastAPI(title="RoadPulse ETA Service", version="0.1.0", lifespan=lifespan)
 
 
 @app.get("/healthz")
-def healthz() -> dict[str, str]:
-    return {"status": "ok"}
+def healthz() -> dict[str, object]:
+    return {
+        "status": "ok",
+        "data_origin": "synthetic",
+        "real_feeds": [],
+        "pending_real_feeds": ["vetc.hex.5min", "fleet_sdk.probes"],
+    }
 
 
 @app.post("/predict", response_model=PredictResponse)

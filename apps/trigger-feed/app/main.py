@@ -34,7 +34,12 @@ _public_pem: str = ""
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     global _ed25519_signer, _public_pem
     logger = get_logger("trigger-feed")
-    logger.info("trigger.startup")
+    logger.info(
+        "trigger.startup",
+        mode="synthetic-fixtures",
+        data_origin="synthetic",
+        pending_real_feed="vetc.hex.5min+sentinel1.sar.water_mask",
+    )
     _ed25519_signer = Ed25519PrivateKey.generate()
     _public_pem = (
         _ed25519_signer.public_key()
@@ -52,8 +57,13 @@ app = FastAPI(title="RoadPulse Trigger Feed", version="0.1.0", lifespan=lifespan
 
 
 @app.get("/healthz")
-def healthz() -> dict[str, str]:
-    return {"status": "ok"}
+def healthz() -> dict[str, object]:
+    return {
+        "status": "ok",
+        "data_origin": "synthetic",
+        "real_feeds": [],
+        "pending_real_feeds": ["vetc.hex.5min", "sentinel1.sar.water_mask"],
+    }
 
 
 @app.get("/policies/{policy_id}/pubkey", response_class=None)

@@ -7,6 +7,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends
 
 from app import __version__
+from app.data_origin import data_origin, pending_real_feeds, real_feeds
 from app.dependencies import state_dep
 from app.models import HealthResponse
 from app.state import AppState
@@ -25,6 +26,9 @@ def healthz(state: Annotated[AppState, Depends(state_dep)]) -> HealthResponse:
             "eta": "ok" if state.eta_model.is_trained else "degraded",
             "flood": "ok" if state.flood_detector.is_trained else "degraded",
         },
+        data_origin=data_origin(),
+        real_feeds=real_feeds(),
+        pending_real_feeds=pending_real_feeds(),
     )
 
 
@@ -40,9 +44,16 @@ def readyz(state: Annotated[AppState, Depends(state_dep)]) -> HealthResponse:
             "graph_edges": str(len(state.graph.edges)),
             "flood_hexes": str(len(state.flood_overlay)),
         },
+        data_origin=data_origin(),
+        real_feeds=real_feeds(),
+        pending_real_feeds=pending_real_feeds(),
     )
 
 
 @router.get("/version", summary="Build metadata")
 def version() -> dict[str, str]:
-    return {"version": __version__, "service": "api-gateway"}
+    return {
+        "version": __version__,
+        "service": "api-gateway",
+        "data_origin": data_origin(),
+    }

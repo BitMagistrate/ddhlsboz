@@ -9,8 +9,13 @@ app = FastAPI(title="RoadPulse Ops Console", version="0.1.0")
 
 
 @app.get("/healthz")
-def healthz() -> dict[str, str]:
-    return {"status": "ok"}
+def healthz() -> dict[str, object]:
+    return {
+        "status": "ok",
+        "data_origin": "synthetic",
+        "real_feeds": [],
+        "pending_real_feeds": ["audit.kanon.violations"],
+    }
 
 
 @app.get("/", response_class=HTMLResponse)

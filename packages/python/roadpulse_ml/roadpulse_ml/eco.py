@@ -55,10 +55,10 @@ class EmissionEstimate:
 class EcoModel:
     """CMEM-simplified emission model."""
 
-    def __init__(self, fuel_density_g_l: float = 740.0, carbon_intensity: float = 2.31) -> None:
+    def __init__(self, fuel_density_g_l: float = 740.0, co2_per_litre_kg: float = 2.31) -> None:
         # 1 L petrol → ~2.31 kg CO₂; diesel ~2.68. Coefficient lets you tweak fuel mix.
         self._fuel_density_g_l = fuel_density_g_l
-        self._carbon_intensity = carbon_intensity
+        self._co2_per_litre_kg = co2_per_litre_kg
 
     def estimate(
         self,
@@ -74,7 +74,7 @@ class EcoModel:
         # Normalise against a 50 km baseline of the same vehicle class. Zero-emission
         # modes (bicycle) get an eco_score of 0.0 to avoid a division-by-zero.
         eco_score = 0.0 if base <= 0 else min(1.0, g_co2 / (base * 50.0))
-        fuel_l = g_co2 / (self._fuel_density_g_l * self._carbon_intensity)
+        fuel_l = g_co2 / (self._fuel_density_g_l * self._co2_per_litre_kg)
         return EmissionEstimate(
             g_co2=round(g_co2, 2),
             eco_score=round(eco_score, 3),

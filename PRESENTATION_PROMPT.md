@@ -302,7 +302,7 @@ funds (21) → ask (22) → milestones (23) → close (24).
 - The RoadPulse internal pitch document (`docs/pitch/roadpulse_pitch.md`)
   is the single source of truth for product, architecture and financials
 - The RoadPulse monorepo for code-level facts:
-  https://github.com/DownloadArea/vlmaqaoz — every architectural box on
+  https://github.com/BitMagistrate/ddhlsboz — every architectural box on
   slide 16 must correspond to a directory under `apps/`, `packages/`,
   `services/` or `infra/`
 

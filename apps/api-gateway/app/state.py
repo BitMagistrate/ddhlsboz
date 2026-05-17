@@ -315,6 +315,15 @@ class AppState:
 
     def _train_eta_model(self) -> EtaModel:
         """Bootstrap the ETA model with synthetic-but-realistic training data."""
+        from roadpulse_telemetry.logger import get_logger
+
+        get_logger("api-gateway").info(
+            "eta_model.train",
+            mode="synthetic-fixtures",
+            data_origin="synthetic",
+            pending_real_feed="vetc.hex.5min",
+            samples=900,
+        )
         rng = random.Random(99)
         rows: list[ETARecord] = []
         targets: list[float] = []
@@ -350,6 +359,15 @@ class AppState:
         return model
 
     def _train_flood_detector(self, flood_by_hex: dict[str, float]) -> FloodDetector:
+        from roadpulse_telemetry.logger import get_logger
+
+        get_logger("api-gateway").info(
+            "flood_detector.train",
+            mode="synthetic-fixtures",
+            data_origin="synthetic",
+            pending_real_feed="sentinel1.sar.water_mask",
+            hexes=len(flood_by_hex),
+        )
         observations: list[FloodObservation] = []
         for hex_id, score in flood_by_hex.items():
             observations.append(

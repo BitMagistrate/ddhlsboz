@@ -18,6 +18,7 @@ from roadpulse_telemetry.logger import configure_logging, get_logger
 
 from app import __version__
 from app.config import get_settings
+from app.data_origin import data_origin, pending_real_feeds, real_feeds
 from app.routers import (
     eta_batch,
     fleet_match,
@@ -45,6 +46,10 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         edges=len(state.graph.edges),
         flood_hexes=len(state.flood_overlay),
         orgs=len(state.seed.orgs),
+        mode="synthetic-fixtures",
+        data_origin=data_origin(),
+        real_feeds=real_feeds(),
+        pending_real_feeds=pending_real_feeds(),
     )
     yield
     logger.info("api_gateway.stopped")
@@ -57,7 +62,10 @@ app = FastAPI(
         "RoadPulse is a flood-aware mobility intelligence layer for Vietnam. This OpenAPI "
         "document covers the public ``/v1/*`` surface — three-route planning, batch ETA, "
         "isochrones, flood risk, site selection, fleet matching and the parametric "
-        "insurance trigger feed. See ``docs/api/`` for SDK snippets."
+        "insurance trigger feed. See ``docs/api/`` for SDK snippets.\n\n"
+        "**Data origin:** this build is served from synthetic VETC-shaped fixtures. "
+        "`/v1/healthz` exposes `data_origin` and the list of pending real feeds — see "
+        "the README \"What's real vs synthetic\" matrix for the full mapping."
     ),
     lifespan=lifespan,
     openapi_url="/v1/openapi.json",

@@ -31,6 +31,12 @@ def stream_buckets(csv_path: Path) -> Iterable[dict[str, object]]:
 def run(csv_path: Path, *, min_k: int = 50) -> dict[str, int]:
     """Filter the CSV through the k-anon guard and return summary counts."""
     logger = get_logger("ingestion-vetc")
+    logger.info(
+        "vetc.startup",
+        mode="synthetic-fixtures",
+        data_origin="synthetic",
+        pending_real_feed="vetc.hex.5min",
+    )
     guard = KAnonGuard(min_k=min_k, source="vetc")
     accepted = 0
     rejected = 0
