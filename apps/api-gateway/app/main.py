@@ -65,7 +65,7 @@ app = FastAPI(
         "insurance trigger feed. See ``docs/api/`` for SDK snippets.\n\n"
         "**Data origin:** this build is served from synthetic VETC-shaped fixtures. "
         "`/v1/healthz` exposes `data_origin` and the list of pending real feeds — see "
-        "the README \"What's real vs synthetic\" matrix for the full mapping."
+        'the README "What\'s real vs synthetic" matrix for the full mapping.'
     ),
     lifespan=lifespan,
     openapi_url="/v1/openapi.json",

@@ -39,9 +39,7 @@ def test_configure_logging_uses_json_renderer() -> None:
 def test_logger_scrubs_pii_fields() -> None:
     payload = json.loads(
         _emit_capture(
-            lambda log: log.info(
-                "login", phone="0901234567", email="x@example.com", note="ok"
-            )
+            lambda log: log.info("login", phone="0901234567", email="x@example.com", note="ok")
         )
     )
     assert "phone" not in payload

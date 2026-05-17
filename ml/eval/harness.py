@@ -239,9 +239,7 @@ def evaluate_eta(
         y_pred = [p.eta_s for p in preds]
         mapes.append(EtaModel.mape(test_y, y_pred))
         in_band = sum(
-            1
-            for true, p in zip(test_y, preds, strict=True)
-            if p.eta_p10_s <= true <= p.eta_p90_s
+            1 for true, p in zip(test_y, preds, strict=True) if p.eta_p10_s <= true <= p.eta_p90_s
         )
         coverages.append(in_band / max(1, len(test_y)))
     return float(np.mean(mapes)), float(np.mean(coverages))

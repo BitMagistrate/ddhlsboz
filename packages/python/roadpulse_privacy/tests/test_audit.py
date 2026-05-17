@@ -39,6 +39,7 @@ def test_in_memory_sink_respects_capacity() -> None:
 def test_violation_is_frozen() -> None:
     v = _make_violation()
     import dataclasses
+
     assert dataclasses.is_dataclass(v)
     # Frozen dataclass should refuse mutation.
     try:

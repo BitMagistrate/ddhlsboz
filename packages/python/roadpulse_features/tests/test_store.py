@@ -10,9 +10,7 @@ from roadpulse_features.store import InMemoryFeatureStore
 def test_ingest_and_get_returns_features() -> None:
     store = InMemoryFeatureStore()
     store.ingest("hex_speed_5min", "hex_a", {"avg_speed_kmh": 24.0, "vehicle_count": 200})
-    out = store.get_online_features(
-        "hex_speed_5min", ["hex_a"], ["avg_speed_kmh", "vehicle_count"]
-    )
+    out = store.get_online_features("hex_speed_5min", ["hex_a"], ["avg_speed_kmh", "vehicle_count"])
     assert out == {"hex_a": {"avg_speed_kmh": 24.0, "vehicle_count": 200}}
 
 
