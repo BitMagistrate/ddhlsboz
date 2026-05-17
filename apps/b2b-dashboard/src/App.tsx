@@ -1,9 +1,12 @@
 import { NavLink, Route, Routes } from "react-router-dom";
 
 import { DispatchPage } from "@/pages/dispatch";
+import { FloodWatchPage } from "@/pages/flood-watch";
 import { TollYieldPage } from "@/pages/toll-yield";
 import { SiteSelectionPage } from "@/pages/site-selection";
 import { FleetMatchPage } from "@/pages/fleet-match";
+
+const LINK = ({ isActive }: { isActive: boolean }) => (isActive ? "active" : "");
 
 export function App() {
   return (
@@ -12,19 +15,15 @@ export function App() {
         <h1>
           Road<span>Pulse</span>
         </h1>
+        <div className="data-banner" role="status">
+          synthetic-fixtures · no real VETC feed yet
+        </div>
         <nav>
-          <NavLink to="/" end className={({ isActive }) => (isActive ? "active" : "")}>
-            Dispatch
-          </NavLink>
-          <NavLink to="/toll-yield" className={({ isActive }) => (isActive ? "active" : "")}>
-            Toll yield
-          </NavLink>
-          <NavLink to="/site-selection" className={({ isActive }) => (isActive ? "active" : "")}>
-            Site selection
-          </NavLink>
-          <NavLink to="/fleet-match" className={({ isActive }) => (isActive ? "active" : "")}>
-            Fleet match
-          </NavLink>
+          <NavLink to="/" end className={LINK}>Dispatch</NavLink>
+          <NavLink to="/flood-watch" className={LINK}>Flood watch</NavLink>
+          <NavLink to="/toll-yield" className={LINK}>Toll yield</NavLink>
+          <NavLink to="/site-selection" className={LINK}>Site selection</NavLink>
+          <NavLink to="/fleet-match" className={LINK}>Fleet match</NavLink>
         </nav>
         <div className="footer">
           v0.1.0 · HCMC · k-anon ≥ 50
@@ -34,6 +33,7 @@ export function App() {
       <main>
         <Routes>
           <Route index element={<DispatchPage />} />
+          <Route path="flood-watch" element={<FloodWatchPage />} />
           <Route path="toll-yield" element={<TollYieldPage />} />
           <Route path="site-selection" element={<SiteSelectionPage />} />
           <Route path="fleet-match" element={<FleetMatchPage />} />

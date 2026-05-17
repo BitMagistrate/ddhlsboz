@@ -4,6 +4,16 @@
  * flags.
  */
 import { useMutation } from "@tanstack/react-query";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Cell,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 
 import { api } from "@/lib/api";
 
@@ -34,7 +44,36 @@ export function FleetMatchPage() {
       {match.isError && <p style={{ color: "var(--rp-bad)" }}>{(match.error as Error).message}</p>}
 
       {match.data && (
-        <div className="card">
+        <div className="chart-grid">
+          <div className="chart-card">
+            <h3>Bids by fleet (₫)</h3>
+            <div className="muted">Green = flood-safe, amber = re-route advised</div>
+            <div style={{ width: "100%", height: 240 }}>
+              <ResponsiveContainer>
+                <BarChart
+                  data={match.data.candidates.map((c) => ({
+                    fleet_name: c.fleet_name,
+                    bid_vnd: c.bid_vnd,
+                  }))}
+                >
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                  <XAxis dataKey="fleet_name" stroke="#475569" fontSize={11} />
+                  <YAxis stroke="#475569" />
+                  <Tooltip formatter={(v: number) => `${v.toLocaleString("vi-VN")} ₫`} />
+                  <Bar dataKey="bid_vnd">
+                    {match.data.candidates.map((c) => (
+                      <Cell key={c.fleet_id} fill={c.flood_safe ? "#16A34A" : "#F59E0B"} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {match.data && (
+        <div className="card section">
           <table>
             <thead>
               <tr>

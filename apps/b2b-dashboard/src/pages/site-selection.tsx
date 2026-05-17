@@ -3,7 +3,16 @@
  * planners. The bounding box defaults to inner HCMC.
  */
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 
 import { api } from "@/lib/api";
 
@@ -15,6 +24,16 @@ export function SiteSelectionPage() {
     queryKey: ["site-selection", hour],
     queryFn: () => api.siteSelection(HCMC_BBOX, hour),
   });
+
+  const chartData = useMemo(
+    () =>
+      (sites.data?.ranked ?? []).slice(0, 8).map((c) => ({
+        hex: c.hex_id.slice(-6),
+        origin: c.origin_flows,
+        destination: c.destination_flows,
+      })),
+    [sites.data],
+  );
 
   return (
     <section>
@@ -38,7 +57,28 @@ export function SiteSelectionPage() {
         <span className="muted">0 = Monday 00:00 · 96 = Friday 00:00</span>
       </div>
 
-      <div className="card">
+      {sites.data && chartData.length > 0 && (
+        <div className="chart-grid">
+          <div className="chart-card">
+            <h3>Top-8 hex flows</h3>
+            <div className="muted">Origin vs destination flows, aggregated for hour {hour}</div>
+            <div style={{ width: "100%", height: 260 }}>
+              <ResponsiveContainer>
+                <BarChart data={chartData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                  <XAxis dataKey="hex" stroke="#475569" />
+                  <YAxis stroke="#475569" />
+                  <Tooltip />
+                  <Bar dataKey="origin" fill="#2563EB" />
+                  <Bar dataKey="destination" fill="#16A34A" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="card section">
         {sites.isPending && <p>Crunching aggregated VETC flows…</p>}
         {sites.isError && <p style={{ color: "var(--rp-bad)" }}>{(sites.error as Error).message}</p>}
         {sites.data && (

@@ -109,3 +109,24 @@ tr:last-child td { border-bottom: none; }
 }
 
 .section + .section { margin-top: 24px; }
+
+.data-banner {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: rgba(245, 158, 11, 0.18);
+  color: #fde68a;
+  font-weight: 600;
+}
+
+.chart-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  margin-top: 18px;
+}
+.chart-card { background: var(--rp-surface); border-radius: 14px; border: 1px solid var(--rp-border); padding: 18px; }
+.chart-card h3 { margin: 0 0 4px; font-size: 15px; }
+.chart-card .muted { color: var(--rp-text-muted); font-size: 12px; margin-bottom: 12px; }

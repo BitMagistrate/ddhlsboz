@@ -58,6 +58,21 @@ export type TriggerEvent = {
   signature_b64: string;
 };
 
+export type FloodHex = {
+  hex_id: string;
+  lat: number;
+  lng: number;
+  score: number;
+};
+
+export type HealthResponse = {
+  status: "ok";
+  version: string;
+  data_origin: "synthetic" | "real";
+  real_feeds: string[];
+  pending_real_feeds: string[];
+};
+
 async function call<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`${BASE_URL}${path}`, {
     ...init,
@@ -93,5 +108,11 @@ export const api = {
     return call<{ policy_id: string; events: TriggerEvent[]; public_key_pem: string }>(
       `/v1/trigger-feed/${encodeURIComponent(policyId)}`,
     );
+  },
+  floodRisk(horizon: "now" | "1h" | "3h" | "6h" = "now") {
+    return call<{ hexes: FloodHex[] }>(`/v1/flood-risk?horizon=${horizon}`);
+  },
+  health() {
+    return call<HealthResponse>("/v1/healthz");
   },
 };

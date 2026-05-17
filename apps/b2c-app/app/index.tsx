@@ -38,6 +38,9 @@ export default function TripPlannerScreen() {
   return (
     <SafeAreaView style={styles.screen}>
       <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.banner}>
+          <Text style={styles.bannerText}>synthetic-fixtures · not real VETC data</Text>
+        </View>
         <Text style={styles.heading}>Where to?</Text>
 
         <View style={styles.odCard}>
@@ -119,6 +122,14 @@ function VariantCard({
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: palette.surface },
   container: { padding: 20, gap: 18 },
+  banner: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: radius.pill,
+    backgroundColor: "rgba(245,158,11,0.16)",
+    alignSelf: "flex-start",
+  },
+  bannerText: { color: palette.hazard, fontWeight: "600", fontSize: 11, letterSpacing: 0.6 },
   heading: { fontSize: 28, fontWeight: "700", color: palette.ink },
   subheading: { fontSize: 18, fontWeight: "600", color: palette.ink, marginBottom: 8 },
   odCard: { backgroundColor: palette.surfaceMuted, borderRadius: radius.lg, padding: 16, gap: 12 },

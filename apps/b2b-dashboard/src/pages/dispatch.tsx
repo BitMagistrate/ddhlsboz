@@ -5,6 +5,16 @@
  */
 import { useMutation } from "@tanstack/react-query";
 import { useMemo } from "react";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Cell,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 
 import { api, type EtaBatchItem } from "@/lib/api";
 
@@ -57,7 +67,51 @@ export function DispatchPage() {
       {eta.isError && <p style={{ color: "var(--rp-bad)" }}>{(eta.error as Error).message}</p>}
 
       {eta.data && (
-        <div className="card">
+        <div className="chart-grid">
+          <div className="chart-card">
+            <h3>ETA per order (min)</h3>
+            <div className="muted">Bars coloured by flood-risk band</div>
+            <div style={{ width: "100%", height: 260 }}>
+              <ResponsiveContainer>
+                <BarChart
+                  data={eta.data.predictions.map((p) => ({
+                    order_id: p.order_id.replace("ORD-", ""),
+                    eta_min: Math.round(p.eta_s / 60),
+                    fill:
+                      p.flood_score >= 0.7
+                        ? "#DC2626"
+                        : p.flood_score >= 0.4
+                        ? "#F59E0B"
+                        : "#16A34A",
+                  }))}
+                >
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                  <XAxis dataKey="order_id" stroke="#475569" />
+                  <YAxis stroke="#475569" allowDecimals={false} />
+                  <Tooltip />
+                  <Bar dataKey="eta_min">
+                    {eta.data.predictions.map((p) => (
+                      <Cell
+                        key={p.order_id}
+                        fill={
+                          p.flood_score >= 0.7
+                            ? "#DC2626"
+                            : p.flood_score >= 0.4
+                            ? "#F59E0B"
+                            : "#16A34A"
+                        }
+                      />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {eta.data && (
+        <div className="card section">
           <table>
             <thead>
               <tr>

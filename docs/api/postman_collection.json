@@ -1,0 +1,170 @@
+{
+  "info": {
+    "name": "RoadPulse Public API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Three-variant flood-aware routing, batch ETA, isochrones, flood-risk, site-selection, fleet matching and the Ed25519 trigger feed.\n\nAll endpoints serve **synthetic-fixtures** data; the `data_origin` field on every healthz/version response confirms this.\n\nMaintained by Vladimir Ermolenko & Sergey Karelin — security@roadpulse.dev."
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000",
+      "type": "string"
+    },
+    {
+      "key": "api_key",
+      "value": "demo_synthetic_key",
+      "type": "string"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {"key": "key", "value": "X-Api-Key", "type": "string"},
+      {"key": "value", "value": "{{api_key}}", "type": "string"},
+      {"key": "in", "value": "header", "type": "string"}
+    ]
+  },
+  "item": [
+    {
+      "name": "health",
+      "item": [
+        {
+          "name": "GET /v1/healthz",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {"raw": "{{base_url}}/v1/healthz", "host": ["{{base_url}}"], "path": ["v1", "healthz"]}
+          }
+        },
+        {
+          "name": "GET /v1/readyz",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {"raw": "{{base_url}}/v1/readyz", "host": ["{{base_url}}"], "path": ["v1", "readyz"]}
+          }
+        },
+        {
+          "name": "GET /v1/version",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {"raw": "{{base_url}}/v1/version", "host": ["{{base_url}}"], "path": ["v1", "version"]}
+          }
+        }
+      ]
+    },
+    {
+      "name": "routing",
+      "item": [
+        {
+          "name": "POST /v1/route",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"origin\":      {\"lat\": 10.820, \"lng\": 106.645},\n  \"destination\": {\"lat\": 10.754, \"lng\": 106.733},\n  \"mode\": \"motorbike\",\n  \"avoid_flood\": true,\n  \"locale\": \"vi\"\n}"
+            },
+            "url": {"raw": "{{base_url}}/v1/route", "host": ["{{base_url}}"], "path": ["v1", "route"]}
+          }
+        },
+        {
+          "name": "POST /v1/eta-batch",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"batch_id\": \"demo_001\",\n  \"items\": [\n    {\n      \"order_id\": \"ord_001\",\n      \"origin\":      {\"lat\": 10.820, \"lng\": 106.645},\n      \"destination\": {\"lat\": 10.754, \"lng\": 106.733},\n      \"mode\": \"motorbike\"\n    }\n  ]\n}"
+            },
+            "url": {"raw": "{{base_url}}/v1/eta-batch", "host": ["{{base_url}}"], "path": ["v1", "eta-batch"]}
+          }
+        },
+        {
+          "name": "POST /v1/isochrone",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"origin\": {\"lat\": 10.780, \"lng\": 106.700},\n  \"minutes\": [5, 10, 15],\n  \"mode\": \"motorbike\"\n}"
+            },
+            "url": {"raw": "{{base_url}}/v1/isochrone", "host": ["{{base_url}}"], "path": ["v1", "isochrone"]}
+          }
+        }
+      ]
+    },
+    {
+      "name": "intelligence",
+      "item": [
+        {
+          "name": "GET /v1/flood-risk (now)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/v1/flood-risk?horizon=now",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "flood-risk"],
+              "query": [{"key": "horizon", "value": "now"}]
+            }
+          }
+        },
+        {
+          "name": "POST /v1/site-selection",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bbox\": [106.64, 10.73, 106.78, 10.83],\n  \"audience\": \"retail\",\n  \"weekday\": [0, 1, 2, 3, 4],\n  \"hour_start\": 7,\n  \"hour_end\": 22\n}"
+            },
+            "url": {"raw": "{{base_url}}/v1/site-selection", "host": ["{{base_url}}"], "path": ["v1", "site-selection"]}
+          }
+        },
+        {
+          "name": "POST /v1/fleet-match",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pickup\":  {\"lat\": 10.780, \"lng\": 106.700},\n  \"dropoff\": {\"lat\": 10.754, \"lng\": 106.733},\n  \"weight_kg\": 800,\n  \"volume_m3\": 5,\n  \"mode\": \"truck\"\n}"
+            },
+            "url": {"raw": "{{base_url}}/v1/fleet-match", "host": ["{{base_url}}"], "path": ["v1", "fleet-match"]}
+          }
+        }
+      ]
+    },
+    {
+      "name": "trigger feed",
+      "item": [
+        {
+          "name": "GET /v1/trigger-feed/{policy_id}",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/v1/trigger-feed/policy_pti_d1_flood_2024",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "trigger-feed", "policy_pti_d1_flood_2024"]
+            }
+          }
+        },
+        {
+          "name": "GET /v1/trigger-feed/{policy_id}/pubkey",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/v1/trigger-feed/policy_pti_d1_flood_2024/pubkey",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "trigger-feed", "policy_pti_d1_flood_2024", "pubkey"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

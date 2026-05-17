@@ -33,11 +33,10 @@ from pathlib import Path
 from typing import Any
 
 import numpy as np
-from roadpulse_ml.eta import ETARecord, EtaModel
+from roadpulse_ml.eta import EtaModel, ETARecord
 from roadpulse_ml.flood import FloodDetector, FloodObservation
 from roadpulse_routing.engine import RoutingEngine, StaticPenalty
 from roadpulse_routing.graph import Edge, Graph, Node
-
 
 ETA_MAPE_TARGET = 0.18
 ETA_COVERAGE_TARGET = 0.75
