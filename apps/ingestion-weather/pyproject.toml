@@ -1,0 +1,11 @@
+[project]
+name = "ingestion-weather"
+version = "0.1.0"
+description = "RoadPulse weather ingestion"
+requires-python = ">=3.12"
+dependencies = ["roadpulse-telemetry"]
+[tool.uv.sources]
+roadpulse-telemetry = { workspace = true }
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

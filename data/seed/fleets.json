@@ -1,0 +1,57 @@
+[
+  {
+    "id": "fleet_001",
+    "name": "TASCO Logistics \u2014 Saigon Hub",
+    "vehicle_class": "truck_5t",
+    "capacity_kg": 5000,
+    "capacity_m3": 22.0,
+    "depot_lat": 10.79,
+    "depot_lng": 106.66,
+    "rate_per_km_vnd": 19500,
+    "rating": 4.7
+  },
+  {
+    "id": "fleet_002",
+    "name": "Ph\u01b0\u01a1ng Trang \u2014 D1 Depot",
+    "vehicle_class": "van_1t",
+    "capacity_kg": 1200,
+    "capacity_m3": 9.0,
+    "depot_lat": 10.776,
+    "depot_lng": 106.69,
+    "rate_per_km_vnd": 11000,
+    "rating": 4.5
+  },
+  {
+    "id": "fleet_003",
+    "name": "Ahamove Bike Network",
+    "vehicle_class": "motorbike",
+    "capacity_kg": 60,
+    "capacity_m3": 0.2,
+    "depot_lat": 10.78,
+    "depot_lng": 106.7,
+    "rate_per_km_vnd": 4200,
+    "rating": 4.6
+  },
+  {
+    "id": "fleet_004",
+    "name": "Vinatrans Heavy",
+    "vehicle_class": "truck_15t",
+    "capacity_kg": 15000,
+    "capacity_m3": 60.0,
+    "depot_lat": 10.745,
+    "depot_lng": 106.71,
+    "rate_per_km_vnd": 32000,
+    "rating": 4.4
+  },
+  {
+    "id": "fleet_005",
+    "name": "GHTK Last-Mile",
+    "vehicle_class": "van_2t",
+    "capacity_kg": 2000,
+    "capacity_m3": 14.0,
+    "depot_lat": 10.77,
+    "depot_lng": 106.705,
+    "rate_per_km_vnd": 13500,
+    "rating": 4.55
+  }
+]

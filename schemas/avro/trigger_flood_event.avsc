@@ -1,0 +1,16 @@
+{
+  "type": "record",
+  "name": "TriggerFloodEvent",
+  "namespace": "vn.roadpulse.trigger.v1",
+  "doc": "Signed parametric-insurance trigger emitted by trigger-feed. Consumed by Bao Viet / PVI policy engines as oracle. The event payload is Ed25519-signed against the policy key so the carrier can replay it for audit.",
+  "fields": [
+    {"name": "policy_id",       "type": "string"},
+    {"name": "event_id",        "type": "string"},
+    {"name": "hex_id",          "type": "string"},
+    {"name": "score",           "type": "float"},
+    {"name": "threshold",       "type": "float"},
+    {"name": "ts_ms",           "type": "long"},
+    {"name": "payout_vnd",      "type": "long",   "default": 0},
+    {"name": "signature_b64",   "type": "string", "doc": "Base64 Ed25519 signature over `policy_id|event_id|hex_id|score|ts_ms`."}
+  ]
+}

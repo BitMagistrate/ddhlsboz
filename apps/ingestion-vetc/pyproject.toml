@@ -1,0 +1,17 @@
+[project]
+name = "ingestion-vetc"
+version = "0.1.0"
+description = "RoadPulse VETC SFTP/CSV ingestion"
+requires-python = ">=3.12"
+dependencies = [
+    "roadpulse-privacy",
+    "roadpulse-telemetry",
+]
+
+[tool.uv.sources]
+roadpulse-privacy = { workspace = true }
+roadpulse-telemetry = { workspace = true }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

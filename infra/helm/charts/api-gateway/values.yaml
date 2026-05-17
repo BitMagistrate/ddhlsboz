@@ -1,0 +1,39 @@
+replicaCount: 3
+
+image:
+  repository: registry.vngcloud.vn/roadpulse/api-gateway
+  pullPolicy: IfNotPresent
+  tag: "0.1.0"
+
+service:
+  type: ClusterIP
+  port: 8080
+
+resources:
+  requests:
+    cpu: 250m
+    memory: 256Mi
+  limits:
+    cpu: 1
+    memory: 1Gi
+
+env:
+  ROADPULSE_LOG_LEVEL: INFO
+  ROADPULSE_KANON_MIN_K: "50"
+
+ingress:
+  enabled: true
+  className: nginx
+  host: api.roadpulse.vn
+  tls:
+    enabled: true
+    secretName: roadpulse-tls
+
+autoscaling:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 12
+  targetCPUUtilizationPercentage: 70
+
+podDisruptionBudget:
+  minAvailable: 2

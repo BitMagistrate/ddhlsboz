@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package vn.roadpulse.ingestion.v1;
+
+// Voluntary fleet-SDK probe ingestion. The driver_id is hashed locally on the
+// handset; the raw GPS trace never leaves the device. The collector enforces
+// k-anonymity at hex-bucket granularity before forwarding to Kafka.
+
+message Probe {
+  string device_hash = 1;
+  string hex_id = 2;
+  int64 ts_ms = 3;
+  double speed_kmh = 4;
+  double heading_deg = 5;
+  string vehicle_class = 6;
+  string sdk_version = 7;
+}
+
+message ProbeAck {
+  bool accepted = 1;
+  string reason = 2;
+}
+
+service SdkCollector {
+  rpc Submit(stream Probe) returns (stream ProbeAck);
+}

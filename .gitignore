@@ -1,0 +1,64 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+.env
+.env.local
+.envrc.local
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+build/
+dist/
+.uv-cache/
+
+# Node / pnpm
+node_modules/
+.pnpm-store/
+.next/
+.turbo/
+.nx/cache/
+.eslintcache
+.parcel-cache/
+
+# Vite / RN / Expo
+apps/b2b-dashboard/dist/
+apps/b2b-dashboard/.vite/
+apps/b2c-app/.expo/
+apps/b2c-app/web-build/
+apps/b2c-app/dist/
+
+# Editors
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+*.swo
+.DS_Store
+
+# Generated artefacts
+proto/_generated/
+schemas/_generated/
+packages/ts/api-client/dist/
+packages/ts/api-client/src/_openapi/
+ml/registry/_local/
+data/raw/
+data/processed/
+data/parquet/
+
+# Infra / secrets
+infra/terraform/.terraform/
+infra/terraform/*.tfstate*
+infra/helm/charts/*.tgz
+*.pem
+*.key
+
+# OS
+Thumbs.db

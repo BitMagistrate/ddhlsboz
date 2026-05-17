@@ -1,0 +1,13 @@
+{
+  "type": "record",
+  "name": "KAnonViolation",
+  "namespace": "vn.roadpulse.audit.v1",
+  "doc": "Privacy audit record. Emitted whenever the KAnonGuard rejects a bucket because k < 50 — the bucket itself is dropped and only this metadata survives, so the violation log is itself privacy-safe.",
+  "fields": [
+    {"name": "source",          "type": "string"},
+    {"name": "bucket",          "type": "string"},
+    {"name": "attempted_k",     "type": "int"},
+    {"name": "min_k",           "type": "int"},
+    {"name": "dropped_at_ms",   "type": "long"}
+  ]
+}

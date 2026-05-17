@@ -1,0 +1,16 @@
+{
+  "type": "record",
+  "name": "WeatherDistrictHourly",
+  "namespace": "vn.roadpulse.weather.v1",
+  "doc": "Hourly weather rollup at the administrative-district level (Quận / Huyện in VN). Sourced from NMHS bulletins, GSMaP near-real-time precipitation and the operational HRRR-VN regional model.",
+  "fields": [
+    {"name": "district_code",   "type": "string", "doc": "VN GSO admin code, e.g. 79760 for District 1 HCMC."},
+    {"name": "hour_start_ms",   "type": "long"},
+    {"name": "precipitation_mm_h", "type": "float"},
+    {"name": "wind_kmh",        "type": "float"},
+    {"name": "wind_dir_deg",    "type": "float"},
+    {"name": "temperature_c",   "type": "float"},
+    {"name": "humidity_pct",    "type": "float"},
+    {"name": "source",          "type": "string"}
+  ]
+}

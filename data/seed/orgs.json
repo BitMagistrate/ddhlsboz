@@ -1,0 +1,47 @@
+[
+  {
+    "id": "org_demo",
+    "name": "RoadPulse Demo Tenant",
+    "tier": "internal",
+    "country": "VN",
+    "api_keys": [
+      "rp_demo_key_2024"
+    ]
+  },
+  {
+    "id": "org_grab_dispatch",
+    "name": "Grab Vietnam \u2014 Dispatch Pilot",
+    "tier": "b2b",
+    "country": "VN",
+    "api_keys": [
+      "rp_grab_pilot_aZ19"
+    ]
+  },
+  {
+    "id": "org_lazada_express",
+    "name": "Lazada Express VN",
+    "tier": "b2b",
+    "country": "VN",
+    "api_keys": [
+      "rp_lex_pilot_bP44"
+    ]
+  },
+  {
+    "id": "org_pti_insurance",
+    "name": "PTI Insurance",
+    "tier": "b2b2c",
+    "country": "VN",
+    "api_keys": [
+      "rp_pti_oracle_kQ77"
+    ]
+  },
+  {
+    "id": "org_vinmart",
+    "name": "Winmart Site Selection",
+    "tier": "b2b",
+    "country": "VN",
+    "api_keys": [
+      "rp_winmart_studio_aL07"
+    ]
+  }
+]

@@ -1,0 +1,1119 @@
+openapi: 3.1.0
+info:
+  title: RoadPulse Public API
+  description: RoadPulse is a flood-aware mobility intelligence layer for Vietnam.
+    This OpenAPI document covers the public ``/v1/*`` surface — three-route planning,
+    batch ETA, isochrones, flood risk, site selection, fleet matching and the parametric
+    insurance trigger feed. See ``docs/api/`` for SDK snippets.
+  version: 0.1.0
+paths:
+  /v1/healthz:
+    get:
+      tags:
+      - health
+      summary: Liveness probe
+      operationId: healthz_v1_healthz_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+  /v1/readyz:
+    get:
+      tags:
+      - health
+      summary: Readiness probe
+      operationId: readyz_v1_readyz_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+  /v1/version:
+    get:
+      tags:
+      - health
+      summary: Build metadata
+      operationId: version_v1_version_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties:
+                  type: string
+                type: object
+                title: Response Version V1 Version Get
+  /v1/route:
+    post:
+      tags:
+      - route
+      summary: Plan a flood-aware route with fast/safe/eco variants
+      operationId: post_route_v1_route_post
+      parameters:
+      - name: X-API-Key
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: X-Api-Key
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RouteRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RouteResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/eta-batch:
+    post:
+      tags:
+      - eta
+      summary: Predict ETA for a batch of 1–50K orders
+      operationId: post_eta_batch_v1_eta_batch_post
+      parameters:
+      - name: X-API-Key
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: X-Api-Key
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchEtaRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchEtaResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/isochrone:
+    post:
+      tags:
+      - isochrone
+      summary: Compute reachability rings for several minute thresholds
+      operationId: post_isochrone_v1_isochrone_post
+      parameters:
+      - name: X-API-Key
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: X-Api-Key
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IsochroneRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IsochroneResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/flood-risk:
+    get:
+      tags:
+      - flood
+      summary: Return current/forecast flood scores for a set of hexes or bbox
+      operationId: get_flood_risk_v1_flood_risk_get
+      parameters:
+      - name: hex_ids
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: array
+            items:
+              type: string
+          - type: 'null'
+          title: Hex Ids
+      - name: bbox
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: array
+            prefixItems:
+            - type: number
+            - type: number
+            - type: number
+            - type: number
+            minItems: 4
+            maxItems: 4
+          - type: 'null'
+          description: minLng,minLat,maxLng,maxLat
+          title: Bbox
+        description: minLng,minLat,maxLng,maxLat
+      - name: horizon
+        in: query
+        required: false
+        schema:
+          enum:
+          - now
+          - 1h
+          - 3h
+          - 6h
+          type: string
+          default: now
+          title: Horizon
+      - name: X-API-Key
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: X-Api-Key
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FloodRiskResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/site-selection:
+    post:
+      tags:
+      - site-selection
+      summary: Rank hexes inside a bbox by attractiveness for retail site selection
+      operationId: post_site_selection_v1_site_selection_post
+      parameters:
+      - name: X-API-Key
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: X-Api-Key
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SiteSelectionRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SiteSelectionResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/fleet-match:
+    post:
+      tags:
+      - fleet-match
+      summary: Match a shipper request against the carrier marketplace
+      operationId: post_fleet_match_v1_fleet_match_post
+      parameters:
+      - name: X-API-Key
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: X-Api-Key
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FleetMatchRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FleetMatchResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/trigger-feed/{policy_id}:
+    get:
+      tags:
+      - trigger-feed
+      summary: Stream parametric insurance trigger events for a policy
+      operationId: get_trigger_feed_v1_trigger_feed__policy_id__get
+      parameters:
+      - name: policy_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Policy Id
+      - name: X-API-Key
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: X-Api-Key
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TriggerFeedResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/trigger-feed/{policy_id}/pubkey:
+    get:
+      tags:
+      - trigger-feed
+      summary: Ed25519 public key for verifying trigger event signatures
+      operationId: get_pubkey_v1_trigger_feed__policy_id__pubkey_get
+      parameters:
+      - name: policy_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Policy Id
+      - name: X-API-Key
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: X-Api-Key
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            text/plain:
+              schema:
+                type: string
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    BatchEtaItem:
+      properties:
+        order_id:
+          type: string
+          title: Order Id
+        origin:
+          $ref: '#/components/schemas/LatLon'
+        destination:
+          $ref: '#/components/schemas/LatLon'
+        mode:
+          $ref: '#/components/schemas/RouteMode'
+          default: motorbike
+        pickup_window_min:
+          type: integer
+          maximum: 240.0
+          minimum: 0.0
+          title: Pickup Window Min
+          default: 15
+      additionalProperties: false
+      type: object
+      required:
+      - order_id
+      - origin
+      - destination
+      title: BatchEtaItem
+    BatchEtaPrediction:
+      properties:
+        order_id:
+          type: string
+          title: Order Id
+        distance_m:
+          type: number
+          title: Distance M
+        eta_s:
+          type: number
+          title: Eta S
+        eta_p10_s:
+          type: number
+          title: Eta P10 S
+        eta_p90_s:
+          type: number
+          title: Eta P90 S
+        flood_score:
+          type: number
+          title: Flood Score
+        confidence:
+          $ref: '#/components/schemas/EtaConfidence'
+      type: object
+      required:
+      - order_id
+      - distance_m
+      - eta_s
+      - eta_p10_s
+      - eta_p90_s
+      - flood_score
+      - confidence
+      title: BatchEtaPrediction
+    BatchEtaRequest:
+      properties:
+        batch_id:
+          type: string
+          title: Batch Id
+        items:
+          items:
+            $ref: '#/components/schemas/BatchEtaItem'
+          type: array
+          maxItems: 50000
+          minItems: 1
+          title: Items
+        depart_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Depart At
+      additionalProperties: false
+      type: object
+      required:
+      - batch_id
+      - items
+      title: BatchEtaRequest
+    BatchEtaResponse:
+      properties:
+        batch_id:
+          type: string
+          title: Batch Id
+        generated_at:
+          type: string
+          format: date-time
+          title: Generated At
+        predictions:
+          items:
+            $ref: '#/components/schemas/BatchEtaPrediction'
+          type: array
+          title: Predictions
+        summary:
+          additionalProperties:
+            type: number
+          type: object
+          title: Summary
+      type: object
+      required:
+      - batch_id
+      - generated_at
+      - predictions
+      - summary
+      title: BatchEtaResponse
+    EtaConfidence:
+      type: string
+      enum:
+      - low
+      - medium
+      - high
+      title: EtaConfidence
+      description: Categorical confidence label attached to ETA predictions.
+    FleetMatchCandidate:
+      properties:
+        fleet_id:
+          type: string
+          title: Fleet Id
+        fleet_name:
+          type: string
+          title: Fleet Name
+        vehicle_class:
+          type: string
+          title: Vehicle Class
+        capacity_kg:
+          type: number
+          title: Capacity Kg
+        capacity_m3:
+          type: number
+          title: Capacity M3
+        pickup_eta_min:
+          type: number
+          title: Pickup Eta Min
+        quote_vnd:
+          type: integer
+          title: Quote Vnd
+        flood_risk:
+          type: number
+          title: Flood Risk
+        rating:
+          type: number
+          title: Rating
+      type: object
+      required:
+      - fleet_id
+      - fleet_name
+      - vehicle_class
+      - capacity_kg
+      - capacity_m3
+      - pickup_eta_min
+      - quote_vnd
+      - flood_risk
+      - rating
+      title: FleetMatchCandidate
+    FleetMatchRequest:
+      properties:
+        pickup:
+          $ref: '#/components/schemas/LatLon'
+        dropoff:
+          $ref: '#/components/schemas/LatLon'
+        weight_kg:
+          type: number
+          minimum: 1.0
+          title: Weight Kg
+        volume_m3:
+          type: number
+          minimum: 0.01
+          title: Volume M3
+        mode:
+          $ref: '#/components/schemas/RouteMode'
+          default: truck
+        departure_window_min:
+          type: integer
+          maximum: 720.0
+          minimum: 10.0
+          title: Departure Window Min
+          default: 60
+      additionalProperties: false
+      type: object
+      required:
+      - pickup
+      - dropoff
+      - weight_kg
+      - volume_m3
+      title: FleetMatchRequest
+    FleetMatchResponse:
+      properties:
+        request_id:
+          type: string
+          title: Request Id
+        generated_at:
+          type: string
+          format: date-time
+          title: Generated At
+        candidates:
+          items:
+            $ref: '#/components/schemas/FleetMatchCandidate'
+          type: array
+          title: Candidates
+      type: object
+      required:
+      - request_id
+      - generated_at
+      - candidates
+      title: FleetMatchResponse
+    FloodOverlayPoint:
+      properties:
+        hex_id:
+          type: string
+          title: Hex Id
+        centroid:
+          $ref: '#/components/schemas/LatLon'
+        score:
+          type: number
+          maximum: 1.0
+          minimum: 0.0
+          title: Score
+        horizon:
+          type: string
+          enum:
+          - now
+          - 1h
+          - 3h
+          - 6h
+          title: Horizon
+          default: now
+      type: object
+      required:
+      - hex_id
+      - centroid
+      - score
+      title: FloodOverlayPoint
+    FloodRiskResponse:
+      properties:
+        horizon:
+          type: string
+          enum:
+          - now
+          - 1h
+          - 3h
+          - 6h
+          title: Horizon
+        generated_at:
+          type: string
+          format: date-time
+          title: Generated At
+        hexes:
+          items:
+            $ref: '#/components/schemas/FloodOverlayPoint'
+          type: array
+          title: Hexes
+      type: object
+      required:
+      - horizon
+      - generated_at
+      - hexes
+      title: FloodRiskResponse
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    HealthResponse:
+      properties:
+        status:
+          type: string
+          enum:
+          - ok
+          - degraded
+          - down
+          title: Status
+        version:
+          type: string
+          title: Version
+        build_sha:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Build Sha
+        uptime_s:
+          type: number
+          title: Uptime S
+        services:
+          additionalProperties:
+            type: string
+          type: object
+          title: Services
+      type: object
+      required:
+      - status
+      - version
+      - uptime_s
+      - services
+      title: HealthResponse
+    IsochroneRequest:
+      properties:
+        origin:
+          $ref: '#/components/schemas/LatLon'
+        minutes:
+          items:
+            type: integer
+          type: array
+          maxItems: 6
+          minItems: 1
+          title: Minutes
+        mode:
+          $ref: '#/components/schemas/RouteMode'
+          default: motorbike
+        depart_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Depart At
+      additionalProperties: false
+      type: object
+      required:
+      - origin
+      title: IsochroneRequest
+    IsochroneResponse:
+      properties:
+        origin:
+          $ref: '#/components/schemas/LatLon'
+        generated_at:
+          type: string
+          format: date-time
+          title: Generated At
+        rings:
+          items:
+            $ref: '#/components/schemas/IsochroneRing'
+          type: array
+          title: Rings
+      type: object
+      required:
+      - origin
+      - generated_at
+      - rings
+      title: IsochroneResponse
+    IsochroneRing:
+      properties:
+        minutes:
+          type: integer
+          title: Minutes
+        area_km2:
+          type: number
+          title: Area Km2
+        population_reached:
+          type: integer
+          title: Population Reached
+        polygon:
+          items:
+            $ref: '#/components/schemas/LatLon'
+          type: array
+          title: Polygon
+      type: object
+      required:
+      - minutes
+      - area_km2
+      - population_reached
+      - polygon
+      title: IsochroneRing
+    LatLon:
+      properties:
+        lat:
+          type: number
+          maximum: 90.0
+          minimum: -90.0
+          title: Lat
+        lng:
+          type: number
+          maximum: 180.0
+          minimum: -180.0
+          title: Lng
+      additionalProperties: false
+      type: object
+      required:
+      - lat
+      - lng
+      title: LatLon
+      description: A geographic coordinate (WGS-84). Latitude first, longitude second.
+    RouteMode:
+      type: string
+      enum:
+      - motorbike
+      - car
+      - truck
+      - bicycle
+      title: RouteMode
+      description: Mode of transport supported by the routing engine.
+    RouteRequest:
+      properties:
+        origin:
+          $ref: '#/components/schemas/LatLon'
+        destination:
+          $ref: '#/components/schemas/LatLon'
+        mode:
+          $ref: '#/components/schemas/RouteMode'
+          default: motorbike
+        depart_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Depart At
+        time_of_day:
+          $ref: '#/components/schemas/TimeOfDay'
+          default: now
+        avoid_tolls:
+          type: boolean
+          title: Avoid Tolls
+          default: false
+        avoid_flood:
+          type: boolean
+          title: Avoid Flood
+          default: true
+        locale:
+          type: string
+          title: Locale
+          default: vi
+        ride_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Ride Id
+      additionalProperties: false
+      type: object
+      required:
+      - origin
+      - destination
+      title: RouteRequest
+    RouteResponse:
+      properties:
+        request_id:
+          type: string
+          title: Request Id
+        generated_at:
+          type: string
+          format: date-time
+          title: Generated At
+        variants:
+          items:
+            $ref: '#/components/schemas/RouteVariant'
+          type: array
+          title: Variants
+        flood_overlay:
+          items:
+            $ref: '#/components/schemas/FloodOverlayPoint'
+          type: array
+          title: Flood Overlay
+        weather_note:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Weather Note
+      type: object
+      required:
+      - request_id
+      - generated_at
+      - variants
+      - flood_overlay
+      title: RouteResponse
+    RouteStep:
+      properties:
+        instruction:
+          type: string
+          title: Instruction
+        distance_m:
+          type: number
+          title: Distance M
+        duration_s:
+          type: number
+          title: Duration S
+        bearing_deg:
+          type: number
+          title: Bearing Deg
+        geometry:
+          items:
+            $ref: '#/components/schemas/LatLon'
+          type: array
+          title: Geometry
+      type: object
+      required:
+      - instruction
+      - distance_m
+      - duration_s
+      - bearing_deg
+      - geometry
+      title: RouteStep
+    RouteVariant:
+      properties:
+        name:
+          type: string
+          enum:
+          - fast
+          - safe
+          - eco
+          title: Name
+        distance_m:
+          type: number
+          title: Distance M
+        duration_s:
+          type: number
+          title: Duration S
+        free_flow_s:
+          type: number
+          title: Free Flow S
+        flood_score:
+          type: number
+          title: Flood Score
+        eco_score:
+          type: number
+          title: Eco Score
+        toll_vnd:
+          type: integer
+          title: Toll Vnd
+        co2_g:
+          type: number
+          title: Co2 G
+        eta_p10_s:
+          type: number
+          title: Eta P10 S
+        eta_p90_s:
+          type: number
+          title: Eta P90 S
+        eta_confidence:
+          $ref: '#/components/schemas/EtaConfidence'
+        geometry:
+          items:
+            $ref: '#/components/schemas/LatLon'
+          type: array
+          title: Geometry
+        steps:
+          items:
+            $ref: '#/components/schemas/RouteStep'
+          type: array
+          title: Steps
+        hex_path:
+          items:
+            type: string
+          type: array
+          title: Hex Path
+        notes:
+          items:
+            type: string
+          type: array
+          title: Notes
+      type: object
+      required:
+      - name
+      - distance_m
+      - duration_s
+      - free_flow_s
+      - flood_score
+      - eco_score
+      - toll_vnd
+      - co2_g
+      - eta_p10_s
+      - eta_p90_s
+      - eta_confidence
+      - geometry
+      - steps
+      - hex_path
+      title: RouteVariant
+    SiteSelectionCell:
+      properties:
+        hex_id:
+          type: string
+          title: Hex Id
+        centroid:
+          $ref: '#/components/schemas/LatLon'
+        score:
+          type: number
+          title: Score
+        flow_share:
+          type: number
+          title: Flow Share
+        flood_penalty:
+          type: number
+          title: Flood Penalty
+        median_visit_min:
+          type: number
+          title: Median Visit Min
+      type: object
+      required:
+      - hex_id
+      - centroid
+      - score
+      - flow_share
+      - flood_penalty
+      - median_visit_min
+      title: SiteSelectionCell
+    SiteSelectionRequest:
+      properties:
+        bbox:
+          prefixItems:
+          - type: number
+          - type: number
+          - type: number
+          - type: number
+          type: array
+          maxItems: 4
+          minItems: 4
+          title: Bbox
+        audience:
+          type: string
+          enum:
+          - retail
+          - logistics
+          - hospitality
+          title: Audience
+          default: retail
+        weekday:
+          items:
+            type: integer
+          type: array
+          title: Weekday
+        hour_start:
+          type: integer
+          maximum: 23.0
+          minimum: 0.0
+          title: Hour Start
+          default: 7
+        hour_end:
+          type: integer
+          maximum: 23.0
+          minimum: 1.0
+          title: Hour End
+          default: 22
+      additionalProperties: false
+      type: object
+      required:
+      - bbox
+      title: SiteSelectionRequest
+    SiteSelectionResponse:
+      properties:
+        bbox:
+          prefixItems:
+          - type: number
+          - type: number
+          - type: number
+          - type: number
+          type: array
+          maxItems: 4
+          minItems: 4
+          title: Bbox
+        generated_at:
+          type: string
+          format: date-time
+          title: Generated At
+        top_cells:
+          items:
+            $ref: '#/components/schemas/SiteSelectionCell'
+          type: array
+          title: Top Cells
+      type: object
+      required:
+      - bbox
+      - generated_at
+      - top_cells
+      title: SiteSelectionResponse
+    TimeOfDay:
+      type: string
+      enum:
+      - now
+      - morning
+      - noon
+      - evening
+      - night
+      title: TimeOfDay
+      description: Departure time bucket. ``NOW`` means the request is for an immediate
+        trip.
+    TriggerEvent:
+      properties:
+        event_id:
+          type: string
+          title: Event Id
+        policy_id:
+          type: string
+          title: Policy Id
+        hex_id:
+          type: string
+          title: Hex Id
+        flood_score:
+          type: number
+          title: Flood Score
+        confidence:
+          type: number
+          title: Confidence
+        captured_at:
+          type: string
+          format: date-time
+          title: Captured At
+        payload_signature:
+          type: string
+          title: Payload Signature
+        payload_alg:
+          type: string
+          title: Payload Alg
+          default: Ed25519
+      type: object
+      required:
+      - event_id
+      - policy_id
+      - hex_id
+      - flood_score
+      - confidence
+      - captured_at
+      - payload_signature
+      title: TriggerEvent
+    TriggerFeedResponse:
+      properties:
+        policy_id:
+          type: string
+          title: Policy Id
+        generated_at:
+          type: string
+          format: date-time
+          title: Generated At
+        events:
+          items:
+            $ref: '#/components/schemas/TriggerEvent'
+          type: array
+          title: Events
+      type: object
+      required:
+      - policy_id
+      - generated_at
+      - events
+      title: TriggerFeedResponse
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError

@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package vn.roadpulse.flood.v1;
+
+message HexQuery {
+  repeated string hex_ids = 1;
+  string horizon = 2; // now | 1h | 3h | 6h
+}
+
+message HexScore {
+  string hex_id = 1;
+  double score = 2;
+  string horizon = 3;
+  double confidence = 4;
+  int64 ts_ms = 5;
+}
+
+message HexScoreList {
+  repeated HexScore hexes = 1;
+}
+
+service FloodService {
+  rpc CurrentScores(HexQuery) returns (HexScoreList);
+}

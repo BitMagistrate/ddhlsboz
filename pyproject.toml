@@ -1,0 +1,149 @@
+[project]
+name = "roadpulse"
+version = "0.1.0"
+description = "Vietnam's flood-aware mobility intelligence layer — TASCO × Skolkovo Smart Mobility"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "Apache-2.0" }
+authors = [{ name = "RoadPulse Engineering" }]
+dependencies = [
+  "fastapi>=0.110",
+  "uvicorn[standard]>=0.27",
+  "pydantic>=2.6",
+  "pydantic-settings>=2.2",
+  "httpx>=0.27",
+  "numpy>=1.26",
+  "scikit-learn>=1.4",
+  "shapely>=2.0",
+  "h3>=3.7,<4.0",
+  "structlog>=24.1",
+  "python-multipart>=0.0.9",
+  "PyYAML>=6.0",
+  "tenacity>=8.2",
+  "cryptography>=42.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+  "pytest-asyncio>=0.23",
+  "pytest-cov>=4.1",
+  "ruff>=0.4",
+  "mypy>=1.10",
+  "hypothesis>=6.100",
+  "httpx>=0.27",
+]
+
+[build-system]
+requires = ["hatchling>=1.21"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["packages/python/roadpulse_core/roadpulse_core"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+extend-exclude = [
+  ".venv",
+  "node_modules",
+  "proto/_generated",
+  "schemas/_generated",
+  "apps/b2c-app",
+  "apps/b2b-dashboard",
+  "infra",
+  "ml/notebooks",
+]
+
+[tool.ruff.lint]
+select = [
+  "E",   # pycodestyle errors
+  "F",   # pyflakes
+  "I",   # isort
+  "B",   # flake8-bugbear
+  "UP",  # pyupgrade
+  "RUF", # ruff-specific
+  "SIM", # flake8-simplify
+  "PL",  # pylint subset
+]
+ignore = [
+  "PLR0913",  # too many arguments
+  "PLR2004",  # magic value comparisons
+  "E501",     # line length (covered by formatter)
+  "RUF001",   # ambiguous unicode in strings — Vietnamese place names use en-dashes
+  "RUF002",   # ambiguous unicode in docstrings — Greek letters describe maths
+  "RUF003",   # ambiguous unicode in comments
+  "PLR0911",  # too many return statements
+  "PLR0912",  # too many branches
+  "PLR0915",  # too many statements
+  "PLC0415",  # imports outside top-level (lazy imports are fine)
+  "SIM108",   # ternary preference is sometimes less readable
+  "SIM103",   # return negated condition (sometimes less readable)
+  "SIM105",   # contextlib.suppress (more verbose than try/except/pass here)
+  "PLW0603",  # global statement (needed for FastAPI lifespan singletons)
+  "PLR1714",  # multiple comparisons (clearer as written)
+  "RUF007",   # itertools.pairwise (we read fine with zip)
+  "RUF046",   # int() cast on int (defensive coercion is fine)
+  "UP042",    # str + Enum inheritance (StrEnum is 3.11+; keep mixed for compat)
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["PLR2004", "S101"]
+"**/conftest.py" = ["PLR2004"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+disallow_untyped_defs = true
+ignore_missing_imports = true
+exclude = [
+  "apps/b2c-app",
+  "apps/b2b-dashboard",
+  "infra",
+  "ml/notebooks",
+  "proto/_generated",
+  "schemas/_generated",
+]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = [
+  "packages/python",
+  "apps/api-gateway",
+  "apps/eta-service",
+  "apps/flood-service",
+  "apps/routing-engine",
+  "apps/trigger-feed",
+  "apps/ingestion-vetc",
+  "tests",
+]
+asyncio_mode = "auto"
+python_files = ["test_*.py", "*_test.py"]
+addopts = "-ra --strict-markers --strict-config"
+filterwarnings = [
+  "error",
+  "ignore::DeprecationWarning:google._upb._message",
+  "ignore::DeprecationWarning:pkg_resources",
+]
+
+[tool.coverage.run]
+branch = true
+source = [
+  "packages/python",
+  "apps/api-gateway/app",
+  "apps/eta-service/app",
+  "apps/flood-service/app",
+  "apps/routing-engine/app",
+  "apps/trigger-feed/app",
+  "apps/ingestion-vetc/app",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+  "pragma: no cover",
+  "raise NotImplementedError",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
