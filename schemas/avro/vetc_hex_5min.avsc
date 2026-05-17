@@ -1,0 +1,20 @@
+{
+  "type": "record",
+  "name": "VetcHex5min",
+  "namespace": "vn.roadpulse.vetc.v1",
+  "doc": "Aggregated VETC transponder readings rolled up to a 5-minute hex bucket. The raw transponder_id is hashed upstream and never enters this topic; only the bucket-level cardinality survives so the k-anonymity guard can enforce k≥50 before publication.",
+  "fields": [
+    {"name": "hex_id",          "type": "string",  "doc": "H3 resolution 8 cell id."},
+    {"name": "bucket_start_ms", "type": "long",    "doc": "UTC epoch ms, floor(now / 5min)."},
+    {"name": "vehicle_class",   "type": {"type": "enum", "name": "VehicleClass", "symbols": ["MOTORBIKE","CAR","TRUCK","BUS","SPECIAL"]}},
+    {"name": "avg_speed_kmh",   "type": "float"},
+    {"name": "speed_p10",       "type": "float"},
+    {"name": "speed_p50",       "type": "float"},
+    {"name": "speed_p90",       "type": "float"},
+    {"name": "vehicle_count",   "type": "int",     "doc": "Unique transponder count for the bucket; ≥50 required by KAnonGuard."},
+    {"name": "flow_in",         "type": "int"},
+    {"name": "flow_out",        "type": "int"},
+    {"name": "source",          "type": "string",  "default": "vetc"},
+    {"name": "ingested_at_ms",  "type": "long"}
+  ]
+}

@@ -1,0 +1,380 @@
+[
+  {
+    "id": 1,
+    "lng": 106.645,
+    "lat": 10.82,
+    "district": "Tan Binh"
+  },
+  {
+    "id": 2,
+    "lng": 106.6575,
+    "lat": 10.82,
+    "district": "Tan Binh"
+  },
+  {
+    "id": 3,
+    "lng": 106.67,
+    "lat": 10.82,
+    "district": "Tan Binh"
+  },
+  {
+    "id": 4,
+    "lng": 106.6825,
+    "lat": 10.82,
+    "district": "Tan Binh"
+  },
+  {
+    "id": 5,
+    "lng": 106.695,
+    "lat": 10.82,
+    "district": "District 1"
+  },
+  {
+    "id": 6,
+    "lng": 106.7075,
+    "lat": 10.82,
+    "district": "District 1"
+  },
+  {
+    "id": 7,
+    "lng": 106.72,
+    "lat": 10.82,
+    "district": "District 1"
+  },
+  {
+    "id": 8,
+    "lng": 106.7325,
+    "lat": 10.82,
+    "district": "District 1"
+  },
+  {
+    "id": 9,
+    "lng": 106.745,
+    "lat": 10.82,
+    "district": "District 1"
+  },
+  {
+    "id": 10,
+    "lng": 106.645,
+    "lat": 10.809,
+    "district": "Go Vap"
+  },
+  {
+    "id": 11,
+    "lng": 106.6575,
+    "lat": 10.809,
+    "district": "Go Vap"
+  },
+  {
+    "id": 12,
+    "lng": 106.67,
+    "lat": 10.809,
+    "district": "Phu Nhuan"
+  },
+  {
+    "id": 13,
+    "lng": 106.6825,
+    "lat": 10.809,
+    "district": "Phu Nhuan"
+  },
+  {
+    "id": 14,
+    "lng": 106.695,
+    "lat": 10.809,
+    "district": "Phu Nhuan"
+  },
+  {
+    "id": 15,
+    "lng": 106.7075,
+    "lat": 10.809,
+    "district": "District 1"
+  },
+  {
+    "id": 16,
+    "lng": 106.72,
+    "lat": 10.809,
+    "district": "District 1"
+  },
+  {
+    "id": 17,
+    "lng": 106.7325,
+    "lat": 10.809,
+    "district": "District 1"
+  },
+  {
+    "id": 18,
+    "lng": 106.745,
+    "lat": 10.809,
+    "district": "District 1"
+  },
+  {
+    "id": 19,
+    "lng": 106.645,
+    "lat": 10.798,
+    "district": "Binh Thanh"
+  },
+  {
+    "id": 20,
+    "lng": 106.6575,
+    "lat": 10.798,
+    "district": "Binh Thanh"
+  },
+  {
+    "id": 21,
+    "lng": 106.67,
+    "lat": 10.798,
+    "district": "Binh Thanh"
+  },
+  {
+    "id": 22,
+    "lng": 106.6825,
+    "lat": 10.798,
+    "district": "Binh Thanh"
+  },
+  {
+    "id": 23,
+    "lng": 106.695,
+    "lat": 10.798,
+    "district": "District 3"
+  },
+  {
+    "id": 24,
+    "lng": 106.7075,
+    "lat": 10.798,
+    "district": "District 3"
+  },
+  {
+    "id": 25,
+    "lng": 106.72,
+    "lat": 10.798,
+    "district": "District 1"
+  },
+  {
+    "id": 26,
+    "lng": 106.7325,
+    "lat": 10.798,
+    "district": "District 1"
+  },
+  {
+    "id": 27,
+    "lng": 106.745,
+    "lat": 10.798,
+    "district": "District 1"
+  },
+  {
+    "id": 28,
+    "lng": 106.645,
+    "lat": 10.787,
+    "district": "District 1"
+  },
+  {
+    "id": 29,
+    "lng": 106.6575,
+    "lat": 10.787,
+    "district": "District 3"
+  },
+  {
+    "id": 30,
+    "lng": 106.67,
+    "lat": 10.787,
+    "district": "District 3"
+  },
+  {
+    "id": 31,
+    "lng": 106.6825,
+    "lat": 10.787,
+    "district": "District 3"
+  },
+  {
+    "id": 32,
+    "lng": 106.695,
+    "lat": 10.787,
+    "district": "District 1"
+  },
+  {
+    "id": 33,
+    "lng": 106.7075,
+    "lat": 10.787,
+    "district": "District 1"
+  },
+  {
+    "id": 34,
+    "lng": 106.72,
+    "lat": 10.787,
+    "district": "District 1"
+  },
+  {
+    "id": 35,
+    "lng": 106.7325,
+    "lat": 10.787,
+    "district": "District 1"
+  },
+  {
+    "id": 36,
+    "lng": 106.745,
+    "lat": 10.787,
+    "district": "District 1"
+  },
+  {
+    "id": 37,
+    "lng": 106.645,
+    "lat": 10.776,
+    "district": "District 1"
+  },
+  {
+    "id": 38,
+    "lng": 106.6575,
+    "lat": 10.776,
+    "district": "District 1"
+  },
+  {
+    "id": 39,
+    "lng": 106.67,
+    "lat": 10.776,
+    "district": "District 1"
+  },
+  {
+    "id": 40,
+    "lng": 106.6825,
+    "lat": 10.776,
+    "district": "District 1"
+  },
+  {
+    "id": 41,
+    "lng": 106.695,
+    "lat": 10.776,
+    "district": "District 1"
+  },
+  {
+    "id": 42,
+    "lng": 106.7075,
+    "lat": 10.776,
+    "district": "District 1"
+  },
+  {
+    "id": 43,
+    "lng": 106.72,
+    "lat": 10.776,
+    "district": "District 4"
+  },
+  {
+    "id": 44,
+    "lng": 106.7325,
+    "lat": 10.776,
+    "district": "District 1"
+  },
+  {
+    "id": 45,
+    "lng": 106.745,
+    "lat": 10.776,
+    "district": "District 1"
+  },
+  {
+    "id": 46,
+    "lng": 106.645,
+    "lat": 10.765,
+    "district": "District 1"
+  },
+  {
+    "id": 47,
+    "lng": 106.6575,
+    "lat": 10.765,
+    "district": "District 1"
+  },
+  {
+    "id": 48,
+    "lng": 106.67,
+    "lat": 10.765,
+    "district": "District 1"
+  },
+  {
+    "id": 49,
+    "lng": 106.6825,
+    "lat": 10.765,
+    "district": "District 1"
+  },
+  {
+    "id": 50,
+    "lng": 106.695,
+    "lat": 10.765,
+    "district": "District 4"
+  },
+  {
+    "id": 51,
+    "lng": 106.7075,
+    "lat": 10.765,
+    "district": "District 4"
+  },
+  {
+    "id": 52,
+    "lng": 106.72,
+    "lat": 10.765,
+    "district": "Thu Thiem"
+  },
+  {
+    "id": 53,
+    "lng": 106.7325,
+    "lat": 10.765,
+    "district": "Thu Thiem"
+  },
+  {
+    "id": 54,
+    "lng": 106.745,
+    "lat": 10.765,
+    "district": "District 1"
+  },
+  {
+    "id": 55,
+    "lng": 106.645,
+    "lat": 10.754,
+    "district": "District 1"
+  },
+  {
+    "id": 56,
+    "lng": 106.6575,
+    "lat": 10.754,
+    "district": "District 1"
+  },
+  {
+    "id": 57,
+    "lng": 106.67,
+    "lat": 10.754,
+    "district": "District 1"
+  },
+  {
+    "id": 58,
+    "lng": 106.6825,
+    "lat": 10.754,
+    "district": "District 7"
+  },
+  {
+    "id": 59,
+    "lng": 106.695,
+    "lat": 10.754,
+    "district": "District 7"
+  },
+  {
+    "id": 60,
+    "lng": 106.7075,
+    "lat": 10.754,
+    "district": "District 7"
+  },
+  {
+    "id": 61,
+    "lng": 106.72,
+    "lat": 10.754,
+    "district": "District 7"
+  },
+  {
+    "id": 62,
+    "lng": 106.7325,
+    "lat": 10.754,
+    "district": "Phu My Hung"
+  },
+  {
+    "id": 63,
+    "lng": 106.745,
+    "lat": 10.754,
+    "district": "Phu My Hung"
+  }
+]

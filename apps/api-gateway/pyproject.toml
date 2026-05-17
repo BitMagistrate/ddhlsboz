@@ -1,0 +1,27 @@
+[project]
+name = "roadpulse-api-gateway"
+version = "0.1.0"
+description = "RoadPulse public API gateway (FastAPI). Single source of truth for /v1/*."
+requires-python = ">=3.11"
+license = { text = "Apache-2.0" }
+dependencies = [
+  "fastapi>=0.110",
+  "uvicorn[standard]>=0.27",
+  "pydantic>=2.6",
+  "pydantic-settings>=2.2",
+  "roadpulse-core>=0.1.0",
+  "roadpulse-routing>=0.1.0",
+  "roadpulse-ml>=0.1.0",
+  "roadpulse-features>=0.1.0",
+  "roadpulse-privacy>=0.1.0",
+  "roadpulse-telemetry>=0.1.0",
+  "cryptography>=42.0",
+  "PyYAML>=6.0",
+]
+
+[build-system]
+requires = ["hatchling>=1.21"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["app"]

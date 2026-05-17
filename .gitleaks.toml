@@ -1,0 +1,20 @@
+# RoadPulse gitleaks config.
+# Inherits all default rules, then allowlists known false positives.
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Allowlist for false positives — synthetic demo data and FastAPI lifespan globals."
+paths = [
+  '''tools/generate_seed\.py''',           # synthetic demo API keys
+  '''data/seed/.*\.json''',                # generated seed fixtures
+  '''apps/trigger-feed/app/main\.py''',    # Ed25519 lifespan handle, not a secret
+]
+regexes = [
+  '''rp_demo_key_2024''',
+  '''rp_grab_pilot_[A-Za-z0-9]+''',
+  '''rp_lazada_pilot_[A-Za-z0-9]+''',
+  '''rp_tasco_demo_[A-Za-z0-9]+''',
+  '''rp_vietinbank_demo_[A-Za-z0-9]+''',
+]

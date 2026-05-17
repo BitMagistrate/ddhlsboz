@@ -1,0 +1,9 @@
+apiVersion: v2
+name: api-gateway
+description: RoadPulse public API gateway (FastAPI + Envoy sidecar)
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+maintainers:
+  - name: RoadPulse platform team
+    email: platform@roadpulse.vn

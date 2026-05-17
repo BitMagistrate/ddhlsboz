@@ -1,0 +1,32 @@
+{
+  "expo": {
+    "name": "Smart Trip — RoadPulse",
+    "slug": "roadpulse-smart-trip",
+    "version": "0.1.0",
+    "scheme": "roadpulse",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0F172A"
+    },
+    "platforms": ["ios", "android"],
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "vn.roadpulse.smarttrip"
+    },
+    "android": {
+      "package": "vn.roadpulse.smarttrip"
+    },
+    "plugins": ["expo-router"],
+    "experiments": {
+      "tsconfigPaths": true,
+      "typedRoutes": true
+    },
+    "extra": {
+      "apiBaseUrl": "http://localhost:8080"
+    }
+  }
+}

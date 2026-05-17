@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package vn.roadpulse.trigger.v1;
+
+message TriggerEvent {
+  string policy_id = 1;
+  string event_id = 2;
+  string hex_id = 3;
+  double score = 4;
+  double threshold = 5;
+  int64 ts_ms = 6;
+  int64 payout_vnd = 7;
+  string signature_b64 = 8;
+}
+
+message TriggerStreamRequest {
+  string policy_id = 1;
+  int64 since_ms = 2;
+}
+
+service TriggerFeed {
+  rpc Stream(TriggerStreamRequest) returns (stream TriggerEvent);
+}

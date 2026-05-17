@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package vn.roadpulse.eta.v1;
+
+message EtaRecord {
+  double distance_m = 1;
+  double free_flow_seconds = 2;
+  int32 hour_of_week = 3;
+  int32 is_weekend = 4;
+  double precipitation_mm_h = 5;
+  double wind_kmh = 6;
+  int32 is_rush_hour = 7;
+  double lag_speed_5min = 8;
+  double lag_speed_15min = 9;
+  double lag_speed_1h = 10;
+  double vehicle_count_5min = 11;
+  double flood_score = 12;
+  int32 road_class_index = 13;
+}
+
+message EtaPrediction {
+  double eta_s = 1;
+  double eta_p10_s = 2;
+  double eta_p90_s = 3;
+  string confidence = 4; // low | medium | high
+}
+
+message BatchEtaRequest {
+  string batch_id = 1;
+  repeated EtaRecord items = 2;
+}
+
+message BatchEtaResponse {
+  string batch_id = 1;
+  repeated EtaPrediction predictions = 2;
+}
+
+service EtaService {
+  rpc Predict(EtaRecord) returns (EtaPrediction);
+  rpc PredictBatch(BatchEtaRequest) returns (BatchEtaResponse);
+}

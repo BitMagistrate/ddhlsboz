@@ -1,0 +1,17 @@
+{
+  "type": "record",
+  "name": "FloodHexScore",
+  "namespace": "vn.roadpulse.flood.v1",
+  "doc": "Per-hex flood probability emitted by flood-service. Scores ∈ [0,1] (0 = dry, 1 = impassable). The Bayesian posterior fuses an Isolation Forest anomaly score over VETC speed drop with a Sentinel-1 SAR water prior.",
+  "fields": [
+    {"name": "hex_id",          "type": "string"},
+    {"name": "ts_ms",           "type": "long"},
+    {"name": "score",           "type": "float", "doc": "Posterior P(flooded | speed_drop, SAR, weather, crowd)."},
+    {"name": "horizon_minutes", "type": "int",   "default": 0, "doc": "0=now, 60=+1h, 180=+3h, 360=+6h."},
+    {"name": "speed_drop_pct",  "type": "float"},
+    {"name": "sar_water_prior", "type": "float"},
+    {"name": "precipitation_mm_h", "type": "float", "default": 0.0},
+    {"name": "crowd_reports",   "type": "int",   "default": 0},
+    {"name": "confidence",      "type": "float", "default": 0.5}
+  ]
+}

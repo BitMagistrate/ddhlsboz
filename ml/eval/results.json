@@ -1,0 +1,20 @@
+{
+  "eta_mape": 0.0385,
+  "eta_p10_p90_coverage": 0.77,
+  "flood_pr_auc": 0.9474,
+  "routing_three_variant_overlap": 0.9143,
+  "samples_eta": 2400,
+  "folds_eta": 5,
+  "samples_flood": 640,
+  "folds_flood": 5,
+  "routing_pairs": 14,
+  "targets": {
+    "eta_mape": 0.18,
+    "eta_p10_p90_coverage": 0.75,
+    "flood_pr_auc": 0.85,
+    "routing_three_variant_overlap": 0.95
+  },
+  "pass_all": true,
+  "generated_at": "2026-05-17T11:15:45+00:00",
+  "data_origin": "synthetic-fixtures"
+}

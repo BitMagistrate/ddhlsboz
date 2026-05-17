@@ -1,0 +1,18 @@
+[project]
+name = "ingestion-sdk-collector"
+version = "0.1.0"
+description = "RoadPulse fleet SDK probe collector"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.110",
+    "uvicorn[standard]>=0.27",
+    "pydantic>=2.6",
+    "roadpulse-privacy",
+    "roadpulse-telemetry",
+]
+[tool.uv.sources]
+roadpulse-privacy = { workspace = true }
+roadpulse-telemetry = { workspace = true }
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

@@ -1,0 +1,44 @@
+{
+  "hex_22": {
+    "score": 0.82,
+    "note": "Hai B\u00e0 Tr\u01b0ng \u2013 Saigon River backflow",
+    "lat": 10.78,
+    "lng": 106.7
+  },
+  "hex_23": {
+    "score": 0.74,
+    "note": "Nguy\u1ec5n H\u1eefu C\u1ea3nh \u2013 flat slope drainage",
+    "lat": 10.77,
+    "lng": 106.71
+  },
+  "hex_32": {
+    "score": 0.66,
+    "note": "District 4 canal overflow",
+    "lat": 10.76,
+    "lng": 106.71
+  },
+  "hex_33": {
+    "score": 0.55,
+    "note": "Kh\u00e1nh H\u1ed9i ferry road",
+    "lat": 10.75,
+    "lng": 106.71
+  },
+  "hex_12": {
+    "score": 0.45,
+    "note": "Ph\u00fa Nhu\u1eadn pinch point",
+    "lat": 10.79,
+    "lng": 106.68
+  },
+  "hex_31": {
+    "score": 0.35,
+    "note": "B\u1ebfn Th\u00e0nh approach"
+  },
+  "hex_43": {
+    "score": 0.3,
+    "note": "Ph\u00fa M\u1ef9 Bridge feeder"
+  },
+  "hex_11": {
+    "score": 0.18,
+    "note": "Go Vap residential"
+  }
+}

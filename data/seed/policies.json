@@ -1,0 +1,27 @@
+[
+  {
+    "id": "policy_pti_d1_flood_2024",
+    "tenant_org_id": "org_pti_insurance",
+    "flood_threshold": 0.65,
+    "monitored_hex_ids": [
+      "hex_22",
+      "hex_23",
+      "hex_32",
+      "hex_33"
+    ],
+    "payout_vnd_per_event": 5000000,
+    "max_events_per_month": 4
+  },
+  {
+    "id": "policy_lazada_d4_ops_2024",
+    "tenant_org_id": "org_lazada_express",
+    "flood_threshold": 0.55,
+    "monitored_hex_ids": [
+      "hex_32",
+      "hex_33",
+      "hex_43"
+    ],
+    "payout_vnd_per_event": 12000000,
+    "max_events_per_month": 6
+  }
+]

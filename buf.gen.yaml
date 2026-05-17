@@ -1,0 +1,6 @@
+version: v2
+plugins:
+  - remote: buf.build/protocolbuffers/python
+    out: packages/python/roadpulse_proto
+  - remote: buf.build/grpc/python
+    out: packages/python/roadpulse_proto

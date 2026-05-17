@@ -1,0 +1,4 @@
+packages:
+  - "apps/b2b-dashboard"
+  - "apps/b2c-app"
+  - "packages/ts/*"

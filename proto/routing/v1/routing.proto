@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package vn.roadpulse.routing.v1;
+
+// Internal gRPC contract between api-gateway and routing-engine.
+// Public REST contract lives in schemas/openapi/public_v1.yaml.
+
+message LatLon {
+  double lat = 1;
+  double lng = 2;
+}
+
+enum VehicleMode {
+  VEHICLE_MODE_UNSPECIFIED = 0;
+  MOTORBIKE = 1;
+  CAR = 2;
+  TRUCK = 3;
+  BICYCLE = 4;
+}
+
+message RouteRequest {
+  LatLon origin = 1;
+  LatLon destination = 2;
+  VehicleMode mode = 3;
+  bool flood_aware = 4;
+  bool eco = 5;
+  int64 depart_at_ms = 6;
+}
+
+message Step {
+  string instruction = 1;
+  double distance_m = 2;
+  double duration_s = 3;
+  double bearing_deg = 4;
+  repeated LatLon geometry = 5;
+}
+
+message RouteVariant {
+  string name = 1;
+  double distance_m = 2;
+  double duration_s = 3;
+  double free_flow_s = 4;
+  double flood_score = 5;
+  double eco_score = 6;
+  int64 toll_vnd = 7;
+  repeated LatLon geometry = 8;
+  repeated Step steps = 9;
+  repeated string hex_path = 10;
+}
+
+message RouteResponse {
+  string request_id = 1;
+  int64 generated_at_ms = 2;
+  repeated RouteVariant variants = 3;
+}
+
+service RoutingService {
+  rpc Route(RouteRequest) returns (RouteResponse);
+}

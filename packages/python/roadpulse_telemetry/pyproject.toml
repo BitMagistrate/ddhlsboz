@@ -1,0 +1,17 @@
+[project]
+name = "roadpulse-telemetry"
+version = "0.1.0"
+description = "OpenTelemetry helpers, structured logger and request-context propagation."
+requires-python = ">=3.11"
+license = { text = "Apache-2.0" }
+dependencies = [
+  "structlog>=24.1",
+  "roadpulse-privacy>=0.1.0",
+]
+
+[build-system]
+requires = ["hatchling>=1.21"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["roadpulse_telemetry"]

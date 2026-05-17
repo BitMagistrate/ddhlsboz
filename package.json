@@ -1,0 +1,21 @@
+{
+  "name": "roadpulse-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "RoadPulse — Vietnam's flood-aware mobility intelligence (monorepo root)",
+  "packageManager": "pnpm@9.6.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "lint": "pnpm -r --if-present run lint",
+    "typecheck": "pnpm -r --if-present run typecheck",
+    "test": "pnpm -r --if-present run test",
+    "build": "pnpm -r --if-present run build"
+  },
+  "workspaces": [
+    "apps/b2b-dashboard",
+    "apps/b2c-app",
+    "packages/ts/*"
+  ]
+}

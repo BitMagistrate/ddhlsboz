@@ -1,0 +1,3162 @@
+[
+  {
+    "src": 1,
+    "dst": 2,
+    "distance_m": 1365.2,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_00",
+    "name": "Tan Binh \u2194 Tan Binh",
+    "toll_vnd": 0
+  },
+  {
+    "src": 2,
+    "dst": 1,
+    "distance_m": 1365.2,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_00",
+    "name": "Tan Binh \u2194 Tan Binh",
+    "toll_vnd": 0
+  },
+  {
+    "src": 1,
+    "dst": 10,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_00",
+    "name": "Tan Binh \u2194 Go Vap",
+    "toll_vnd": 0
+  },
+  {
+    "src": 10,
+    "dst": 1,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_00",
+    "name": "Tan Binh \u2194 Go Vap",
+    "toll_vnd": 0
+  },
+  {
+    "src": 1,
+    "dst": 11,
+    "distance_m": 1833.0,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_00",
+    "name": "Tan Binh \u2194 Go Vap",
+    "toll_vnd": 0
+  },
+  {
+    "src": 2,
+    "dst": 3,
+    "distance_m": 1365.2,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_00",
+    "name": "Tan Binh \u2194 Tan Binh",
+    "toll_vnd": 0
+  },
+  {
+    "src": 3,
+    "dst": 2,
+    "distance_m": 1365.2,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_10",
+    "name": "Tan Binh \u2194 Tan Binh",
+    "toll_vnd": 0
+  },
+  {
+    "src": 2,
+    "dst": 11,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_00",
+    "name": "Tan Binh \u2194 Go Vap",
+    "toll_vnd": 0
+  },
+  {
+    "src": 11,
+    "dst": 2,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_00",
+    "name": "Tan Binh \u2194 Go Vap",
+    "toll_vnd": 0
+  },
+  {
+    "src": 2,
+    "dst": 12,
+    "distance_m": 1833.0,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_00",
+    "name": "Tan Binh \u2194 Phu Nhuan",
+    "toll_vnd": 0
+  },
+  {
+    "src": 2,
+    "dst": 10,
+    "distance_m": 1833.0,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_00",
+    "name": "Tan Binh \u2194 Go Vap",
+    "toll_vnd": 0
+  },
+  {
+    "src": 3,
+    "dst": 4,
+    "distance_m": 1365.2,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_10",
+    "name": "Tan Binh \u2194 Tan Binh",
+    "toll_vnd": 0
+  },
+  {
+    "src": 4,
+    "dst": 3,
+    "distance_m": 1365.2,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_10",
+    "name": "Tan Binh \u2194 Tan Binh",
+    "toll_vnd": 0
+  },
+  {
+    "src": 3,
+    "dst": 12,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_10",
+    "name": "Tan Binh \u2194 Phu Nhuan",
+    "toll_vnd": 0
+  },
+  {
+    "src": 12,
+    "dst": 3,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_10",
+    "name": "Tan Binh \u2194 Phu Nhuan",
+    "toll_vnd": 0
+  },
+  {
+    "src": 3,
+    "dst": 13,
+    "distance_m": 1833.0,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_10",
+    "name": "Tan Binh \u2194 Phu Nhuan",
+    "toll_vnd": 0
+  },
+  {
+    "src": 3,
+    "dst": 11,
+    "distance_m": 1833.0,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_10",
+    "name": "Tan Binh \u2194 Go Vap",
+    "toll_vnd": 0
+  },
+  {
+    "src": 4,
+    "dst": 5,
+    "distance_m": 1365.2,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_10",
+    "name": "Tan Binh \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 5,
+    "dst": 4,
+    "distance_m": 1365.2,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_20",
+    "name": "Tan Binh \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 4,
+    "dst": 13,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_10",
+    "name": "Tan Binh \u2194 Phu Nhuan",
+    "toll_vnd": 0
+  },
+  {
+    "src": 13,
+    "dst": 4,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_10",
+    "name": "Tan Binh \u2194 Phu Nhuan",
+    "toll_vnd": 0
+  },
+  {
+    "src": 4,
+    "dst": 14,
+    "distance_m": 1833.0,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_10",
+    "name": "Tan Binh \u2194 Phu Nhuan",
+    "toll_vnd": 0
+  },
+  {
+    "src": 4,
+    "dst": 12,
+    "distance_m": 1833.0,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_10",
+    "name": "Tan Binh \u2194 Phu Nhuan",
+    "toll_vnd": 0
+  },
+  {
+    "src": 5,
+    "dst": 6,
+    "distance_m": 1365.2,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_20",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 6,
+    "dst": 5,
+    "distance_m": 1365.2,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_20",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 5,
+    "dst": 14,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_20",
+    "name": "District 1 \u2194 Phu Nhuan",
+    "toll_vnd": 0
+  },
+  {
+    "src": 14,
+    "dst": 5,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_20",
+    "name": "District 1 \u2194 Phu Nhuan",
+    "toll_vnd": 0
+  },
+  {
+    "src": 5,
+    "dst": 15,
+    "distance_m": 1833.0,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_20",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 5,
+    "dst": 13,
+    "distance_m": 1833.0,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_20",
+    "name": "District 1 \u2194 Phu Nhuan",
+    "toll_vnd": 0
+  },
+  {
+    "src": 6,
+    "dst": 7,
+    "distance_m": 1365.2,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_20",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 7,
+    "dst": 6,
+    "distance_m": 1365.2,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_30",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 6,
+    "dst": 15,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_20",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 15,
+    "dst": 6,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_20",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 6,
+    "dst": 16,
+    "distance_m": 1833.0,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_20",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 6,
+    "dst": 14,
+    "distance_m": 1833.0,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_20",
+    "name": "District 1 \u2194 Phu Nhuan",
+    "toll_vnd": 0
+  },
+  {
+    "src": 7,
+    "dst": 8,
+    "distance_m": 1365.2,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_30",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 8,
+    "dst": 7,
+    "distance_m": 1365.2,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_30",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 7,
+    "dst": 16,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_30",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 16,
+    "dst": 7,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_30",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 7,
+    "dst": 17,
+    "distance_m": 1833.0,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_30",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 7,
+    "dst": 15,
+    "distance_m": 1833.0,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_30",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 8,
+    "dst": 9,
+    "distance_m": 1365.2,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_30",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 9,
+    "dst": 8,
+    "distance_m": 1365.2,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_40",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 8,
+    "dst": 17,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_30",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 17,
+    "dst": 8,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_30",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 8,
+    "dst": 18,
+    "distance_m": 1833.0,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_30",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 8,
+    "dst": 16,
+    "distance_m": 1833.0,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_30",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 9,
+    "dst": 18,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_40",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 18,
+    "dst": 9,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_40",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 9,
+    "dst": 17,
+    "distance_m": 1833.0,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_40",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 10,
+    "dst": 11,
+    "distance_m": 1365.3,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_00",
+    "name": "Go Vap \u2194 Go Vap",
+    "toll_vnd": 0
+  },
+  {
+    "src": 11,
+    "dst": 10,
+    "distance_m": 1365.3,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_00",
+    "name": "Go Vap \u2194 Go Vap",
+    "toll_vnd": 0
+  },
+  {
+    "src": 10,
+    "dst": 19,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_00",
+    "name": "Go Vap \u2194 Binh Thanh",
+    "toll_vnd": 0
+  },
+  {
+    "src": 19,
+    "dst": 10,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_01",
+    "name": "Go Vap \u2194 Binh Thanh",
+    "toll_vnd": 0
+  },
+  {
+    "src": 10,
+    "dst": 20,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_00",
+    "name": "Go Vap \u2194 Binh Thanh",
+    "toll_vnd": 0
+  },
+  {
+    "src": 11,
+    "dst": 12,
+    "distance_m": 1365.3,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_00",
+    "name": "Go Vap \u2194 Phu Nhuan",
+    "toll_vnd": 0
+  },
+  {
+    "src": 12,
+    "dst": 11,
+    "distance_m": 1365.3,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_10",
+    "name": "Go Vap \u2194 Phu Nhuan",
+    "toll_vnd": 0
+  },
+  {
+    "src": 11,
+    "dst": 20,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_00",
+    "name": "Go Vap \u2194 Binh Thanh",
+    "toll_vnd": 0
+  },
+  {
+    "src": 20,
+    "dst": 11,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_01",
+    "name": "Go Vap \u2194 Binh Thanh",
+    "toll_vnd": 0
+  },
+  {
+    "src": 11,
+    "dst": 21,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_00",
+    "name": "Go Vap \u2194 Binh Thanh",
+    "toll_vnd": 0
+  },
+  {
+    "src": 11,
+    "dst": 19,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_00",
+    "name": "Go Vap \u2194 Binh Thanh",
+    "toll_vnd": 0
+  },
+  {
+    "src": 12,
+    "dst": 13,
+    "distance_m": 1365.3,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_10",
+    "name": "Phu Nhuan \u2194 Phu Nhuan",
+    "toll_vnd": 0
+  },
+  {
+    "src": 13,
+    "dst": 12,
+    "distance_m": 1365.3,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_10",
+    "name": "Phu Nhuan \u2194 Phu Nhuan",
+    "toll_vnd": 0
+  },
+  {
+    "src": 12,
+    "dst": 21,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_10",
+    "name": "Phu Nhuan \u2194 Binh Thanh",
+    "toll_vnd": 0
+  },
+  {
+    "src": 21,
+    "dst": 12,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_11",
+    "name": "Phu Nhuan \u2194 Binh Thanh",
+    "toll_vnd": 0
+  },
+  {
+    "src": 12,
+    "dst": 22,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_10",
+    "name": "Phu Nhuan \u2194 Binh Thanh",
+    "toll_vnd": 0
+  },
+  {
+    "src": 12,
+    "dst": 20,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_10",
+    "name": "Phu Nhuan \u2194 Binh Thanh",
+    "toll_vnd": 0
+  },
+  {
+    "src": 13,
+    "dst": 14,
+    "distance_m": 1365.3,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_10",
+    "name": "Phu Nhuan \u2194 Phu Nhuan",
+    "toll_vnd": 0
+  },
+  {
+    "src": 14,
+    "dst": 13,
+    "distance_m": 1365.3,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_20",
+    "name": "Phu Nhuan \u2194 Phu Nhuan",
+    "toll_vnd": 0
+  },
+  {
+    "src": 13,
+    "dst": 22,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_10",
+    "name": "Phu Nhuan \u2194 Binh Thanh",
+    "toll_vnd": 0
+  },
+  {
+    "src": 22,
+    "dst": 13,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_11",
+    "name": "Phu Nhuan \u2194 Binh Thanh",
+    "toll_vnd": 0
+  },
+  {
+    "src": 13,
+    "dst": 23,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_10",
+    "name": "Phu Nhuan \u2194 District 3",
+    "toll_vnd": 0
+  },
+  {
+    "src": 13,
+    "dst": 21,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_10",
+    "name": "Phu Nhuan \u2194 Binh Thanh",
+    "toll_vnd": 0
+  },
+  {
+    "src": 14,
+    "dst": 15,
+    "distance_m": 1365.3,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_20",
+    "name": "Phu Nhuan \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 15,
+    "dst": 14,
+    "distance_m": 1365.3,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_20",
+    "name": "Phu Nhuan \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 14,
+    "dst": 23,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_20",
+    "name": "Phu Nhuan \u2194 District 3",
+    "toll_vnd": 0
+  },
+  {
+    "src": 23,
+    "dst": 14,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_21",
+    "name": "Phu Nhuan \u2194 District 3",
+    "toll_vnd": 0
+  },
+  {
+    "src": 14,
+    "dst": 24,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_20",
+    "name": "Phu Nhuan \u2194 District 3",
+    "toll_vnd": 0
+  },
+  {
+    "src": 14,
+    "dst": 22,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_20",
+    "name": "Phu Nhuan \u2194 Binh Thanh",
+    "toll_vnd": 0
+  },
+  {
+    "src": 15,
+    "dst": 16,
+    "distance_m": 1365.3,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_20",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 16,
+    "dst": 15,
+    "distance_m": 1365.3,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_30",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 15,
+    "dst": 24,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_20",
+    "name": "District 1 \u2194 District 3",
+    "toll_vnd": 0
+  },
+  {
+    "src": 24,
+    "dst": 15,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_21",
+    "name": "District 1 \u2194 District 3",
+    "toll_vnd": 0
+  },
+  {
+    "src": 15,
+    "dst": 25,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_20",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 15,
+    "dst": 23,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_20",
+    "name": "District 1 \u2194 District 3",
+    "toll_vnd": 0
+  },
+  {
+    "src": 16,
+    "dst": 17,
+    "distance_m": 1365.3,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_30",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 17,
+    "dst": 16,
+    "distance_m": 1365.3,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_30",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 16,
+    "dst": 25,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_30",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 25,
+    "dst": 16,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_31",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 16,
+    "dst": 26,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_30",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 16,
+    "dst": 24,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_30",
+    "name": "District 1 \u2194 District 3",
+    "toll_vnd": 0
+  },
+  {
+    "src": 17,
+    "dst": 18,
+    "distance_m": 1365.3,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_30",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 18,
+    "dst": 17,
+    "distance_m": 1365.3,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_40",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 17,
+    "dst": 26,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_30",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 26,
+    "dst": 17,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_31",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 17,
+    "dst": 27,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_30",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 17,
+    "dst": 25,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_30",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 18,
+    "dst": 27,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_40",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 27,
+    "dst": 18,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_41",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 18,
+    "dst": 26,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_40",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 19,
+    "dst": 20,
+    "distance_m": 1365.3,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_01",
+    "name": "Binh Thanh \u2194 Binh Thanh",
+    "toll_vnd": 0
+  },
+  {
+    "src": 20,
+    "dst": 19,
+    "distance_m": 1365.3,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_01",
+    "name": "Binh Thanh \u2194 Binh Thanh",
+    "toll_vnd": 0
+  },
+  {
+    "src": 19,
+    "dst": 28,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_01",
+    "name": "Binh Thanh \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 28,
+    "dst": 19,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_01",
+    "name": "Binh Thanh \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 19,
+    "dst": 29,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_01",
+    "name": "Binh Thanh \u2194 District 3",
+    "toll_vnd": 0
+  },
+  {
+    "src": 20,
+    "dst": 21,
+    "distance_m": 1365.3,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_01",
+    "name": "Binh Thanh \u2194 Binh Thanh",
+    "toll_vnd": 0
+  },
+  {
+    "src": 21,
+    "dst": 20,
+    "distance_m": 1365.3,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_11",
+    "name": "Binh Thanh \u2194 Binh Thanh",
+    "toll_vnd": 0
+  },
+  {
+    "src": 20,
+    "dst": 29,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_01",
+    "name": "Binh Thanh \u2194 District 3",
+    "toll_vnd": 0
+  },
+  {
+    "src": 29,
+    "dst": 20,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_01",
+    "name": "Binh Thanh \u2194 District 3",
+    "toll_vnd": 0
+  },
+  {
+    "src": 20,
+    "dst": 30,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_01",
+    "name": "Binh Thanh \u2194 District 3",
+    "toll_vnd": 0
+  },
+  {
+    "src": 20,
+    "dst": 28,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_01",
+    "name": "Binh Thanh \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 21,
+    "dst": 22,
+    "distance_m": 1365.3,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_11",
+    "name": "Binh Thanh \u2194 Binh Thanh",
+    "toll_vnd": 0
+  },
+  {
+    "src": 22,
+    "dst": 21,
+    "distance_m": 1365.3,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_11",
+    "name": "Binh Thanh \u2194 Binh Thanh",
+    "toll_vnd": 0
+  },
+  {
+    "src": 21,
+    "dst": 30,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_11",
+    "name": "Binh Thanh \u2194 District 3",
+    "toll_vnd": 0
+  },
+  {
+    "src": 30,
+    "dst": 21,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_11",
+    "name": "Binh Thanh \u2194 District 3",
+    "toll_vnd": 0
+  },
+  {
+    "src": 21,
+    "dst": 31,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_11",
+    "name": "Binh Thanh \u2194 District 3",
+    "toll_vnd": 0
+  },
+  {
+    "src": 21,
+    "dst": 29,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_11",
+    "name": "Binh Thanh \u2194 District 3",
+    "toll_vnd": 0
+  },
+  {
+    "src": 22,
+    "dst": 23,
+    "distance_m": 1365.3,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_11",
+    "name": "Binh Thanh \u2194 District 3",
+    "toll_vnd": 0
+  },
+  {
+    "src": 23,
+    "dst": 22,
+    "distance_m": 1365.3,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_21",
+    "name": "Binh Thanh \u2194 District 3",
+    "toll_vnd": 0
+  },
+  {
+    "src": 22,
+    "dst": 31,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_11",
+    "name": "Binh Thanh \u2194 District 3",
+    "toll_vnd": 0
+  },
+  {
+    "src": 31,
+    "dst": 22,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_11",
+    "name": "Binh Thanh \u2194 District 3",
+    "toll_vnd": 0
+  },
+  {
+    "src": 22,
+    "dst": 32,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_11",
+    "name": "Binh Thanh \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 22,
+    "dst": 30,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_11",
+    "name": "Binh Thanh \u2194 District 3",
+    "toll_vnd": 0
+  },
+  {
+    "src": 23,
+    "dst": 24,
+    "distance_m": 1365.3,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_21",
+    "name": "District 3 \u2194 District 3",
+    "toll_vnd": 0
+  },
+  {
+    "src": 24,
+    "dst": 23,
+    "distance_m": 1365.3,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_21",
+    "name": "District 3 \u2194 District 3",
+    "toll_vnd": 0
+  },
+  {
+    "src": 23,
+    "dst": 32,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_21",
+    "name": "District 3 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 32,
+    "dst": 23,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_21",
+    "name": "District 3 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 23,
+    "dst": 33,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_21",
+    "name": "District 3 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 23,
+    "dst": 31,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_21",
+    "name": "District 3 \u2194 District 3",
+    "toll_vnd": 0
+  },
+  {
+    "src": 24,
+    "dst": 25,
+    "distance_m": 1365.3,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_21",
+    "name": "District 3 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 25,
+    "dst": 24,
+    "distance_m": 1365.3,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_31",
+    "name": "District 3 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 24,
+    "dst": 33,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_21",
+    "name": "District 3 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 33,
+    "dst": 24,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_21",
+    "name": "District 3 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 24,
+    "dst": 34,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_21",
+    "name": "District 3 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 24,
+    "dst": 32,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_21",
+    "name": "District 3 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 25,
+    "dst": 26,
+    "distance_m": 1365.3,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_31",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 26,
+    "dst": 25,
+    "distance_m": 1365.3,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_31",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 25,
+    "dst": 34,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_31",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 34,
+    "dst": 25,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_31",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 25,
+    "dst": 35,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_31",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 25,
+    "dst": 33,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_31",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 26,
+    "dst": 27,
+    "distance_m": 1365.3,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_31",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 27,
+    "dst": 26,
+    "distance_m": 1365.3,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_41",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 26,
+    "dst": 35,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_31",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 35,
+    "dst": 26,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_31",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 26,
+    "dst": 36,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_31",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 26,
+    "dst": 34,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_31",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 27,
+    "dst": 36,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_41",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 36,
+    "dst": 27,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_41",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 27,
+    "dst": 35,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_41",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 28,
+    "dst": 29,
+    "distance_m": 1365.4,
+    "free_flow_speed_kmh": 55,
+    "road_class": "trunk",
+    "hex_id": "hex_01",
+    "name": "District 1 \u2194 District 3",
+    "toll_vnd": 15000
+  },
+  {
+    "src": 29,
+    "dst": 28,
+    "distance_m": 1365.4,
+    "free_flow_speed_kmh": 55,
+    "road_class": "trunk",
+    "hex_id": "hex_01",
+    "name": "District 1 \u2194 District 3",
+    "toll_vnd": 15000
+  },
+  {
+    "src": 28,
+    "dst": 37,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_01",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 37,
+    "dst": 28,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_02",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 28,
+    "dst": 38,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_01",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 29,
+    "dst": 30,
+    "distance_m": 1365.4,
+    "free_flow_speed_kmh": 55,
+    "road_class": "trunk",
+    "hex_id": "hex_01",
+    "name": "District 3 \u2194 District 3",
+    "toll_vnd": 15000
+  },
+  {
+    "src": 30,
+    "dst": 29,
+    "distance_m": 1365.4,
+    "free_flow_speed_kmh": 55,
+    "road_class": "trunk",
+    "hex_id": "hex_11",
+    "name": "District 3 \u2194 District 3",
+    "toll_vnd": 15000
+  },
+  {
+    "src": 29,
+    "dst": 38,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_01",
+    "name": "District 3 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 38,
+    "dst": 29,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_02",
+    "name": "District 3 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 29,
+    "dst": 39,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_01",
+    "name": "District 3 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 29,
+    "dst": 37,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_01",
+    "name": "District 3 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 30,
+    "dst": 31,
+    "distance_m": 1365.4,
+    "free_flow_speed_kmh": 55,
+    "road_class": "trunk",
+    "hex_id": "hex_11",
+    "name": "District 3 \u2194 District 3",
+    "toll_vnd": 15000
+  },
+  {
+    "src": 31,
+    "dst": 30,
+    "distance_m": 1365.4,
+    "free_flow_speed_kmh": 55,
+    "road_class": "trunk",
+    "hex_id": "hex_11",
+    "name": "District 3 \u2194 District 3",
+    "toll_vnd": 15000
+  },
+  {
+    "src": 30,
+    "dst": 39,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_11",
+    "name": "District 3 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 39,
+    "dst": 30,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_12",
+    "name": "District 3 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 30,
+    "dst": 40,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_11",
+    "name": "District 3 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 30,
+    "dst": 38,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_11",
+    "name": "District 3 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 31,
+    "dst": 32,
+    "distance_m": 1365.4,
+    "free_flow_speed_kmh": 55,
+    "road_class": "trunk",
+    "hex_id": "hex_11",
+    "name": "District 3 \u2194 District 1",
+    "toll_vnd": 15000
+  },
+  {
+    "src": 32,
+    "dst": 31,
+    "distance_m": 1365.4,
+    "free_flow_speed_kmh": 55,
+    "road_class": "trunk",
+    "hex_id": "hex_21",
+    "name": "District 3 \u2194 District 1",
+    "toll_vnd": 15000
+  },
+  {
+    "src": 31,
+    "dst": 40,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_11",
+    "name": "District 3 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 40,
+    "dst": 31,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_12",
+    "name": "District 3 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 31,
+    "dst": 41,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_11",
+    "name": "District 3 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 31,
+    "dst": 39,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_11",
+    "name": "District 3 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 32,
+    "dst": 33,
+    "distance_m": 1365.4,
+    "free_flow_speed_kmh": 55,
+    "road_class": "trunk",
+    "hex_id": "hex_21",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 15000
+  },
+  {
+    "src": 33,
+    "dst": 32,
+    "distance_m": 1365.4,
+    "free_flow_speed_kmh": 55,
+    "road_class": "trunk",
+    "hex_id": "hex_21",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 15000
+  },
+  {
+    "src": 32,
+    "dst": 41,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_21",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 41,
+    "dst": 32,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_22",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 32,
+    "dst": 42,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_21",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 32,
+    "dst": 40,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_21",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 33,
+    "dst": 34,
+    "distance_m": 1365.4,
+    "free_flow_speed_kmh": 55,
+    "road_class": "trunk",
+    "hex_id": "hex_21",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 15000
+  },
+  {
+    "src": 34,
+    "dst": 33,
+    "distance_m": 1365.4,
+    "free_flow_speed_kmh": 55,
+    "road_class": "trunk",
+    "hex_id": "hex_31",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 15000
+  },
+  {
+    "src": 33,
+    "dst": 42,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_21",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 42,
+    "dst": 33,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_22",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 33,
+    "dst": 43,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_21",
+    "name": "District 1 \u2194 District 4",
+    "toll_vnd": 0
+  },
+  {
+    "src": 33,
+    "dst": 41,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_21",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 34,
+    "dst": 35,
+    "distance_m": 1365.4,
+    "free_flow_speed_kmh": 55,
+    "road_class": "trunk",
+    "hex_id": "hex_31",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 15000
+  },
+  {
+    "src": 35,
+    "dst": 34,
+    "distance_m": 1365.4,
+    "free_flow_speed_kmh": 55,
+    "road_class": "trunk",
+    "hex_id": "hex_31",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 15000
+  },
+  {
+    "src": 34,
+    "dst": 43,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_31",
+    "name": "District 1 \u2194 District 4",
+    "toll_vnd": 0
+  },
+  {
+    "src": 43,
+    "dst": 34,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_32",
+    "name": "District 1 \u2194 District 4",
+    "toll_vnd": 0
+  },
+  {
+    "src": 34,
+    "dst": 44,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_31",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 34,
+    "dst": 42,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_31",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 35,
+    "dst": 36,
+    "distance_m": 1365.4,
+    "free_flow_speed_kmh": 55,
+    "road_class": "trunk",
+    "hex_id": "hex_31",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 15000
+  },
+  {
+    "src": 36,
+    "dst": 35,
+    "distance_m": 1365.4,
+    "free_flow_speed_kmh": 55,
+    "road_class": "trunk",
+    "hex_id": "hex_41",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 15000
+  },
+  {
+    "src": 35,
+    "dst": 44,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_31",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 44,
+    "dst": 35,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_32",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 35,
+    "dst": 45,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_31",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 35,
+    "dst": 43,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_31",
+    "name": "District 1 \u2194 District 4",
+    "toll_vnd": 0
+  },
+  {
+    "src": 36,
+    "dst": 45,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_41",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 45,
+    "dst": 36,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_42",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 36,
+    "dst": 44,
+    "distance_m": 1833.1,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_41",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 37,
+    "dst": 38,
+    "distance_m": 1365.4,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_02",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 38,
+    "dst": 37,
+    "distance_m": 1365.4,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_02",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 37,
+    "dst": 46,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_02",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 46,
+    "dst": 37,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_02",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 37,
+    "dst": 47,
+    "distance_m": 1833.2,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_02",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 38,
+    "dst": 39,
+    "distance_m": 1365.4,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_02",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 39,
+    "dst": 38,
+    "distance_m": 1365.4,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_12",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 38,
+    "dst": 47,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_02",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 47,
+    "dst": 38,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_02",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 38,
+    "dst": 48,
+    "distance_m": 1833.2,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_02",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 38,
+    "dst": 46,
+    "distance_m": 1833.2,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_02",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 39,
+    "dst": 40,
+    "distance_m": 1365.4,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_12",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 40,
+    "dst": 39,
+    "distance_m": 1365.4,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_12",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 39,
+    "dst": 48,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_12",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 48,
+    "dst": 39,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_12",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 39,
+    "dst": 49,
+    "distance_m": 1833.2,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_12",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 39,
+    "dst": 47,
+    "distance_m": 1833.2,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_12",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 40,
+    "dst": 41,
+    "distance_m": 1365.4,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_12",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 41,
+    "dst": 40,
+    "distance_m": 1365.4,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_22",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 40,
+    "dst": 49,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_12",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 49,
+    "dst": 40,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_12",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 40,
+    "dst": 50,
+    "distance_m": 1833.2,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_12",
+    "name": "District 1 \u2194 District 4",
+    "toll_vnd": 0
+  },
+  {
+    "src": 40,
+    "dst": 48,
+    "distance_m": 1833.2,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_12",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 41,
+    "dst": 42,
+    "distance_m": 1365.4,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_22",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 42,
+    "dst": 41,
+    "distance_m": 1365.4,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_22",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 41,
+    "dst": 50,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_22",
+    "name": "District 1 \u2194 District 4",
+    "toll_vnd": 0
+  },
+  {
+    "src": 50,
+    "dst": 41,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_22",
+    "name": "District 1 \u2194 District 4",
+    "toll_vnd": 0
+  },
+  {
+    "src": 41,
+    "dst": 51,
+    "distance_m": 1833.2,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_22",
+    "name": "District 1 \u2194 District 4",
+    "toll_vnd": 0
+  },
+  {
+    "src": 41,
+    "dst": 49,
+    "distance_m": 1833.2,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_22",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 42,
+    "dst": 43,
+    "distance_m": 1365.4,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_22",
+    "name": "District 1 \u2194 District 4",
+    "toll_vnd": 0
+  },
+  {
+    "src": 43,
+    "dst": 42,
+    "distance_m": 1365.4,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_32",
+    "name": "District 1 \u2194 District 4",
+    "toll_vnd": 0
+  },
+  {
+    "src": 42,
+    "dst": 51,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_22",
+    "name": "District 1 \u2194 District 4",
+    "toll_vnd": 0
+  },
+  {
+    "src": 51,
+    "dst": 42,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_22",
+    "name": "District 1 \u2194 District 4",
+    "toll_vnd": 0
+  },
+  {
+    "src": 42,
+    "dst": 52,
+    "distance_m": 1833.2,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_22",
+    "name": "District 1 \u2194 Thu Thiem",
+    "toll_vnd": 0
+  },
+  {
+    "src": 42,
+    "dst": 50,
+    "distance_m": 1833.2,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_22",
+    "name": "District 1 \u2194 District 4",
+    "toll_vnd": 0
+  },
+  {
+    "src": 43,
+    "dst": 44,
+    "distance_m": 1365.4,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_32",
+    "name": "District 4 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 44,
+    "dst": 43,
+    "distance_m": 1365.4,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_32",
+    "name": "District 4 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 43,
+    "dst": 52,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_32",
+    "name": "District 4 \u2194 Thu Thiem",
+    "toll_vnd": 0
+  },
+  {
+    "src": 52,
+    "dst": 43,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_32",
+    "name": "District 4 \u2194 Thu Thiem",
+    "toll_vnd": 0
+  },
+  {
+    "src": 43,
+    "dst": 53,
+    "distance_m": 1833.2,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_32",
+    "name": "District 4 \u2194 Thu Thiem",
+    "toll_vnd": 0
+  },
+  {
+    "src": 43,
+    "dst": 51,
+    "distance_m": 1833.2,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_32",
+    "name": "District 4 \u2194 District 4",
+    "toll_vnd": 0
+  },
+  {
+    "src": 44,
+    "dst": 45,
+    "distance_m": 1365.4,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_32",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 45,
+    "dst": 44,
+    "distance_m": 1365.4,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_42",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 44,
+    "dst": 53,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_32",
+    "name": "District 1 \u2194 Thu Thiem",
+    "toll_vnd": 0
+  },
+  {
+    "src": 53,
+    "dst": 44,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_32",
+    "name": "District 1 \u2194 Thu Thiem",
+    "toll_vnd": 0
+  },
+  {
+    "src": 44,
+    "dst": 54,
+    "distance_m": 1833.2,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_32",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 44,
+    "dst": 52,
+    "distance_m": 1833.2,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_32",
+    "name": "District 1 \u2194 Thu Thiem",
+    "toll_vnd": 0
+  },
+  {
+    "src": 45,
+    "dst": 54,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_42",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 54,
+    "dst": 45,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_42",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 45,
+    "dst": 53,
+    "distance_m": 1833.2,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_42",
+    "name": "District 1 \u2194 Thu Thiem",
+    "toll_vnd": 0
+  },
+  {
+    "src": 46,
+    "dst": 47,
+    "distance_m": 1365.5,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_02",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 47,
+    "dst": 46,
+    "distance_m": 1365.5,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_02",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 46,
+    "dst": 55,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_02",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 55,
+    "dst": 46,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_03",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 46,
+    "dst": 56,
+    "distance_m": 1833.2,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_02",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 47,
+    "dst": 48,
+    "distance_m": 1365.5,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_02",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 48,
+    "dst": 47,
+    "distance_m": 1365.5,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_12",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 47,
+    "dst": 56,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_02",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 56,
+    "dst": 47,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_03",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 47,
+    "dst": 57,
+    "distance_m": 1833.2,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_02",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 47,
+    "dst": 55,
+    "distance_m": 1833.2,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_02",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 48,
+    "dst": 49,
+    "distance_m": 1365.5,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_12",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 49,
+    "dst": 48,
+    "distance_m": 1365.5,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_12",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 48,
+    "dst": 57,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_12",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 57,
+    "dst": 48,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_13",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 48,
+    "dst": 58,
+    "distance_m": 1833.2,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_12",
+    "name": "District 1 \u2194 District 7",
+    "toll_vnd": 0
+  },
+  {
+    "src": 48,
+    "dst": 56,
+    "distance_m": 1833.2,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_12",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 49,
+    "dst": 50,
+    "distance_m": 1365.5,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_12",
+    "name": "District 1 \u2194 District 4",
+    "toll_vnd": 0
+  },
+  {
+    "src": 50,
+    "dst": 49,
+    "distance_m": 1365.5,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_22",
+    "name": "District 1 \u2194 District 4",
+    "toll_vnd": 0
+  },
+  {
+    "src": 49,
+    "dst": 58,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_12",
+    "name": "District 1 \u2194 District 7",
+    "toll_vnd": 0
+  },
+  {
+    "src": 58,
+    "dst": 49,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_13",
+    "name": "District 1 \u2194 District 7",
+    "toll_vnd": 0
+  },
+  {
+    "src": 49,
+    "dst": 59,
+    "distance_m": 1833.2,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_12",
+    "name": "District 1 \u2194 District 7",
+    "toll_vnd": 0
+  },
+  {
+    "src": 49,
+    "dst": 57,
+    "distance_m": 1833.2,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_12",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 50,
+    "dst": 51,
+    "distance_m": 1365.5,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_22",
+    "name": "District 4 \u2194 District 4",
+    "toll_vnd": 0
+  },
+  {
+    "src": 51,
+    "dst": 50,
+    "distance_m": 1365.5,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_22",
+    "name": "District 4 \u2194 District 4",
+    "toll_vnd": 0
+  },
+  {
+    "src": 50,
+    "dst": 59,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_22",
+    "name": "District 4 \u2194 District 7",
+    "toll_vnd": 0
+  },
+  {
+    "src": 59,
+    "dst": 50,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_23",
+    "name": "District 4 \u2194 District 7",
+    "toll_vnd": 0
+  },
+  {
+    "src": 50,
+    "dst": 60,
+    "distance_m": 1833.2,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_22",
+    "name": "District 4 \u2194 District 7",
+    "toll_vnd": 0
+  },
+  {
+    "src": 50,
+    "dst": 58,
+    "distance_m": 1833.2,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_22",
+    "name": "District 4 \u2194 District 7",
+    "toll_vnd": 0
+  },
+  {
+    "src": 51,
+    "dst": 52,
+    "distance_m": 1365.5,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_22",
+    "name": "District 4 \u2194 Thu Thiem",
+    "toll_vnd": 0
+  },
+  {
+    "src": 52,
+    "dst": 51,
+    "distance_m": 1365.5,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_32",
+    "name": "District 4 \u2194 Thu Thiem",
+    "toll_vnd": 0
+  },
+  {
+    "src": 51,
+    "dst": 60,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_22",
+    "name": "District 4 \u2194 District 7",
+    "toll_vnd": 0
+  },
+  {
+    "src": 60,
+    "dst": 51,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_23",
+    "name": "District 4 \u2194 District 7",
+    "toll_vnd": 0
+  },
+  {
+    "src": 51,
+    "dst": 61,
+    "distance_m": 1833.2,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_22",
+    "name": "District 4 \u2194 District 7",
+    "toll_vnd": 0
+  },
+  {
+    "src": 51,
+    "dst": 59,
+    "distance_m": 1833.2,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_22",
+    "name": "District 4 \u2194 District 7",
+    "toll_vnd": 0
+  },
+  {
+    "src": 52,
+    "dst": 53,
+    "distance_m": 1365.5,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_32",
+    "name": "Thu Thiem \u2194 Thu Thiem",
+    "toll_vnd": 0
+  },
+  {
+    "src": 53,
+    "dst": 52,
+    "distance_m": 1365.5,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_32",
+    "name": "Thu Thiem \u2194 Thu Thiem",
+    "toll_vnd": 0
+  },
+  {
+    "src": 52,
+    "dst": 61,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_32",
+    "name": "Thu Thiem \u2194 District 7",
+    "toll_vnd": 0
+  },
+  {
+    "src": 61,
+    "dst": 52,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_33",
+    "name": "Thu Thiem \u2194 District 7",
+    "toll_vnd": 0
+  },
+  {
+    "src": 52,
+    "dst": 62,
+    "distance_m": 1833.2,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_32",
+    "name": "Thu Thiem \u2194 Phu My Hung",
+    "toll_vnd": 0
+  },
+  {
+    "src": 52,
+    "dst": 60,
+    "distance_m": 1833.2,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_32",
+    "name": "Thu Thiem \u2194 District 7",
+    "toll_vnd": 0
+  },
+  {
+    "src": 53,
+    "dst": 54,
+    "distance_m": 1365.5,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_32",
+    "name": "Thu Thiem \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 54,
+    "dst": 53,
+    "distance_m": 1365.5,
+    "free_flow_speed_kmh": 42,
+    "road_class": "primary",
+    "hex_id": "hex_42",
+    "name": "Thu Thiem \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 53,
+    "dst": 62,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_32",
+    "name": "Thu Thiem \u2194 Phu My Hung",
+    "toll_vnd": 0
+  },
+  {
+    "src": 62,
+    "dst": 53,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_33",
+    "name": "Thu Thiem \u2194 Phu My Hung",
+    "toll_vnd": 0
+  },
+  {
+    "src": 53,
+    "dst": 63,
+    "distance_m": 1833.2,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_32",
+    "name": "Thu Thiem \u2194 Phu My Hung",
+    "toll_vnd": 0
+  },
+  {
+    "src": 53,
+    "dst": 61,
+    "distance_m": 1833.2,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_32",
+    "name": "Thu Thiem \u2194 District 7",
+    "toll_vnd": 0
+  },
+  {
+    "src": 54,
+    "dst": 63,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_42",
+    "name": "District 1 \u2194 Phu My Hung",
+    "toll_vnd": 0
+  },
+  {
+    "src": 63,
+    "dst": 54,
+    "distance_m": 1223.1,
+    "free_flow_speed_kmh": 22,
+    "road_class": "residential",
+    "hex_id": "hex_43",
+    "name": "District 1 \u2194 Phu My Hung",
+    "toll_vnd": 0
+  },
+  {
+    "src": 54,
+    "dst": 62,
+    "distance_m": 1833.2,
+    "free_flow_speed_kmh": 14,
+    "road_class": "hem",
+    "hex_id": "hex_42",
+    "name": "District 1 \u2194 Phu My Hung",
+    "toll_vnd": 0
+  },
+  {
+    "src": 55,
+    "dst": 56,
+    "distance_m": 1365.5,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_03",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 56,
+    "dst": 55,
+    "distance_m": 1365.5,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_03",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 56,
+    "dst": 57,
+    "distance_m": 1365.5,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_03",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 57,
+    "dst": 56,
+    "distance_m": 1365.5,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_13",
+    "name": "District 1 \u2194 District 1",
+    "toll_vnd": 0
+  },
+  {
+    "src": 57,
+    "dst": 58,
+    "distance_m": 1365.5,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_13",
+    "name": "District 1 \u2194 District 7",
+    "toll_vnd": 0
+  },
+  {
+    "src": 58,
+    "dst": 57,
+    "distance_m": 1365.5,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_13",
+    "name": "District 1 \u2194 District 7",
+    "toll_vnd": 0
+  },
+  {
+    "src": 58,
+    "dst": 59,
+    "distance_m": 1365.5,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_13",
+    "name": "District 7 \u2194 District 7",
+    "toll_vnd": 0
+  },
+  {
+    "src": 59,
+    "dst": 58,
+    "distance_m": 1365.5,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_23",
+    "name": "District 7 \u2194 District 7",
+    "toll_vnd": 0
+  },
+  {
+    "src": 59,
+    "dst": 60,
+    "distance_m": 1365.5,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_23",
+    "name": "District 7 \u2194 District 7",
+    "toll_vnd": 0
+  },
+  {
+    "src": 60,
+    "dst": 59,
+    "distance_m": 1365.5,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_23",
+    "name": "District 7 \u2194 District 7",
+    "toll_vnd": 0
+  },
+  {
+    "src": 60,
+    "dst": 61,
+    "distance_m": 1365.5,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_23",
+    "name": "District 7 \u2194 District 7",
+    "toll_vnd": 0
+  },
+  {
+    "src": 61,
+    "dst": 60,
+    "distance_m": 1365.5,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_33",
+    "name": "District 7 \u2194 District 7",
+    "toll_vnd": 0
+  },
+  {
+    "src": 61,
+    "dst": 62,
+    "distance_m": 1365.5,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_33",
+    "name": "District 7 \u2194 Phu My Hung",
+    "toll_vnd": 0
+  },
+  {
+    "src": 62,
+    "dst": 61,
+    "distance_m": 1365.5,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_33",
+    "name": "District 7 \u2194 Phu My Hung",
+    "toll_vnd": 0
+  },
+  {
+    "src": 62,
+    "dst": 63,
+    "distance_m": 1365.5,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_33",
+    "name": "Phu My Hung \u2194 Phu My Hung",
+    "toll_vnd": 0
+  },
+  {
+    "src": 63,
+    "dst": 62,
+    "distance_m": 1365.5,
+    "free_flow_speed_kmh": 30,
+    "road_class": "secondary",
+    "hex_id": "hex_43",
+    "name": "Phu My Hung \u2194 Phu My Hung",
+    "toll_vnd": 0
+  }
+]

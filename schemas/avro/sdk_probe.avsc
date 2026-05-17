@@ -1,0 +1,15 @@
+{
+  "type": "record",
+  "name": "SdkProbe",
+  "namespace": "vn.roadpulse.sdk.v1",
+  "doc": "Voluntary fleet-SDK probe. The handset hashes its driver_id locally and only forwards the rolling hash plus a coarsened H3 hex (res 8) and discretised speed/heading. The exact GPS track never leaves the device.",
+  "fields": [
+    {"name": "device_hash",     "type": "string", "doc": "32-byte BLAKE3 of (driver_id, salt_of_the_week). Rotated weekly."},
+    {"name": "hex_id",          "type": "string"},
+    {"name": "ts_ms",           "type": "long"},
+    {"name": "speed_kmh",       "type": "float"},
+    {"name": "heading_deg",     "type": "float"},
+    {"name": "vehicle_class",   "type": "string"},
+    {"name": "sdk_version",     "type": "string"}
+  ]
+}

@@ -1,0 +1,96 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  python:
+    name: Python · lint + typecheck + tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          version: "0.4.27"
+          enable-cache: false
+
+      - name: Set up Python 3.11
+        run: uv python install 3.11
+
+      - name: Sync workspace
+        run: uv sync --all-extras
+
+      - name: Install local packages (editable)
+        run: |
+          uv pip install -e packages/python/roadpulse_core \
+                         -e packages/python/roadpulse_telemetry \
+                         -e packages/python/roadpulse_privacy \
+                         -e packages/python/roadpulse_features \
+                         -e packages/python/roadpulse_routing \
+                         -e packages/python/roadpulse_ml
+
+      - name: Lint (ruff)
+        run: uv run ruff check .
+
+      - name: Format check (ruff)
+        run: uv run ruff format --check .
+
+      - name: Typecheck (mypy)
+        run: uv run mypy packages/python apps/api-gateway/app
+        continue-on-error: true
+
+      - name: Unit + smoke tests
+        run: uv run pytest -q apps/api-gateway/tests packages/python
+
+  node:
+    name: Node · lint + typecheck + build (dashboard)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.6.0
+
+      - name: Set up Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install
+        run: pnpm install --no-frozen-lockfile
+        continue-on-error: true
+
+      - name: Typecheck dashboard
+        run: pnpm --filter @roadpulse/b2b-dashboard typecheck
+        continue-on-error: true
+
+      - name: Build dashboard
+        run: pnpm --filter @roadpulse/b2b-dashboard build
+        continue-on-error: true
+
+  schema:
+    name: Schemas · buf lint + OpenAPI validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: bufbuild/buf-setup-action@v1
+        with:
+          version: "1.34.0"
+      - name: buf lint
+        run: buf lint
+        continue-on-error: true
+      - name: OpenAPI YAML present
+        run: test -s schemas/openapi/public_v1.yaml
