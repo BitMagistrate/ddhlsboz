@@ -24,8 +24,8 @@ jobs:
           version: "0.4.27"
           enable-cache: false
 
-      - name: Set up Python 3.12
-        run: uv python install 3.12
+      - name: Set up Python 3.11
+        run: uv python install 3.11
 
       - name: Sync workspace
         run: uv sync --all-extras
