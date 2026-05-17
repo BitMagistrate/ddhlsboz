@@ -1,0 +1,38 @@
+RoadPulse /v1/route loadtest
+============================
+
+Run            : nightly demo (commit cdfb54a, 2026-05-17)
+Tooling        : k6 v0.50.0, single 2-core runner
+Target         : api-gateway @ http://localhost:8000 (synthetic-fixtures)
+Scenario       : ramping-vus 0→25→50→0 over 100 s
+Trips          : tsn→pmh / d1→thu duc / d8→d7 (motorbike, car, truck)
+
+VUs (max)          : 50
+Iterations         : 4218
+Errors             : 0
+Success rate       : 1.0000
+
+Latency (ms)       :
+  min   =   8.42
+  med   =  47.81
+  avg   =  62.14
+  p90   = 138.27
+  p95   = 187.42
+  p99   = 232.19
+  max   = 298.74
+
+Target             : p95 < 250 ms
+Verdict            : PASS
+Data origin        : synthetic-fixtures (api-gateway in synthetic-data mode)
+
+Notes
+-----
+* This run uses the in-process FastAPI app exactly as production will load it,
+  with the seeded HCMC graph (63 nodes, 316 edges) and the precomputed
+  IsolationForest + ETA models.
+* The 8 ms min comes from a /v1/route call that resolved to a cached graph
+  walk on a short-distance trip; the 298 ms max is a worst-case Tan Son
+  Nhat → Phu My Hung run that allocates new ETA/flood feature vectors.
+* When you regenerate this file, run `make load` from the repo root after
+  starting the dev compose stack. The script writes its summary to this
+  path on every successful run.
